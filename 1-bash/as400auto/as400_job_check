@@ -1,0 +1,26 @@
+#!/bin/bash
+
+source ~/bin/ssh_functions.sh
+
+SYSTEM=$1
+JOB=$2
+[[ -z ${SYSTEM} || -z ${JOB} ]] && echo "Usage: $0 <System> <Job>" && exit 1 
+
+LOGDIR=$(dirname $0)/../logs/$(basename $0)
+mkdir -p ${LOGDIR}
+LOGFILE=${LOGDIR}/${JOB}_${SYSTEM}
+
+ping -c4 ${SYSTEM} >/dev/null 2>&1
+[[ $? != 0 ]] && echo ${TSTAMP},\"UNKNOWN\",\"Ping KO\" >> ${LOGFILE} && exit
+
+read JOBNAME JOBUSR JOBNUM <<< $(ssh ${AS400USR}@${SYSTEM} system 'WRKACTJOB' | grep ${JOB} | awk '{print $1,$2,$3}')
+TSTAMP=$(date +%Y,%m,%d,%H:%M)
+
+if [[ -n $JOBNAME ]]
+then
+    CMD="WRKJOB JOB\\(${JOBNUM}/${JOBUSR}/${JOBNAME}\\) OPTION\\(*STSA\\)"
+    read DUMMY START <<< $(ssh ${AS400USR}@${SYSTEM} system $CMD | grep Time | sed -e 's/^.* //')
+    echo ${TSTAMP},\"ACTIVE\",\"Started at ${START} system time\" >> ${LOGFILE}
+else
+    echo ${TSTAMP},\"INACTIVE\",\"\" >> ${LOGFILE}
+fi

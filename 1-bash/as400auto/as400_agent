@@ -1,0 +1,31 @@
+#!/bin/bash
+
+ETCDIR=$(dirname $0)/../etc
+AGENTVARS=${ETCDIR}/agent.sh
+mkdir -p ${ETCDIR}
+
+case $1 in
+    start)
+	[[ -f ${AGENTVARS} ]] && source ${AGENTVARS} && exit 1
+	ssh-agent > ${AGENTVARS}
+	chmod 400 ${AGENTVARS}
+	echo "Agent started"
+	source ${AGENTVARS}
+	ssh-add ${ETCDIR}/keys/id_rsa
+	;;
+
+    stop)
+	[[ ! -f ${AGENTVARS} ]] && echo "Agent not started" && exit 1
+	source ${AGENTVARS}
+	kill ${SSH_AGENT_PID}
+	rm -f ${AGENTVARS}
+	echo "Agent stopped"
+	;;
+
+    *)
+	echo "Invalid option \"$1\""
+	exit 1
+	;;
+esac
+
+exit 0

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="1-bash">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/1-bash/TS3500CLI.jar!/" />
+      <root url="jar://$PROJECT_DIR$/1-bash/as400-monitor-server-linux.zip!/" />
+      <root url="jar://$PROJECT_DIR$/1-bash/autoqsec.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

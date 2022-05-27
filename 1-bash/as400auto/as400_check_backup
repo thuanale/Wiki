@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# 040419: Initial version. Vincent Dang
+
+source ~/bin/ssh_functions.sh
+
+[[ -z $1 ]] && echo "Usage: $0 <server>" && exit 1
+
+SRV=$1
+is_alive
+[[ ${RETCODE} != 0 ]] && echo "${SRV} not reachable" && exit 1
+
+CMD="WRKACTJOB"
+ssh_exec | grep BRMSSAVE >/dev/null 2>&1
+BRMSOK=$?
+[[ ${RETCODE} != 0 ]] && echo "Failed to check BRMSSAVE status on ${SRV}" && exit 1
+
+[[ ${BRMSOK} != 0 ]] &&\
+    (echo "check BRMSSAVE on $1 please" | mail -r v.dang@dfs.com -s "BRMSSAVE on $1 is NOT STARTED" v.dang@linkbynet.com)

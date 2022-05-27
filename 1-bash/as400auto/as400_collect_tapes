@@ -1,0 +1,63 @@
+#!/bin/bash
+
+source ~/bin/ssh_functions.sh
+
+[[ -z $1 ]] && echo "Usage: $0 <VOL0> <VOL1> .... " && exit 1
+
+TMPDIR=~/tmp/$(basename $0)
+mkdir -p ${TMPDIR}
+
+DB=/home/shared/data/as400/as400_stats
+
+SRV=INDO
+
+while [[ -n $1 ]]
+do
+    VOL=$1 
+    echo "$VOL ---"
+    read SRCSRV CTRLGRP <<< \
+	$(echo "SELECT host, ctrlgrp FROM BACKUPS WHERE volume = '${VOL}' ORDER BY start DESC LIMIT 1;" |\
+	    sqlite3 -separator ' ' ${DB})
+
+    [[ -z ${SRCSRV} ]] && echo "Invalid volume ${VOL}. Ignoring" && shift && continue
+
+    DATFILE=${TMPDIR}/${SRCSRV}_${CTRLGRP}_${VOL}.out
+    if [[ ! -f ${DATFILE} ]]
+    then
+	CMD="'WRKMEDIBRM VOL(${VOL})'"
+	ssh_exec | grep ${CTRLGRP} > ${DATFILE}
+	[[ $(ls -l ${DATFILE} | awk '{print $5}') == 0 ]] &&\
+	    echo "Failed to extract data for tape ${VOL} on ${SRCSRV}. Skipping" && shift && continue
+    fi 
+
+    # Code to work around fact that expiry date may vary for last elements because FSB spans midnight.
+    unset EDATE
+
+    TAG=$(dd if=/dev/urandom bs=128 count=1 2>/dev/null | md5sum | awk '{print $1}')
+    
+    while read LN
+    do
+	read ITEM STYPE ITYPE SDATE STIME TMPEDATE SAVED NSAVED SEQ TMPVOL TMPCTRLGRP TMPSRV DUMMY <<< ${LN} 
+	[[ -z ${EDATE} ]] && EDATE=${TMPEDATE}
+
+	[[ ${VOL} != ${TMPVOL} ]] && echo "Volume mismatch between backup (${VOL})and tape DB ${TMPVOL}" && continue
+	[[ ${SRCSRV} != ${TMPSRV} ]] && echo "Server mismatch between backup (${SRCSRV})and tape DB ${TMPSRV}" && continue
+	[[ ${CTRLGRP} != ${TMPCTRLGRP} ]] && echo "Control group mismatch between backup (${CTRLGRP})and tape DB ${TMPCTRLGRP}" &&\
+	    continue
+
+	TS_START=$(/home/shared/bin/as400_dt_convert --from ${SRCSRV} -d "${SDATE} ${STIME}" --format "+%s" 2>/dev/null)
+	TS_EXP=$(/home/shared/bin/as400_dt_convert --from ${SRCSRV} -d "${EDATE} 00:00:00" --format "+%s" 2>/dev/null)
+	    
+	echo "INSERT INTO VOLUMES VALUES('${TAG}', '${SRCSRV}', '${VOL}', '${CTRLGRP}', ${TS_START}, '${ITEM}', '${STYPE}', '${ITYPE}', ${TS_EXP}, ${SAVED}, ${NSAVED}, ${SEQ}, NULL);" | sqlite3 ${DB}
+	if [[ $? != 0 ]]
+	then
+	    echo "Failed to add ${VOL}, ${SRCSRV}, ${CTRLGRP}, ${SDATE}, ${STIME}"
+	    echo "INSERT INTO VOLUMES VALUES('${TAG}', '${SRCSRV}', '${VOL}', '${CTRLGRP}', ${TS_START}, '${ITEM}','${STYPE}',\
+		'${ITYPE}', ${TS_EXP}, ${SAVED}, ${NSAVED}, ${SEQ});"
+	fi
+	    
+    done < ${DATFILE}
+
+    #rm -f ${DATFILE}
+    shift
+done

@@ -1,0 +1,69 @@
+#!/bin/bash
+
+PREFIX=$(dirname $0)
+mkdir -p ${PREFIX}/../data/as400
+STEP_A=${PREFIX}/../data/as400/STEP_A_$(date +%d%m%y).out
+STEP_B=${PREFIX}/../data/as400/STEP_B_$(date +%d%m%y).out
+STEP_C=${PREFIX}/../data/as400/STEP_C_$(date +%d%m%y).out
+STEP_D=${PREFIX}/../data/as400/STEP_D_$(date +%d%m%y).out
+
+SRVLST="CAM CATS CLUX DFSNZ1 DRSAP2PF GDC GVA HKGA HNL INDO ITL KOREA KSENV5U KSENV6 KSENV6U LAX1 MIDEAST MIDPAC PAD1 PAX1 PRC SFO SFO2 SIN2 SYD"
+
+while [[ -n $1 ]]
+do
+    case $1 in
+        --as400usr)
+            shift
+            AS400USR=$1
+            ;;
+
+        --tlusr)
+            shift
+            TLUSR=$1
+            ;;
+        *)
+            echo "Invalid option $1" && exit 1
+            ;;
+    esac
+    shift
+done
+
+[[ -z ${AS400USR} ]] && echo "Please provide AS400 user name" && exit 1
+[[ -z ${TLUSR} ]] && echo "Please provide TS3500 user name" && exit 1
+
+if [[ ! -f ${STEP_A} ]]
+then
+    echo "Extracting tape list from tape library"
+    /home/shared/bin/tlib --ntt --get-tapes --user ${TLUSR} --file ${STEP_A}.full
+    [[ $? != 0 ]] && echo "Failed to extract tape list from tape library" && exit 1
+    grep System_I ${STEP_A}.full > ${STEP_A}
+else
+    echo "Using existing file ${STEP_A} for tape list from tape library"
+fi
+
+if [[ ! -f ${STEP_B} ]]
+then
+    echo "Extracting assigned tapes from AS400 servers"
+    for SERVER in CAM CATS CLUX DFSNZ1 GDC GVA HKGA HNL INDO ITL KOREA KSENV5U KSENV6 KSENV6U LAX1 MIDEAST MIDPAC PAD1 PAX1 PRC SFO SFO2 SIN2 SYD
+    do
+        ssh ${AS400USR}@indo.dfs "system 'WRKMEDBRM MEDCLS(ULTRIUM5) LOC(LTO5DRT) SYSNAME(APPN.'$SERVER')'" \
+            | grep LTO5DRT | grep -v Location
+    done > ${STEP_B}
+else
+    echo "Using existing file ${STEP_B} list of assigned tapes on AS400 servers"
+fi
+
+rm -f ${STEP_C}
+echo "Saving list of tapes assigned but not in tape library in ${STEP_C}"
+while read LN
+do
+    TAPE=$(echo ${LN} | awk -F, '{print $1}' | sed -e 's/L.*$//')
+    grep "${TAPE}" ${STEP_B} >/dev/null || echo $TAPE >> ${STEP_C}
+done < ${STEP_A}
+
+rm -f ${STEP_D}
+while read VOL
+do
+    ssh -n ADMVMOOS@indo.dfs "system 'WRKMEDBRM VOL('${VOL}')'" | grep ${VOL} >> ${STEP_D} 
+    [[ $? != 0 ]] && echo "${VOL} not available in BRMS" || echo "${VOL} available in BRMS"
+done < ${STEP_C}

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+INVENTORY=/home/shared/etc/LBN_Inventory.csv
+EXCLUDE="sfov7 mcsdev"
+unset SRVLIST
+
+while [[ $# > 0 ]]
+do
+    case $1 in
+        --production|-p)
+            SRVLIST=$(grep 'AS400,production' ${INVENTORY} | awk -F, '{print $1}')
+            ;;
+
+        --script|-s)
+                shift
+                SCR=$1
+                ;;
+
+        --usr|-u)
+                shift
+                USR=$1
+                ;;
+        *)
+                echo "Invalid parameter $1"
+                exit 1
+                ;;
+    esac
+    shift
+done
+
+[[ -z ${SCR} ]] && echo "Script not provided" && exit 1
+[[ -z ${USR} ]] && echo "SSH user not provided" && exit 1
+[[ -z ${SRVLIST} ]] && SRVLIST=$(grep AS400 ${INVENTORY} | awk -F, '{print $1}' | grep -v '^dr')
+
+TMPNAME=/var/tmp/$(basename $0)-$(dd if=/dev/urandom  bs=64 count=1 2>/dev/null | md5sum | awk '{print $1}')
+
+for SRV in ${SRVLIST}
+do
+    for TMP in ${EXCLUDE}
+    do
+        [[ ${TMP} == ${SRV} ]] && echo "Excluding ${SRV}" && continue 2
+    done
+    $(dirname $0)/as400_exec --server ${SRV} --script ${SCR} --logfile ${TMPNAME}.out --usr ${USR}
+done
+
+echo "Output available in ${TMPNAME}.out"

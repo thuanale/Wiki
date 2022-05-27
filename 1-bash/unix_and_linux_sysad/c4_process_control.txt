@@ -1,0 +1,52 @@
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    4.9 cron
+1. cron configration file call cron table (crontab)
+
+2. Key files:
+    cron configuration file: store in (Linux) /var/spool/cron per user.
+    Log file: /var/log/scron
+
+3. crontab command notifies every changed in crontab files. Do:
+	Not change directly in crontab files
+	Use crontab -e: edit/ crontab - r: remove /crontab -l: list
+	crontab -u username: view & edit other user crontab <only under root permission>
+    without argument crontab read form stdin.
+    Escape cron Ctrl-C.
+	Not use Ctrl-D to escape. Because it will delete whole content of files.
+    crontab filename: set other file as crontab.
+
+4. Format:
+    # .---------------- minute (0 - 59)
+    # |  .------------- hour (0 - 23)
+    # |  |  .---------- day of month (1 - 31)
+    # |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+    # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+    # |  |  |  |  |
+    # *  *  *  *  * user-name command to be executed
+
+    Time range: Each of time field can content:
+    	*: match everything
+    	Single integer: match exactly
+    	Two integers separated by a dash: match a range of value
+    	A range followed by a slash and a step value 
+    	A comma-separated list of integers or ranges
+    <command>:
+        excecute (by default) sh command line 
+        can be set to other by: put "SHELL=/bin/bash" on head of crontab configuration file
+        %: indicate new line (\%: to escape)
+        SHELL not inherit login shell enviroment paramter => write script to set up enviroment variables.
+
+5. access control:
+    /etc/cron.{allow,deny}:
+        allow: only users in list are allowed.
+        deny: only users in list are prohibited.
+        read from allow -> deny
+    by default: accept allow
+    set proper permission for /var/spool/cron and /var/cron/tabs to avoid users access & run command in crontab of others.
+
+
+
+                

@@ -1,0 +1,74 @@
+DROP TABLE IF EXISTS SERVERS;
+
+CREATE TABLE SERVERS(
+    host TEXT PRIMARY KEY,
+    dc TEXT NOT NULL,
+    utc_off INTEGER NOT NULL,
+    datefmt TEXT CHECK(datefmt IN ('DMY', 'MDY')) NOT NULL,
+    env TEXT CHECK(env IN ('DR', 'INFRA', 'NPROD', 'PROD', 'TST')) NOT NULL,
+    tz TEXT
+);
+INSERT INTO SERVERS VALUES('CAM', 'NTT', 7, 'MDY', 'PROD', 'Asia/Phnom_Penh');
+INSERT INTO SERVERS VALUES('CATS', 'NTT', 8, 'MDY', 'PROD', 'Asia/Shanghai');
+INSERT INTO SERVERS VALUES('CLUX', 'NTT', 8, 'MDY', 'PROD', 'Asia/Shanghai');
+INSERT INTO SERVERS VALUES('DFSNZ1', 'NTT', 13, 'DMY', 'PROD', 'Pacific/Auckland');
+INSERT INTO SERVERS VALUES('GDC', 'NTT', 8, 'MDY', 'PROD', 'Asia/Shanghai');
+INSERT INTO SERVERS VALUES('GVA', 'NTT', 8, 'DMY', 'PROD', 'Asia/Singapore');
+INSERT INTO SERVERS VALUES('HKGA', 'NTT', 8, 'DMY', 'PROD', 'Asia/Shanghai');
+INSERT INTO SERVERS VALUES('HNL', 'NTT', -10, 'MDY', 'PROD', 'Pacific/Honolulu');
+INSERT INTO SERVERS VALUES('INDO', 'NTT', 7, 'MDY', 'PROD', 'Asia/Jakarta');
+INSERT INTO SERVERS VALUES('ITL', 'NTT', 1, 'MDY', 'PROD', 'Europe/Zurich');
+INSERT INTO SERVERS VALUES('KOREA', 'NTT', 9, 'MDY', 'PROD', 'Asia/Seoul');
+INSERT INTO SERVERS VALUES('LAX1', 'NTT', -8, 'MDY', 'PROD', 'America/Los_Angeles');
+INSERT INTO SERVERS VALUES('MIDEAST', 'NTT', 4, 'MDY', 'PROD', 'Asia/Dubai');
+INSERT INTO SERVERS VALUES('MIDPAC', 'NTT', 10, 'MDY', 'PROD', 'Pacific/Guam');
+INSERT INTO SERVERS VALUES('PAD1', 'NTT', -10, 'MDY', 'PROD', 'Pacific/Honolulu');
+INSERT INTO SERVERS VALUES('PAX1', 'NTT', -8, 'MDY', 'PROD', 'America/Los_Angeles');
+INSERT INTO SERVERS VALUES('PRC', 'NTT', 8, 'MDY', 'PROD', 'Asia/Shanghai');
+INSERT INTO SERVERS VALUES('DRSAP2PF', 'KDDI', -8, 'MDY', 'DR', 'America/Los_Angeles');
+INSERT INTO SERVERS VALUES('SFO', 'NTT', 12, 'MDY', 'PROD', 'Pacific/Wake');
+INSERT INTO SERVERS VALUES('SFO2', 'NTT', -8, 'MDY', 'PROD', 'America/Los_Angeles');
+INSERT INTO SERVERS VALUES('SIN2', 'NTT', 8, 'MDY', 'PROD', 'Asia/Singapore');
+INSERT INTO SERVERS VALUES('SYD', 'NTT', 11, 'DMY', 'PROD', 'Australia/Sydney');
+INSERT INTO SERVERS VALUES('KSENV5U', 'NTT', 12, 'MDY', 'NPROD', 'Pacific/Wake');
+INSERT INTO SERVERS VALUES('KSENV6', 'NTT', 12, 'MDY', 'NPROD', 'Pacific/Wake');
+INSERT INTO SERVERS VALUES('KSENV6U', 'NTT', 12, 'MDY', 'NPROD', 'Pacific/Wake');
+
+
+
+DROP TABLE IF EXISTS BACKUPS;
+
+CREATE TABLE BACKUPS(
+    host TEXT,
+    ctrlgrp TEXT CHECK(ctrlgrp IN ('SAVDLY', 'SAVWSB', 'SAVMSB')),
+    start INTEGER NOT NULL,
+    end INTEGER NOT NULL,
+    obj_saved INTEGER,
+    obj_nsaved INTEGER,
+    save_size INTEGER,
+    save_rate INTEGER,
+    media TEXT,
+    volume INTEGER,
+    status TEXT CHECK(status IN ('*ERROR', '*NOERR', '*QUAL', '*ACT', '*CANCL')) NOT NULL,
+    PRIMARY KEY (host, ctrlgrp, start),
+    FOREIGN KEY (host) REFERENCES SERVERS(host)
+);
+
+DROP TABLE IF EXISTS VOLUMES;
+
+CREATE TABLE VOLUMES(
+    tag TEXT NOT NULL,
+    host TEXT NOT NULL,
+    vol INTEGER NOT NULL,
+    ctrlgrp TEXT CHECK(ctrlgrp IN ('SAVDLY', 'SAVWSB', 'SAVMSB')),
+    start INTEGER NOT NULL,
+    item TEXT,
+    save_type TEXT,
+    item_type TEXT,
+    expire INTEGER NOT NULL,
+    obj_saved INTEGER,
+    obj_nsaved INTEGER,
+    seq INTEGER,
+    duration INTEGER,
+    FOREIGN KEY (host) REFERENCES SERVERS(host)
+);

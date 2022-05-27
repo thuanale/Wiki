@@ -1,0 +1,213 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create VPC, 4 subnets, inet GW, nat GW, network ACL
+Parameters:
+  Lab1VpcCidr:
+    Description: VPC CIDR Block
+    Type: String
+    Default: 10.0.0.0/16
+  Lab1IpBlock:
+    Description: Comma-delimited list of four CIDR Block
+    Type: CommaDelimitedList
+    Default: "10.0.0.0/24,10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"
+Resources:
+  Lab1VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref Lab1VpcCidr
+      Tags:
+      - Key: Name
+        Value: Lab1VPC
+      - Key: Enviroment
+        Value: Dev
+  Lab1PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Lab1VPC
+      AvailabilityZone: !Select [0, Fn::GetAZs: !Ref AWS::Region]
+      CidrBlock: !Select [0, !Ref Lab1IpBlock]
+      Tags:
+      - Key: Name
+        Value: Lab1PublicSubnet1
+  Lab1PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Lab1VPC
+      AvailabilityZone: !Select [1, Fn::GetAZs: !Ref AWS::Region]
+      CidrBlock: !Select [1, !Ref Lab1IpBlock]
+      Tags:
+      - Key: Name
+        Value: Lab1PublicSubnet2
+  Lab1PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Lab1VPC
+      AvailabilityZone: !Select [0, Fn::GetAZs: !Ref AWS::Region]
+      CidrBlock: !Select [2, !Ref Lab1IpBlock]
+      Tags:
+      - Key: Name
+        Value: Lab1PrivateSubnet1
+  Lab1PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Lab1VPC
+      AvailabilityZone: !Select [1, Fn::GetAZs: !Ref AWS::Region]
+      CidrBlock: !Select [3, !Ref Lab1IpBlock]
+      Tags:
+      - Key: Name
+        Value: Lab1PrivateSubnet2
+  Lab1InetGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: Lab1InetGW 
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref Lab1VPC
+      InternetGatewayId: !Ref Lab1InetGW
+  Lab1NatGW1:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+        - EIP
+        - AllocationId
+      SubnetId: !Ref Lab1PublicSubnet1
+  EIP:
+    DependsOn: AttachGateway
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  Lab1PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Lab1VPC
+  Lab1PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Lab1VPC
+  Lab1PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: Lab1InetGW
+    Properties:
+      RouteTableId: !Ref Lab1PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref Lab1InetGW
+  PublicSubnet1Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref Lab1PublicRouteTable
+      SubnetId: !Ref Lab1PublicSubnet1
+  PublicSubnet2Assocation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref Lab1PublicRouteTable
+      SubnetId: !Ref Lab1PublicSubnet2
+  Lab1PrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref Lab1PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref Lab1NatGW1
+  PrivateSubnet1Association: 
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref Lab1PrivateRouteTable
+      SubnetId: !Ref Lab1PrivateSubnet1
+  PrivateSubnet2Association:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref Lab1PrivateRouteTable
+      SubnetId: !Ref Lab1PrivateSubnet2
+  Lab1NetworkAcl:
+    Type: AWS::EC2::NetworkAcl
+    Properties:
+      VpcId: !Ref Lab1VPC
+  NetworkAclAssociaton1:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      SubnetId: !Ref Lab1PublicSubnet1
+  NetworkAclAssociaton2:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      SubnetId: !Ref Lab1PublicSubnet2
+  NetworkAclAssociaton3:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      SubnetId: !Ref Lab1PrivateSubnet1
+  NetworkAclAssociaton4:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      SubnetId: !Ref Lab1PrivateSubnet2
+  Lab1NetworkAclRule1:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Protocol: 6
+      PortRange:
+        From: 22
+        To: 22
+      RuleAction: allow
+      RuleNumber: 100
+  Lab1NetworkAclRule2:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Protocol: 6
+      PortRange:
+        From: 80
+        To: 80
+      RuleAction: allow
+      RuleNumber: 110
+  Lab1NetworkAclRule3:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Protocol: 6
+      PortRange:
+        From: 443
+        To: 443
+      RuleAction: allow
+      RuleNumber: 120
+  Lab1NetworkAclRule4:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties: 
+      NetworkAclId: !Ref Lab1NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Icmp: 
+        Code: -1
+        Type: -1
+      Protocol: 1
+      RuleAction: allow
+      RuleNumber: 130
+  Lab1NetworkAclRule5:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Protocol: 6
+      PortRange:
+        From: 32768
+        To: 65535
+      RuleAction: allow
+      RuleNumber: 140
+  Lab1NetworkAclRule6:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref Lab1NetworkAcl
+      Egress: 'true'
+      CidrBlock: 0.0.0.0/0
+      Protocol: -1
+      RuleAction: allow
+      RuleNumber: 100
+
+
+      

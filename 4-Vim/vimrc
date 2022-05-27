@@ -1,0 +1,62 @@
+"Encoding
+set encoding=utf-8
+
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
+set nocompatible
+
+" Enable syntax highlighting
+if has('syntax')
+  syntax on
+endif
+
+"Line size
+set textwidth=79
+
+"Highlight search
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase       "if search start with upper case, only search them
+
+"Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+
+"When opening a new line and no filetype-specific indenting is enabled, keep
+"the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
+set shiftwidth=2    "Used for << and >> commands
+set tabstop=2       "Used for tab key
+set smartindent     "set smartindenting on
+set smarttab 
+set expandtab       "tabs are replaced by spaces
+
+"Stop certain movements from always going to the first character of a line.
+set nostartofline
+
+"Display the cursor position on the last line of the screen or in the status
+"line of a window
+set ruler
+
+"Always display the status line, even if only one window is displayed
+set laststatus=2
+
+"Raise a dialogue asking if you wish to save changed file.
+set confirm
+
+"Display line real/relative numbers on the left
+set number
+set relativenumber
+
+"Enable use of the mouse for all modes
+if has('mouse')
+  set mouse=a
+endif
+
+"-----Find files--------
+"Search down into subfolders
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu

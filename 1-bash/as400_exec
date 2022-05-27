@@ -1,0 +1,51 @@
+#!/bin/bash
+
+while [[ $# > 0 ]]
+do
+    case $1 in
+        --logfile)
+                shift
+                LOG=$1
+                ;;
+        --script)
+                shift
+                SCR=$1
+                ;;
+        --server)
+                shift
+                SRV=$(echo $1 | tr '[:lower:]' '[:upper:]')
+                ping -c1 ${SRV}.dfs >/dev/null 2>&1
+                [[ $? != 0 ]] && echo "${SRV} is not a valid server name" && exit 1
+                ;;
+        --usr)
+                shift
+                USR=$1
+                ;;
+        *)
+                echo "Invalid parameter $1"
+                exit 1
+                ;;
+    esac
+    shift
+done
+
+
+[[ -z ${LOG} ]] && echo "Logfile not provided" && exit 1
+[[ -z ${SCR} ]] && echo "Script not provided" && exit 1
+[[ ! -f ${SCR} ]] && echo "Script ${SCR} not found" && exit 1
+[[ -z ${SRV} ]] && echo "Server not provided" && exit 1
+[[ -z ${USR} ]] && echo "SSH user not provided" && exit 1
+
+
+scp ${SCR} ${USR}@${SRV}.dfs:/home/${USR} >/dev/null 2>&1
+if [[ $? != 0 ]]
+then
+    echo "Script copy to ${SRV} failed" | tee -a ${LOG}
+    exit 1
+fi
+
+SCRBASE=$(basename ${SCR})
+echo "Execution starting on ${SRV}" | tee -a ${LOG}
+ssh ${USR}@${SRV}.dfs "/home/${USR}/${SCRBASE}" 2>&1 | tee -a ${LOG}
+ssh ${USR}@${SRV}.dfs "rm -f /home/${USR}/${SCRBASE}" >/dev/null 2>&1
+echo "Execution completed on ${SRV}" | tee -a ${LOG}

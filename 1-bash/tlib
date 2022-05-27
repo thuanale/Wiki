@@ -1,0 +1,178 @@
+#!/bin/bash
+
+function check_tl_param {
+
+    [[ -z $TLIP ]] && echo "Tape library name required but not provided. Please provide --kddi or --ntt option" && exit 1
+}
+
+function get_password {
+
+    [[ -z $TLUSR ]] && echo "User name was required but not provided" && exit 1
+    echo -e "Enter password for user \"$TLUSR\" and press enter\n" 
+    read -s TLPWD
+}
+
+function get_tapes {
+    check_tl_param
+    get_password
+    [[ -z ${OUTF} ]] && OUTF=$(echo $TLNAME | awk '{print $1}')_$(date +%d%m%y)_$(date +%H%M).txt
+    touch $OUTF || (echo "Unable to create output file in current directory" && exit 1)
+    echo "Extracting list of tapes from ${TLNAME}"
+    java -jar ${TSCLI} -a ${TLIP} -u ${TLUSR} -p ${TLPWD} --viewDataCartridges > ${OUTF}
+    [[ $? != 0 ]] && echo "Error while executing command on tape library" && exit 1
+    echo "Output is in $OUTF"
+}
+
+EXECDIR=$(dirname $0)
+TSCLI=${EXECDIR}/TS3500CLI.jar
+TLIP=
+TLNAME=
+CMD=
+
+while [[ $# > 0 ]]
+do
+    case $1 in
+
+        --assign-tapes)
+            CMD=assign_tapes
+            ;;
+
+        --check-returns)
+            CMD=check_returns
+            ;;
+
+        --file)
+            shift
+            OUTF=$1
+            ;;
+
+        --get-tapes)
+            CMD=get_tapes
+            ;;
+
+        --kddi)
+            TLIP=10.176.34.102
+            TLNAME="KDDI tape Library"
+            TLLGL="iSeries"
+            ;;
+
+        --ntt)
+            TLIP=10.176.232.45
+            TLNAME="NTT tape Library"
+            TLLGL="System_I"
+            ;;
+
+        --user|-u)
+            shift
+            TLUSR=$1
+            ;;
+
+        *)
+            echo "Invalid option $1"
+            exit 1
+    esac
+shift
+done
+
+[[ -z $CMD ]] && echo "No command provided" && exit 1
+
+case $CMD in
+
+    assign_tapes)
+        check_tl_param
+        [[ ! -f ASSIGN.TXT ]] && echo "Tape assignment to Logical AS400 Tape Library requires checking returns first" && exit 1
+
+        get_password
+        echo "Attempting tape assignment using data in ASSIGN.TXT"
+        java -jar ${TSCLI} -a ${TLIP} -u ${TLUSR} -p ${TLPWD} --assignDataCartridges ./ASSIGN.TXT -u ${TLUSR} -p ${TLPWD}
+
+        [[ $? != 0 ]] && echo "Assignment to Logical AS400 Tape Library failed. Please review ASSIGN.tXT and Tape Library" && exit 1
+        ;;
+
+    check_returns)
+        [[ ! -f RETURN.TXT ]] && echo "This command expects a file named RETURN.TXT in the current directory" && exit 1
+        get_tapes
+
+        [[ -f ASSIGN.TXT ]] && echo "Warning: removing existing ASSIGN.TXT" && rm -f ASSIGN.TXT
+
+        ASSIGNED=
+        IOSTN=
+        LOADED=
+        ABSENT=
+        for CTG in $(grep ULTRIUM RETURN.TXT | awk '{print $1}')
+        do
+            TMP=$(grep ${CTG} ${OUTF})
+            [[ $? != 0 ]] && ABSENT="${CTG} $ABSENT" && continue
+            
+            echo ${TMP} | grep -q I\/O
+            [[ $? == 0 ]] && IOSTN="${CTG} $IOSTN" && continue
+
+            CAT=$(echo ${TMP} | awk '{print $2}' | sed -e 's/,//') 
+            [[ ${CAT} == "Unassigned," ]] && LOADED="${CTG} $LOADED" &&\
+                echo "$(echo ${TMP} | awk '{print $1}'| sed -e 's/,//'), ${TLLGL}" >> ASSIGN.TXT && continue
+
+            ASSIGNED="${CTG} $ASSIGNED"
+        done
+
+        if [[ $(echo $ASSIGNED | wc -w) > 0 ]]
+        then
+            echo "Tapes loaded and assigned in the Tape Library: "
+            for VOL in ${ASSIGNED}
+            do
+                echo ${VOL}
+            done
+            echo
+        else
+            echo "Tapes loaded and assigned in the Tape Library: None"
+            echo
+        fi
+        
+        if [[ $(echo $LOADED | wc -w) > 0 ]]
+        then
+            echo "Tapes loaded but not assigned in the Tape Library: "
+            for VOL in ${LOADED}
+            do
+                echo ${VOL}
+            done
+            echo
+        else
+            echo "Tapes loaded but not assigned in the Tape Library: None"
+            echo
+        fi
+        
+        if [[ $(echo $IOSTN | wc -w) > 0 ]]
+        then
+            echo "Tapes in IO station: "
+            for VOL in ${IOSTN}
+            do
+                echo ${VOL}
+            done
+            echo
+        else
+            echo "Tapes in IO station: None"
+            echo
+        fi
+
+        if [[ $(echo $ABSENT | wc -w) > 0 ]]
+        then
+            echo "Tapes not in Tape Library: "
+            for VOL in ${ABSENT}
+            do
+                echo ${VOL}
+            done
+            echo
+        else
+            echo "Tapes absent from Tape Library: None"
+            echo
+        fi
+        
+        ;;
+
+    get_tapes)
+        get_tapes    
+        ;;
+
+    *)
+        echo "Unsupported command $CMD"
+        exit 1
+esac

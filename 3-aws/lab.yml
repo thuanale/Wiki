@@ -1,0 +1,98 @@
+[Getting Started]
+
+1. Implement Security by Using an IAM Role
+You are a solutions architect responsible for an Amazon Web Services (AWS) environment. 
+You need to create an Identity and Access Management (IAM) role that you will use to 
+access an Amazon Simple Storage Service (Amazon S3) bucket from an Elastic Compute Cloud (EC2) instance.
+  - Create an Amazon S3 bucket to store objects.
+  - Create a role to provide access to the bucket from an EC2 instance.
+  - Create an IAM policy that provides full control of the bucket
+  - Assign the policy to the role. 
+  - Create a new EC2 instance that will use the role, 
+  - Sign in to the EC2 instance and test the role.
+
+2. AWS TE.1-000: Getting Started with AWS Tech Essentials [Getting Started]
+In this lab, you will configure an Amazon Web Services environment. 
+- Create an Amazon Simple Storage Service (Amazon S3) bucket to host a publicly accessible website.
+- Build a custom Virtual Private Cloud (VPC) that will support public and private workloads.
+- Create a re-usable Amazon Elastic Compute Cloud (Amazon EC2) solution by using a custom AMI and a launch template.
+
+3.
+You are a system administrator for a company that is establishing a new Amazon Web Services (AWS) environment. 
+You need to create an Amazon Virtual Private Cloud (VPC) and subnets that provide high availability by using all of the availability zones in a region. 
+Your customized network must adhere to AWS best practices. 
+First, you will create a network foundation that is made up of a VPC, an internet gateway, a NAT gateway, and two subnets in a single availability zone. 
+Next, you will create two additional subnets in a second availability zone. Finally, you will create route tables, and then you will associate route tables with your subnets.
+
+4. 
+In this lab, you will configure a scalable, load-balanced web server farm by using Amazon Web Services (AWS). 
+First, you will configure an Amazon Elastic Compute Cloud (Amazon EC2) instance, and then you will create a custom Amazon Machine Image (AMI) based on the instance. 
+Next, you will create a launch template, and then you will configure an Auto Scaling group.
+Finally, you will install a web server by using AWS System Manager Run Command, and then you will configure load balancing for the server farm. 
+
+5. 
+You are a SysOps Administrator responsible for an Amazon Web Services (AWS) environment. You need to configure health checks for your environment. 
+First, you will create a target group for an Application Load Balancer, and then you will configure health checks for the target group. 
+Next, you will create a listener that will route requests from the load balancer to the target group, and then you will configure health checks for your load balancer by using Route 53. 
+Finally, you will configure an Amazon Simple Notification Service (SNS) topic to notify you when a failure occurs, and then you will monitor health checks while simulating a web server failure. 
+
+6.
+You are a system administrator responsible for an Amazon Web Services (AWS) environment. 
+You need to create a Windows Server® virtual machine by using Amazon Elastic Compute Cloud (EC2). First, you will create a new key pair that you will use to decrypt the password for an EC2 instance. 
+Next, you will create a security group to allow access to an EC2 instance, and then you will create an EC2 instance by using a Windows Server Amazon Machine Image (AMI). 
+Finally, you will download an RDP file to your local computer, and then you will connect to the EC2 instance by using the RDP file.
+
+7. 
+In this lab, you will configure a secure Amazon Web Services (AWS) virtual private cloud (VPC) architecture for a web server.
+First, you will configure an AWS VPC environment following AWS best practices for security and reliability.
+Next, you will create an Auto Scaling Group that contains a load balancer to host multiple web servers in the VPC. 
+Finally, you will test your environment to make sure that it is functioning. Note: Once you begin a challenge you will not be able to pause, save, or return to your progress. Please ensure you have set aside enough time to complete the challenge before you start.
+
+8. 
+You are a solutions architect responsible for an Amazon Web Services (AWS) environment. 
+You need to configure and deploy Elastic Compute Cloud (EC2) instances by using an Auto Scaling group. 
+First, you will create a security group for a launch template, and then you will configure a launch template. 
+Next, you will create an Auto Scaling group. 
+Finally, you will test the Auto Scaling group.
+
+9.
+In this lab, you will configure a scalable, load-balanced web server farm by using Amazon Web Services (AWS). 
+First, you will configure an Amazon Elastic Compute Cloud (Amazon EC2) instance, and then you will create a custom Amazon Machine Image (AMI) based on the instance. 
+Next, you will create a launch template, and then you will configure an Auto Scaling group. 
+Finally, you will install a web server by using AWS System Manager Run Command, and then you will configure load balancing for the server farm.
+
+10.
+You are a system administrator for a company that is establishing a new Amazon Web Services (AWS) environment. 
+You need to maintain log files for one year in a cost-efficient way, and you need to replicate the files across two regions. 
+First, you will create an S3 bucket to store log files, and then you will create an S3 bucket in a different region for file duplication. 
+Next, you will configure cross-region replication. 
+Finally, you will create a lifecycle policy.
+
+11.
+In this challenge, you will create a resilient set of servers that can be easily duplicated. 
+First, you will create a key pair, and then you will create a security group. 
+Next, you will create a new Amazon Machine Image (AMI) by using an existing instance, and then you will create a launch template. 
+Finally, you will create an Auto Scaling group. 
+Note: Once you begin the challenge, you will not be able to pause, save, or exit and then return to your challenge. 
+Please ensure that you have set aside enough time to complete the challenge before you start.
+
+12.
+You are a system administrator for a company that is establishing a new Amazon Web Services (AWS) environment. 
+You need to establish a customized network in the US-East (Ohio) region that adheres to AWS best practices. 
+You need to ensure that your application is highly available. 
+You will create an Amazon Virtual Private Cloud (VPC) and subnets that allow you to use multiple availability zones for the region.
+
+13.
+In this challenge, you will configure and deploy a highly available and secure website by using Amazon Web Services (AWS). 
+First, you will establish a secure network environment by using a network access control list (ACL) and a security group, and then you will configure a redundant Amazon Simple Storage Service (Amazon S3) bucket to store static assets. 
+Next, you will create a fleet of web servers running on an Amazon Elastic Compute Cloud (EC2) instance in a virtual private cloud (VPC) by using an Auto Scaling group. 
+Finally, you will create an Application Load Balancer to use with the Auto Scaling group. 
+Note: Once you begin the challenge, you will not be able to pause, save, or exit and then return to your challenge. 
+Please ensure that you have set aside enough time to complete the challenge before you start.
+
+14.
+In this challenge, you will configure a web server farm that can scale to meet future demand. 
+First, you will configure the supporting resources, and then you will create a custom Amazon Machine Image (AMI) based on an existing instance.
+Next, you will create a launch template, and then you will configure an Auto Scaling group.
+Finally, you will install a web server by using AWS System Manager Run Command, and then you will configure load balancing for the server farm. 
+Note: Once you begin the challenge, you will not be able to pause, save, or exit and then return to your challenge. Please ensure that you have set aside enough time to complete the challenge before you start.

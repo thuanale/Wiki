@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source ~/bin/ssh_functions.sh
+
+[[ -z $1 || -z $2 ]] && echo "Usage: $0 <server> <system value>" && exit 1
+
+SRV=$1
+SYSVAL=$2
+TMP=${SYSVAL:0:1}
+
+[[ ${SYSVAL:0:1} != 'Q' ]] && echo "Invalid system value ${SYSVAL}" && exit 1
+is_alive
+[[ ${RETCODE} != 0 ]] && echo "${SRV} not reachable" && exit 1
+
+CMD="DSPSYSVAL ${SYSVAL}"
+VAL=$(ssh_exec | grep ${SYSVAL} | sed -e 's/>//' | awk '{print $2}')
+echo "${SRV} [${SYSVAL}] = '${VAL}'"
+
+[[ $RETCODE != 0 ]] && echo "Failed to query value of ${SYSVAL}. See errors above" && exit 1

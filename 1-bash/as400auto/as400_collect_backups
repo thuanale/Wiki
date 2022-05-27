@@ -1,0 +1,70 @@
+#!/bin/bash
+
+source ~/bin/ssh_functions.sh
+
+SRVLST="CAM CATS CLUX DFSNZ1 DRSAP2PF FRANCE GDC GVA HKGA HNL INDO ITL KOREA KSENV5U KSENV6 KSENV6U LAX1 MIDEAST MIDPAC PAD1 PAX1 PRC SFO SFO2 SIN2 SYD"
+
+[[ -z $1 ]] && echo "Usage: $0 <[SAVDLY|SAVWSB|SAVMSB]> ... " && exit 1
+
+TMPDIR=~/tmp/$(basename $0)
+mkdir -p ${TMPDIR}
+
+DB=/home/shared/data/as400/as400_stats
+
+while [[ -n $1 ]]
+do
+    case $1 in
+	SAVDLY|SAVMSB|SAVWSB) BKP=$1 ;;
+	*) echo "Invalid backup group $1" && exit 1 ;;
+    esac
+
+    for SRV in ${SRVLST}
+    do
+	echo "Extracting data for ${BKP} on ${SRV}"
+	DATFILE=${TMPDIR}/${SRV}_${BKP}.out
+	CMD="'PRTRPTBRM TYPE(*CTLGRPSTAT) CTLGRP(${BKP})'"
+	ssh_exec | grep ${BKP} | tail -4 > ${DATFILE}
+
+	[[ ! -f ${DATFILE} ]] && echo "Failed to extract ${BKP} data on ${SRV}. No output. Skipping"  && continue
+	[[ $(ls -l ${DATFILE} | awk '{print $5}') == 0 ]] &&\
+	    echo "Failed to extract ${BKP} data on ${SRV}. Zero output. Skipping" && continue
+    
+	while read LN
+	do
+	    read CTRLGRP DT_START TM_START DT_END TM_END DURATION SAVED NSAVED SIZE RATE MEDIA VOL STATUS <<< ${LN} 
+
+	    TS_START=$(/home/shared/bin/as400_dt_convert --from ${SRV} -d "${DT_START} ${TM_START}" --format "+%s" 2>/dev/null)
+	    TS_END=$(/home/shared/bin/as400_dt_convert --from ${SRV} -d "${DT_END} ${TM_END}" --format "+%s" 2>/dev/null)
+	    
+	    if [[ -z ${STATUS} ]] 
+	    then
+		STATUS=${MEDIA}
+		MEDIA=''
+		VOL=''
+	    fi
+
+	    [[ ${STATUS} == '*ACT' ]] && echo "Skipping active ${BKP} on ${SRV}" && continue
+
+	    # Ignore if entry exists.
+	    VAL=$(echo "SELECT 1 FROM BACKUPS WHERE host = '${SRV}' AND ctrlgrp = '${CTRLGRP}' AND start = '${TS_START}';" |\
+		sqlite3 ${DB})
+	    [[ ${VAL} == 1 ]] && echo "Ignoring ${SRV}, ${CTRLGRP}, ${DT_START}, ${TM_START}. Already in DB" && continue
+
+	    echo "INSERT INTO BACKUPS \
+		VALUES('${SRV}', '${CTRLGRP}', ${TS_START}, ${TS_END}, ${SAVED}, ${NSAVED}, ${SIZE}, ${RATE}, '${MEDIA}', '${VOL}', '${STATUS}');" | sqlite3 ${DB}
+	    if [[ $? != 0 ]]
+	    then
+		echo "Failed to add ${SRV}, ${CTRLGRP}, ${DT_START}, ${TM_START}"
+		echo "INSERT INTO BACKUPS \
+		    VALUES('${SRV}', '${CTRLGRP}', ${TS_START}, ${TS_END}, ${SAVED}, ${NSAVED}, ${SIZE}, ${RATE}, '${MEDIA}', '${VOL}', '${STATUS}');"
+	    else
+		echo "Added entry ${SRV}, ${CTRLGRP}, ${DT_START}, ${TM_START}"
+	    fi
+	    
+	    unset CTRLGRP DT_START TM_START DT_END TM_END DURATION SAVED NSAVED SIZE RATE MEDIA VOL STATUS
+	done < ${DATFILE}
+
+    done
+
+    shift
+done

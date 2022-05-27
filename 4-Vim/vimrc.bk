@@ -1,0 +1,25 @@
+" No backward compatible with Vi. Enable advanced futures on VIM
+set nocompatible
+"-----------------------
+" Set search
+" Set highlight search
+set hls
+" Incremental search
+set inc
+"Insenstive case except when uppercase is choosen.
+set ignorecase
+set smartcase
+"--------------------------
+"Set text
+"Encoding
+set encoding=utf-8
+"Lines limit
+set lines=79
+"-------------------------
+" Set number
+set number
+set relativenumber
+"--------------------------
+"Other
+"Confirm to save files before closing
+set confirm

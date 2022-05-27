@@ -1,0 +1,68 @@
+#!/bin/bash
+
+PREFIX=$(dirname $0)
+DB=${PREFIX}/../data/as400/as400_stats
+
+while [[ $# > 0 ]]
+do
+    case $1 in
+        --datetime|--dt|-d)
+                shift
+                DT=$1
+                ;;
+        --format)
+                shift
+                OUTFMT=$1
+                ;;
+        --from)
+                shift
+                FROM=$1
+                ;;
+        --to)
+                shift
+                TO=$1
+                ;;
+        *)
+                echo "Invalid parameter $1" >&2
+                exit 1
+                ;;
+    esac
+    shift
+done
+
+
+[[ -z ${DT} ]] && echo "Date/Time to convert not provided" >&2 && exit 1
+[[ -z ${FROM} ]] && echo "Source system / zone not provided. Assuming Asia/Singapore" >&2 && FROM="SIN2" 
+[[ -z ${TO} ]] && echo "Target system / zone not provided. Assuming Asia/Singapore" >&2 && TO="SIN2"
+[[ ${FROM} == {${TO} ]] && echo "Source/Destination timezones are the same" >&2 && exit 1
+
+if [[ ${FROM} != 'UTC' ]]
+then
+    SRCTZ=$(echo "SELECT tz FROM SERVERS WHERE host = '${FROM}';" | sqlite3 ${DB})
+    [[ -z ${SRCTZ} ]] && echo "Invalid server name ${FROM}" >&2 && exit 1
+else
+    SRCTZ='UTC'
+fi
+
+if [[ ${TO} != 'UTC' ]]
+then
+    DSTTZ=$(echo "SELECT tz FROM SERVERS WHERE host = '${TO}';" | sqlite3 ${DB})
+    [[ -z ${DSTTZ} ]] && echo "Invalid server name ${TO}" >&2 && exit 1
+else
+    DSTTZ='UTC'
+fi
+
+TMP=$(echo ${DT} | sed -e 's/\// /g')
+if [[ ${DT} != ${TMP} ]]
+then
+    read DAY MONTH YEAR TIME <<< ${TMP}
+    case $(echo "SELECT datefmt FROM SERVERS WHERE host = '${FROM}';" | sqlite3 ${DB}) in
+        DMY) DT="20${YEAR}-${MONTH}-${DAY} ${TIME}" ;;
+        MDY) DT="20${YEAR}-${DAY}-${MONTH} ${TIME}" ;;
+        *) echo "Unable to handle date format for ${FROM}">&2 ;;
+    esac
+fi
+
+[[ -z ${OUTFMT} ]] && VAL=$(TZ=${DSTTZ} date -d "TZ=\"${SRCTZ}\" ${DT}") || VAL=$(TZ=${DSTTZ} date -d "TZ=\"${SRCTZ}\" ${DT}" ${OUTFMT})
+[[ $? != 0 ]] && echo "Conversion failed" && exit 1
+echo ${VAL}
