@@ -17,22 +17,46 @@
   git add . # add all
 4. Add file into commited state 
   git commit -m "<your message>"
+- Commit file without staging
+  git commit -a -m "<your message>"
 5. Verify status
   git status
+  git status -s #short status
 6. Clear all file in staged mode back to modified mode
   git restore --staged
+- Discard change in the current working directory (unstaged modified file)
   git restore <file>: restore a deleted file
-7. restore current working directory to a previous commited staged 
-  git checkout <commit_id>
+7. To discard changes in working directory
+  git checkout -- <file>...
 8. Check log:
   git log
   git log --oneline
-9. Different between current commited session and staged mode 
+9. Different betwen mode
+- Check unstaged files
   git diff
-  git diff <commit_id_1> <commit_id_2> # different between commited id
+- Compare changes in staging area to last commit:
+  git diff --staged
+- Different between commit session
+  git diff <commit_id_1> <commit_id_2> 
 10. To ignore a file from git commit, add it into .gitignore
   .gitignore
+- Rules:
+  - Blank lines or lines starting with # are ignored.
+  - Standard glob patterns work, and will be applied recursively throughout the entire working tree.
+  - You can start patterns with a forward slash (/) to avoid recursivity.
+  - You can end patterns with a forward slash (/) to specify a directory.
+  - You can negate a pattern by starting it with an exclamation point (!).
 11. Help
   git help 
   git <command> --help/-h 
-  man git   
+  man git
+12. Remove file
+- Stage removal of a file.
+  git rm
+- Remove staged file
+  git rm --staged/--cached
+13. Reset 
+- Remove staged file
+  git reset <file>
+- Multiple files 
+  git reset -- .
