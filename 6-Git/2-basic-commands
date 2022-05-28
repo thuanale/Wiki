@@ -1,0 +1,38 @@
+1. Setup:  
+- Minimum:
+  git config --global user.name "<your username>"
+  git config --global user.email "<your email>"
+- Verify:
+  git config --list
+- Another config may be saved in:
+  /etc/gitconfig
+  ~/.gitconfig
+2. Start a git repository:
+- Initialize (make) a local directory as git repository
+  git init
+- Clone (copy) repository from remote repository
+  git clone 
+3. Add new or modified file into staged mode
+  git add <file>
+  git add . # add all
+4. Add file into commited state 
+  git commit -m "<your message>"
+5. Verify status
+  git status
+6. Clear all file in staged mode back to modified mode
+  git restore --staged
+  git restore <file>: restore a deleted file
+7. restore current working directory to a previous commited staged 
+  git checkout <commit_id>
+8. Check log:
+  git log
+  git log --oneline
+9. Different between current commited session and staged mode 
+  git diff
+  git diff <commit_id_1> <commit_id_2> # different between commited id
+10. To ignore a file from git commit, add it into .gitignore
+  .gitignore
+11. Help
+  git help 
+  git <command> --help/-h 
+  man git   

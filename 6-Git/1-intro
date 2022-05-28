@@ -1,0 +1,27 @@
+1. Definition:
+- Git is a Version Control System (VCS).
+2. Type of git:
+- Local VCS: server & client on same hardware.
+- Central VCS: have a central VCS which is connecting to one or more clients.
+- Distributed VCS: mutliple VCS and sync among each others. 
+3. Setup:  
+- Minimum:
+  git config --global user.name "<your username>"
+  git config --global user.email "<your email>"
+- Verify:
+  git config --list
+4. Git status:
+- modified: file has been changed but not having saved in local DB.
+- staged: file marked as modified & will be save in next commit submission.
+- commited: all changes have been saved into local database.
+
+5. Directory:
+- Working directory: contain a version of project
+- Staging directory: is a file in Git folder which contain information will be
+  commited.
+- Git directory: where git save database of metadata.
+  
+
+(*) Reference:
+- https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
+- 
