@@ -58,5 +58,5 @@
 13. Reset 
 - Remove staged file
   git reset <file>
-- Multiple files 
+- Remove staged files 
   git reset -- .
