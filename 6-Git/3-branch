@@ -1,0 +1,22 @@
+1. Type of tags:
+- lightweight: 
+  - temporary
+  - like a branch name, point to commit
+- annotated:
+  - like an object
+  - recommended way to tag
+2. Command:
+- List tags:
+  git tag -l
+- Lightweight tags
+  git tag <tag-name> <commit-id>
+- Annotated tag:
+  git tag -a <tag-name> -m <msg> <commit-id>
+- Share tag:
+  git push <remote-repo> <tag-name>
+- Share all tags:
+  git push <remote-repo> --tags
+- Delete tag:
+  git tag -d <tag-name>
+- Check out:
+  git checkout <tag-name>
