@@ -1,0 +1,26 @@
+Well Architect Framework
+
+- Related to: 
+  - Measure existing workloads.
+  - Document existing workloads.
+- List of best practice to apply to AWS.
+- Items:
+  - Operational Excellence:
+    - Constant improvement (new deployments)
+    - Automation (update & change management, templates)
+  - Cost optimization:
+    - Work with AWS Cost Explorer
+  - Reliability:
+    - Backup & store
+    - Load balancing
+    - Data replication
+  - Permance Efficiency:
+    - Performance monitoring (Cloudwatch)
+    - Load balancing (ELB)
+    - AutoScaling
+  - Security:
+    - VPN
+    - AWS Certificate Manager (ACM)
+    - IAM
+    - S3 bucket encrypting
+    - Usage auditing (CloudTrail)

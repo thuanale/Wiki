@@ -1,0 +1,21 @@
+Cloud Formation
+
+- Infrastructure as Code
+1. Templates:
+- Format: json or yaml
+- Components:
+  - Version
+  - Metadata
+  - Mappings
+  - Transform
+  - Output
+  - Description 
+  - Parameters
+  - Codition
+  - Resources: required components
+2. CloudFormation Stacks:
+  - The result of deploying a template.
+  - Use stack change sets to modify stack resources
+  - Deleting a stack deletes resources in that stack
+3. CloudFormation Designer:
+  - GUI version of template

@@ -95,4 +95,7 @@ In this challenge, you will configure a web server farm that can scale to meet f
 First, you will configure the supporting resources, and then you will create a custom Amazon Machine Image (AMI) based on an existing instance.
 Next, you will create a launch template, and then you will configure an Auto Scaling group.
 Finally, you will install a web server by using AWS System Manager Run Command, and then you will configure load balancing for the server farm. 
+
+15. K8s + CI/CD
+https://000062.awsstudygroup.com/
 Note: Once you begin the challenge, you will not be able to pause, save, or exit and then return to your challenge. Please ensure that you have set aside enough time to complete the challenge before you start.
