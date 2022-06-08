@@ -1,0 +1,34 @@
+- List image:
+docker image
+
+- Pull image from repository
+docker pull image:tag
+
+- Remove image
+docker image rm <imagename>
+
+- Run docker
+docker run -dt --name <container_name> -h <desired_host_name> image
+
+- Exit docker container without stopping it
+Ctrl + p, Ctrl + q
+
+- List running containers
+docker ps 
+
+- List all containers (running & stopped)
+docker ps -a
+
+- Stop container
+docker stop container
+
+- Jump into container terminal
+docker attach container
+
+- Remove container
+docker rm container
+
+- Forcefully
+docker rm container -f
+
+
