@@ -1,0 +1,3 @@
+# Enable user profile
+chgusrprf usrprf(opsthuan) enabled(*yes)
+
