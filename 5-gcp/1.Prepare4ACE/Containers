@@ -1,0 +1,39 @@
+1. A containers:
+- Is an invisible box around your code & its dependencies
+- Has limited access to its own partition of the file system and hardware.
+- Only requires a few system calls to create and starts as quickly as a process
+- Only needs an OS kernel that supports containers and a container runtime, on
+  each host.
+- Scales like Paas and gives flexibility as IaaS.
+- Modular, easily deployable and scale independently accross a group of hosts.
+
+1. Kubernetes APIs:
+- Used to deploy containers on a set of nodes called a cluster.
+- Masters run the control plane.
+- Nodes run containers.
+- Nodes are VMs (in GKE they're Compute Engine instances).
+- You describe the apps, Kubernetes figures out how to make that happen
+
+2. Cloud Run:
+- Serverless Container management.
+- Based on a service resource.
+- A service exposes an endpoint:
+  - Regional
+  - Replicated across zones.
+- Scales based on incoming requests.
+
+3. App Engine:
+- Management environments:
+  - Standard: 
+    - apps run in a sandbox using a specific language runtime.
+    - Good for rapid scaling.
+    - limited to specific languages.
+    - can scale to 0
+    - start up in seconds.
+    - not allowed to make changes to the runtime.
+  - Flexible:
+    - run in Docker containers in Compute Engine VMs.
+    - support more programming languages.
+    - not scale to 0
+    - start up in minutes.
+    - allowed to modify the runtime environment.

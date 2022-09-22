@@ -1,0 +1,16 @@
+1. Shared VPC:
+- Shared VPC allows an organization to connect resources from multiple projects
+  to a common VPC network.
+- Allows the resources to communicate with each other securely and efficiently
+  using internal IPs from that network.
+- designate a project as a host project and attach one or more other service
+  projects to it.
+- Each project has an instance with has an interface in VPC of host project.
+- security and network policy occurs in a single designated VPC network.
+
+2. VPC Peering:
+- Connect accross two VPC networks, regardless of whether they belong to the
+  same project or the same organization.
+- Decentralized:
+  - each VPC network can remain under the control of separate administrator
+    groups and maintains its own global firewall and routing tables.

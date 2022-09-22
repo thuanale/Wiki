@@ -1,0 +1,112 @@
+1. Cloud Storage:
+- helps you store binary objects in Google Cloud. 
+- Object packaged format contains:
+  - Binary form of the actual data itself.
+  - Relevant associated meta-data
+  - Globally unique identifier - These unique keys are in the form of URLs.
+- Can house data in any format as an immutable object. 
+- In Cloud Storage, objects are stored in containers called buckets.
+- Buckets can be used to upload and download objects, and permissions can be
+  assigned to specify who has access to them.
+- A bucket needs a globally unique name and a specific geographic location for
+  where it should be stored.
+- Cloud Storages primary use is whenever binary large-object storage (also
+  known as a BLOB) is needed for online content such as videos and photos, for
+  backup and archived data and for storage of intermediate results in
+  processing workflows.
+- You can manage and interact with Cloud Storage via:
+  - the console
+  - via the command line
+  - the gsutil command set
+  - via client libraries
+  - or through APIs.
+- Security:
+  - Cloud IAM
+  - ACL: Scope (who) + Permission (what).
+    - Maximum number of ACL entries you can create for a bucket or object is
+      100.
+  - signed URLs:
+    - Ticket is a cryptographically signed URL
+    - time-limited
+    - Operations specified in ticket: HTTP GET, PUT, DELETE.
+    - Any user with URL can invoke permitted operations.
+  - signed policy document:
+    - refines the control by determining what kind of file can be uploaded by
+      someone with a signed URL.
+- Benefit:
+  - It’s scalable to exabytes of data.
+  - The time to first byte is in milliseconds.
+  - has very high availability across all storage classes
+  - has a single API across those storage classes
+
+2. Storage classes and use cases summary:
+- Data location:
+  - Regional
+    - Lower cost per GB stored
+    - Data stored in a narrow geographic region
+    - Redundant across zones
+    - Can never be changed to multi-region
+  - Dual-regional 
+  - Multi-regional
+    - Redundant accross regions
+    - Can't be changed to regional.
+- Storage class:
+  - Standard
+    - default
+    - immediately available
+  - Nearline
+    - Very low cost per GB stored
+    - Higher per-operation costs
+    - 30-day minimum storage duration
+  - Coldline
+    - Lowest cost per GB stored
+    - Higher per-operation costs
+    - 90-day minimum storage duration.
+  - Archive storage:
+    - Long-term storage for data accessed only once a year.
+  - Access data before the minimum amount of time will be chared a data access
+    fee.
+  - inherited from parent
+
+3. Object Lifecycle:
+- Object metadata has to match all rules for the action to fire.
+- If an object state matches more than one rule set, delete takes precedence,
+  followed by storage class with lowest price.
+- Object inspection occurs in asynchronous batches.
+- Changes can take 24 hours to apply.
+
+4. Steps for creating a cloud bucket include:
+- Naming bucket:
+- Location type:
+  - Dual region: a specific pair or regions. It provides geo-redundancy.
+- Storage class
+
+5. Tranfer data to Cloud Storage:
+- Online transfer: console
+- Storage Transfer Service: The Storage Transfer Service lets you schedule and
+  manage batch transfers to Cloud Storage from another cloud provider, from a
+  different Cloud Storage region, or from an HTTP(S) endpoint.
+- Transfer Appliance: hardware
+
+6. Features:
+- CSEK (Customer-supplied encryption key)
+- Object Lifecycle Management
+- Object Versioning
+- Directory synchronization.
+- Object change notifications using Pub/Sub.
+
+7. Data import services:
+- Transfer Appliance: 
+  - Rack, capture and then ship your data to Google Cloud
+  - Support up to 1 PB
+- Storage Transfer Service:
+  - import online data
+- Offline Media Import:
+  - third-party provider uploads the data from physical media.
+
+8. Global consitency:
+- Read-after-write
+- Read-after-metadata-update
+- Read-after-delete
+- Bucket listing
+- Oject listing

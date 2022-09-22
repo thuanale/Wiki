@@ -1,0 +1,12 @@
+- Google Cloud Pub/Sub is an asynchronous global messaging service. 
+- There are 3 terms in Pub/Sub that appear often: topics, publishing, and
+  subscribing.
+   - A topic is a shared string that allows applications to connect with one
+     another through a common thread.
+   - Publishers push (or publish) a message to a Cloud Pub/Sub topic.
+   - Subscribers will then make a subscription to that thread, where they will
+     either pull messages from the topic or configure webhooks for push
+     subscriptions. Every subscriber must acknowledge each message within a configurable
+     window of time.
+   - In sum, a publisher creates and sends messages to a topic and a subscriber
+     creates a subscription to a topic to receive messages from it.

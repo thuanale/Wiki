@@ -1,0 +1,67 @@
+1. Compute Engine:
+- Can create & run virtual machine on Google infra
+- No upfront investment.
+- Thousands of virtual CPUs can run a system that's designed to be fast and to
+  offer consistent performance.
+- Each VM contains the power and functionality of a full-fledged OS.
+- Can be configured much like a physical server.
+- Can be created via the Google Cloud Console or via the glcoud CLI tool.
+- OS: Linux & windows Server images
+  - provides by Google / Cloud Market place.
+  - any customized version.
+- Can build and run images of other OS and flexibity reconfigure VMs.
+- Scalability:
+  - Horizontal: add/remove machine via autoscaling.
+  - Vertical: change instance type.
+- Networking:
+  - built-in route table.
+  - No router provisioning or managing.
+  - forward traffic among instances.
+  - No external IP required.
+  - Firewall: Firewall rules can be defined through metadata tags on Compute
+    Engine instances.
+  - Interconnect:
+    - Between VPC: VPC peering
+    - to use the full power of Identity Access Management (IAM) to control who
+      and what in one project can interact with a VPC in another, you can
+      configure a Shared VPC.
+
+4. Managed Instance groups (MIGs):
+- A managed instance group (MIG) is a group of virtual machine (VM) instances
+  that you treat as a single entity. 
+- Each VM in a MIG is based on an instance template.
+- Instance group can be resized
+- Manager ensures all instance are RUNNING
+  - If a VM fails or stops, the MIG recreates it based on the instance
+    template. 
+  - Make  MIG health checks application-based, which looks for an expected
+    response from your application. The MIG will automatically recreate VMs
+    that are not responding correctly. 
+  - Can use w/ a load balancer.
+- Typically used with autoscaller to improve scalability
+- Can be single zone or regional
+- Automated updates: Applying new configurations to VMs in a MIGs
+  - First, Updated instance templates & per-instance configuration
+  - Second, apply updates:
+    - Automated rolling update (Proactive mode): roll out a new version of an
+      instance template to all or to a random subset of managed instances in the MIG.
+    - Selective update of specific instances (Opportunistic mode): target
+      selected instances for an update.
+- Creation:
+  - create an instance template.
+  - After you create an instance template you need to conﬁgure your managed
+    instance group. Here is where you specify location settings, describe port
+    mappings, and reference the instance template.
+  - You also specify the number of instances in your group, conﬁgure
+    autoscaling, and create health checks for your instances to determine which
+    instances should receive traﬃc.
+- Support:
+  - Zonal 
+  - Regional
+- Autoscaling:
+  - Dynamically add/remove instances
+  - Autoscaling policy:
+    - CPU utilization
+    - Load balacing capcity
+    - Monitoring metrics
+    - Queue-based workload

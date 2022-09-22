@@ -1,0 +1,17 @@
+- Blockchain was invented to support Bitcoin.
+- Ledgers: a note book to keep records of all releated transactions.
+  - need a trusted & 3rd-party record to avoid fraud, disagreement.
+  - cost money, might be delay.
+- Distributed Ledgers:
+  - automatically copied to all personal ledgers when new transaction is made.
+  - decentralized
+  - peer-to-peer replication
+- Every blocks is used with cryptographic hash.
+  - can't get orginal data back.
+  - compare if data is tampering by comparing hash value.
+- new block contains previous block hash value in its data.
+- Type of blockchain:
+  - Public vs Private
+  - Permissioned (business blockchain) vs Permissionless (typical for currency,
+    open platforms)
+- Smart Contracts:

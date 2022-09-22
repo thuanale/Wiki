@@ -1,0 +1,41 @@
+Securing Cloud Assets:
+- Data:
+  - Data: Data integrity
+  - System Access - Authentication
+  - System Access - Physical
+  - Contigency - Data Availability
+- Apps/Functions/Proccesses
+
+1. Data Integrity:
+- Maintain data integrity while in a passive state or in transit
+- Ensure that backup is an exact copy of the source - no corruption
+- Ensure that data is recoverable
+- Ensure that access is controlled.
+- Ensure that deleted data is in fact deleted.
+- Ensure that data cannot be corrupted or stolen.
+- Audit access to data.
+- Provide isolation.
+
+2. Access, Authentication:
+- Deploy/ensure inter-device trust
+- Deploy/ensure/secure user identification
+- Strong passwords & password change
+- Manage Public/Private keys
+- Maintain security certificates
+- Maintain access audit logging.
+
+3. Contingency, Data Availability:
+- Deploy a failover machanism
+- Ensure efficient recovery of data
+- Ensure efficient access - multi-location topology
+- Ensure an adequate backup schedule
+- Permit security assessment from a neutral third-party
+- Ensure smooth transition - no lock-in
+- Prevent denial of service.
+
+4. Apps, Functions & services:
+- Examine security vulnerabilities and take steps to ensure protection.
+- Emphasis on PaaS where the developer is responsible for the security of any
+  apps that will be hosted on a SaaS platform.
+- Emphasis on SaaS platform and its inherent security requirements, the
+  responsibility of which fall almost exclusively on the SaaS provider.

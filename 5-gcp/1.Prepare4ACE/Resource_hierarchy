@@ -1,0 +1,51 @@
+                   Resource hierarchy:
+- Bottom up: Resources => Project => Folder => Organization
+- Resources: Google cloud services
+- Projects:
+  - Separate entities under Organization node.
+  - Each resources belongs to just one Project.
+  - Have different owners & users.
+  - Billed & managed separately.
+  - 3 identified attributes:
+    - Project ID:
+      - Globally unique
+      - Assigned by Google Cloud but mutable during creation
+      - Immutable after creation
+    - Project name:
+      - Need not be unique
+      - Human-readable
+      - Choose by you
+      - Mutable
+    - Project number:
+      - Globally unique
+      - Assigned by Google cloud
+      - Immutable
+  - Can be managed by: Resource Manager Tool
+  - Project can be under organization, folders or none of them.
+- Folder:
+  - Let you assign policies to resouces at a level of granularity you choose.
+  - Folder can contain projects, folders or both.
+  - Must belong to organization
+- Organization
+  - When need to centrally apply organization-wide policies.
+  - With & without Google Workspace:
+    - with: projects will automatically belong to customers' organization node.
+    - without: use Cloud Identity to create organization node.
+- Policy:
+  - Defined at project, folder, organization levels
+  - Some google cloud services allow to grant policy to individual resources.
+  - Inherited downward.
+  - When a child node inherits organization policies based on list
+    constraints, the inherited policies are merged and reconciled with the
+    node's organization policy. In list policy evaluation, DENY values always
+    take precedence.
+  - Organization policies that are derived from boolean constraints do not
+    merge and reconcile policies. If a policy is specified on a resource node,
+    that TRUE or FALSE value is used to determine the effective policy.
+
+2. Quotas:
+- 15 VPC networks/project
+- Rate limits that you can make API reuqests in a project 5 admin
+  actions/second.
+- 24 CPUs region/project
+- Increase: Quotas page in Cloud Console or a support ticket.

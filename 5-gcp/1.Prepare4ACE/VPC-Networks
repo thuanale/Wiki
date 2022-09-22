@@ -1,0 +1,69 @@
+1. VPC networks types:
+- Default:
+  - every project
+  - One subnet per region
+  - Default firewall rules
+- Auto Mode:
+  - Default network.
+  - One subnet per region
+  - Regional IP allocation.
+  - Fixed /20 subnetwork per region.
+  - Expandable up to /16
+- Custom Mode:
+  - No default subnets created.
+  - Full control of IP ranges
+  - Regional IP allocation.
+  - Expandable to IP ranges you specify
+
+2. Rules:
+- To expand subnets without re-creating instances:
+  - Cannot overlap with other subnets.
+  - IP range must be a unique valid CIDR block
+  - New subnet IP ranges have to fall within valid IP ranges.
+  - Can expand but not shrink.
+  - Auto mode can be expanded from /20 to /16.
+  - Avoid large subnets.
+
+3. IP address:
+- Internal IP:
+  - Allocated from subnet range to VMs by DHCP.
+  - DHCP lease is renewed every 24h
+  - VM name + IP is registered with network-scoped DNS.
+- External IP:
+  - Assigned from pool (ephemeral)
+  - Reserved (static)
+  - BYOIP (Bring your own IP address)
+  - VM doesn't know eternal IP; it is mapped to the internal IP.
+
+4. DNS:
+- Internal addresses:
+  - Each instance has a hostname that can be resolved to an internal IP
+    address:
+      - The hostname is the same as the instance name
+      - FQDN: [hostname].[zone].c.[project-id].internal
+  - Name resolution is handled by internal DNS resolver:
+    - Provided as part of Compute Engine (169.254.169.254)
+    - Configured for use on instance via DHCP
+    - Provides answer for internal and external address.
+- External address:
+  - Instances with external IP addresses can allow connections from hosts
+    outside the project.
+      - Users connect directly using external IP address.
+      - Admins can also publish DNS records pointing to the instance.
+        - Public DNS records are not published automatically.
+  - DNS records for external address can be pulished using existing DNS servers
+    (outside of Google Cloud).
+  - DNS zones can be hosted using Cloud DNS.
+
+5. Cloud DNS:
+- Google DNS service
+- Low latency
+- 100% uptime SLA
+- Create and update militions of DNS records.
+- via UI, CLI or API
+
+6. Assign a range of IP addresses as aliases to a VM's network interface using
+alias IP ranges.
+
+7. Cloud NAT:
+

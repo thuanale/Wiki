@@ -1,0 +1,82 @@
+Introduction
+Welcome to the creating base Docker image lab. Your assignment for this exercise is to create a base Docker image using the debootstrap utility and run nginx process inside a container using port 8080.
+Tasks
+In this exercise you will create a base Docker image using the debootstrap utility and run nginx process inside a container using port 8080.
+Task 1. Install the debootstrap and dirmngr packages and create a base Debian system
+Task 2. Mount the udev, devpts, proc and sysfs filesystems inside the base Debian system
+Task 3. Create an archive and use Docker to import an image
+Task 4. Create a Dockerfile using nginx and build an image
+Task 5. Run nginx process inside a container using port 8080
+
+Solution:
+https://sleeplessbeastie.eu/2018/04/11/how-to-create-base-docker-image/
+
+2. Building Python Web App on Docker Compose
+Introduction
+Welcome to the building Python Web App on Docker Compose lab. Your assignment for this exercise is to build a Python web application and run it inside a Docker Container using Docker Compose.
+Tasks
+In this exercise you will build a Python web application and run it inside a Docker Container using Docker Compose.
+Task 1. Create a directory titled sampleapp and a file titled app.py in the project directory
+Task 2. Create a requirements.txt file for dependency management
+Task 3. Create a Dockerfile to build a Docker image
+Task 4. Define services in a Compose file
+Task 5. Build and run a Python Web App with Compose
+
+3. Configuring Docker Seccomp
+Introduction
+Welcome to the configuring Docker Seccomp lab. Your assignment for this exercise is to define Seccomp profile and start a Container applying the Seccomp profile on it.
+Tasks
+In this exercise you will define Seccomp profile and start a Container applying the Seccomp profile on it.
+Task 1. Verify if the host’s kernel support Seccomp
+Task 2. Download Docker’s official default profile and define custom Seccomp profile
+Task 3. Start Docker container applying Seccomp
+
+4. Docker Compose and WordPress
+Introduction
+Welcome to the Docker Compose and WordPress lab. Your assignment for this exercise is to create and build a Docker project that starts WordPress and a separate MySQL instance using Docker Compose.
+
+Tasks
+In this exercise you will create and build a Docker project that starts WordPress and a separate MySQL instance using Docker Compose.
+Task 1. Verify and check the version of Docker and Docker-compose, and create a project
+Task 2. Create a docker-compose.yml file and add MySQL service
+Task 3. Append WordPress services to YML file
+Task 4. Create and run container instances
+
+5. Building Docker Containers
+Introduction
+Welcome to the Building Docker Containers lab. Your assignment for this exercise is to build, manage and distribute Docker images.
+Tasks
+In this exercise you will build, manage, and distribute Docker images.
+Task 1. Create an image using Dockerfile
+Task 2. List all existing images with their repository and tag in a table format
+Task 3. List and remove all dangling images
+Task 4. Rename an image without rebuilding
+Task 5. Create a Docker Hub account
+Task 6. Create a repository and push an image to share
+
+6. Managing Swarm Node
+Introduction
+Welcome to the Managing Swarm Node lab. Your assignment for this exercise is to create a Docker Swarm, add Nodes to the Swarm and deploy application components as Docker services.
+Tasks
+In this exercise you will create a Docker Swarm, add Nodes to the Swarm and deploy application components as Docker services.
+Task 1. Create a Swarm cluster and add Node
+Task 2. Create an application
+Task 3. Deploy the application
+
+7. Docker User-defined Bridge Network
+Introduction
+Welcome to the Docker User-defined Bridge Network lab. Your assignment for this exercise is to create a user-defined bridge network and connect a Container to the user-defined bridge network.
+Tasks
+In this exercise you will create a user-defined bridge network and connect a Container to the user-defined bridge network.
+Task 1. List all the networks
+Task 2. Create a user-defined bridge network
+Task 3. Inspect the network
+Task 4. Create a container and connect it to the network
+
+8. Docker Trusted Image Sandbox
+Introduction
+Welcome to the Docker Trusted Image Sandbox lab. Your assignment for this exercise is to build a Docker trusted Image Sandbox using Docker Compose and test trust operations on the Sandbox.
+Tasks
+In this exercise you will build a Docker trusted Image Sandbox using Docker Compose and test trust operations on the Sandbox.
+Task 1. Build Docker trusted Image Sandbox using Docker-compose
+Task 2. Test trust operations on the Sandbox

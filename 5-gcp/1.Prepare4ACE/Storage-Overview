@@ -1,0 +1,48 @@
+1. Database & Storage
+- NoSQL: 
+  - Firestore:
+    - is a document database that supports entities and attributes.
+    - NoSQL document
+    - Best for: storing, syncing and querying data
+    - Capability:
+      - TB
+      - Max unit size: 1MB per entity.
+  - Cloud Bigtable:
+    - is based on column families where rows of data are referenced by a key
+      that combines commonly queried columns. Related columns can additionally
+      be organized into column families such as username and address.
+    - NoSQL wide column
+    - Best for: “Flat” data, Heavy read/write, events, analytical data
+    - Capability:
+      - PB
+      - Max unit size: 10MB/cell, 100MB/row.
+- Cloud Storage:
+  - Blob storage
+  - Immutable object storage service: pictures and videos, as well as file objects with
+    an implicit schema, such as logs and csv files.
+  - Best for: Structured and unstructured binary or object data.
+  - Capability:
+    - PB
+    - Max unit size: 5TB / object
+
+- Google’s relational database offerings include Cloud SQL and Cloud Spanner.
+  Use them when you need a transactional processing system you can query with SQL. 
+  - Cloud SQL:
+    - Relational SQL for OLTP (online transaction processing system).
+    - is a managed version of databases you can implement on-premises.
+    - Best for: web frameworks, existing apps.
+    - Capability: 30,720GB.
+  - Cloud Spanner:
+    - Relational SQL for OLTP
+    - is horizontally scalable and globally available.
+    - Best for: large-scale database apps (> ~ 2TB)
+    - Capability: PB
+- BigQuery: 
+  - Relational SQL for OLAP
+  - is a serverless distributed query engine that is primarily used as a modern
+    data warehouse. 
+  - Have a native storage format but can also query external data where it resides. 
+  - Its native storage format:
+    - is not a good solution for a backend store for an application. 
+    - however, improve performance of analytical queries you run against it
+      using the query engine.

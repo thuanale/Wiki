@@ -1,0 +1,57 @@
+
+- Deliver per-second billing:
+  - Compute Engine
+  - Kurbenetes Engine
+  - Dataproc
+  - APp Engine
+- Compute Engine offers automatically sustained-use discounts:
+  - discounts that you get for running a VM for significian portion of the
+    billing month.
+- Tools to govern bill:
+  - Budgets: limit
+  - Alerts: send email
+  - Report: visual tool
+  - Quotas: prevent over consumption
+    - Rate quota: resets after a specific time.
+    - Allocation quota: governs number of resources.
+    - Both applied at project levels.
+  - Visualize Google Cloud sepnd with Data Studio
+- A billing account can be linked to one or more projects
+- A project and its resources can only be tied to one billing account.
+- A cloud billing accounts pay for usage costs in Google Cloud projects and
+  Google Map Platform projects.
+- A project and its service-level resources are linked to one Cloud Billing
+  account at a time.
+- A Cloud Billing account operates in a single currency and is linked to a
+  Google payments profile.
+- A Cloud Billing account can be linked to one or more projects.
+- Usage costs are tracked by Project and are charged to the linked Cloud
+  Billing account.
+- Important: Projects that are not linked to an active Cloud Billing account
+  cannot use Google Cloud or Google Maps Platform services. This is true even
+  if you only use services that are free.
+
+
+2. How to create new budget:
+- To create a new budget, complete the following steps:
+  1. Create and name the budget
+  2. Set the budget scope
+  3. Set the budget amount
+  4. Set the budget threshold rules and actions
+  5. Click finish to save the new budget
+- Alerts are send via:
+  - Email
+  - Cloud Pub/Sub
+- Threshold rules define the triggering events used to generate a budget
+  notification email. 
+- Note that:
+  - Threshold rules are required for email notifications and are used
+    specifically to trigger email notifications. 
+  - Thresholds rules are not required for programmatic notifications, unless
+    you want your programmatic notifications to include data about the
+    thresholds you set.
+- Email notification settings can be either:
+  - role-based, which sends alerts to the Billing account Administrator and
+    Billing Account Users. This is the default behavior. 
+  - set up Cloud Monitoring notification channels to send alerts to email
+    addresses of your choice.

@@ -1,0 +1,79 @@
+- monitoring is defined as: "Collecting, processing, aggregating, and
+  displaying real-time quantitative data about a system, such as query counts
+  and types, error counts and types, processing times, and server lifetimes."
+
+2. Four Golden Signal
+- Latency: how long it takes a particular part of a system to return a result.
+- Traffic: how many requests are reaching the system
+- Saturation: how close to capacity a system is.
+- Errors: a flaw, failure, or fault in a computer program or system causes.
+
+3. SLI, SLO, SLA
+- Service Level Indicators: are carefully selected monitoring metrics that
+  measure one aspect of a service's reliability.
+- Service Level Objectives: combines a service level indicator with a target
+  reliability.
+- Service Level Aggrements: commitments made to your customers that your
+  systems and applications will have only a certain amount of down time.
+
+3. Cloud Monitoring
+4. Cloud Logging:
+- Analysis:
+  - integrated logs Explorer.
+  - can be exported to several destinations.
+  - Pub/Sub messages can be analyzed in near-real time using custom code or
+    stream processing.
+  - BigQuery allows analysts to examine logging data through SQL queries.
+  - archived log files in Cloud Storage can be analyzed with several tools and
+    techniques.
+- Export: eported as:
+  - files to Cloud Storage
+  - messages through Pub/Sub
+  - into BigQuery tables.
+  - Log-based metrics can be created and integrated.
+- Log retention:
+  - Default log retention in Cloud Logging depends on the log type.
+  - Data access logs are retained by default for 30 days.
+  - Admin logs are stored by default for 400 days.
+  - Logs can be exported to Cloud Storage or BigQuery to extend retention.
+- 4 key log categories:
+  - Cloud Audit Logs: who did what, where?
+  - Agent Logs: ingest log data from Google Cloud Instances
+  - Network Logs
+  - Service Logs: provide access to logs created by developers deploying code
+    to Google Cloud.
+
+5. Error reporting:
+- counts, analyzes, and aggregates the crashes in your running cloud services.
+- management interface displays the results with sorting and filtering capabilities.
+- A dedicated view shows the error details.
+- also create alerts to receive notifications on new errors.
+
+6. Cloud debugger:
+- debug your applications while running in production to examine your code's
+  function and performance under actual production conditions.
+- easy to collaborate with other team members by sharing your debug session
+  simply by sending the Console URL.
+- state of your application in production can be captured at a specific line
+  location with snapshots.
+- easily integrated into existing developer workflows.
+- integrates with version control systems. 
+
+7. Cloud Trace:
+- collects "latency" data from your distributed applications and displays it in
+  the Google Cloud Console.
+- capture traces from applications deployed on App Engine, Compute Engine VMs,
+  and Kubernetes Engine containers.
+- Performance insights are provided in near-real time.
+- automatically analyzes all of your application's traces to generate in-depth
+  latency reports to surface performance degradations.
+- gathers and analyzes trace data to automatically identify recent changes to
+  your application's performance.
+
+8. Cloud Profiler:
+- using statistical techniques and extremely low-impact instrumentation that
+   runs across all production application instances to provide a complete CPU
+   and heap picture of an application without slowing it down.
+- allows developers to analyze applications running anywhere
+- presents the call hierarchy and resource consumption of the relevant function
+  in an interactive flame graph

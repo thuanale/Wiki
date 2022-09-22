@@ -1,0 +1,133 @@
+1. Terminology:
+- Terraform is a tool for building, changing, and versioning infrastructure
+  safely and efficiently.
+
+- A simple workflow for deployment will follow closely to the steps below:
+  - Scope - Confirm what resources need to be created for a given project.
+  - Author - Create the configuration file in HCL based on the scoped
+    parameters.
+  - initialize - Run terraform init in the project directory with the
+    configuration files. This will download the correct provider plug-ins for
+    the project.
+  - Plan & Apply - Run terraform plan to verify creation process and then
+    terraform apply to create real resources as well as the state file that
+    compares future changes in your configuration files to what actually exists
+    in your deployment environment.
+- Dependencies:
+  - Implicit dependencies via interpolation expressions are the primary way to
+    inform Terraform about these relationships, and should be used whenever
+    possible.
+  - Sometimes there are dependencies between resources that are not visible to
+    Terraform. The depends_on argument can be added to any resource and accepts
+    a list of resources to create explicit dependencies for.
+- Provisioners only run when a resource is created, but adding a provisioner
+  does not force that resource to be destroyed and recreated.
+  - Multiple provisioner blocks can be added to define multiple provisioning
+    steps.
+  - To apply, mark resource as tainted & apply configuration again.
+  - Provisioners can also be defined that run only during a destroy operation.
+- If a resource is successfully created but fails a provisioning step,
+  Terraform will error and mark the resource as tainted.
+  - A resource that is tainted still exists, but shouldn't be considered safe
+    to use, since provisioning failed.
+  - When you generate your next execution plan, Terraform will remove any
+    tainted resources and create new resources, attempting to provision them
+    again after creation.
+
+2. Key features:
+- IAC
+  - Create a template file
+  - Template is HashiCorp Configuration Language (HCL), & describes all the
+    components of your environment.
+  - Terraform then uses that template to determine the actions needed to create
+    the environment your template describes.
+- Excution plans: has plan steps
+- Resource graph: build a graph of all resources & parallelizes the creation &
+  modification of any non-dependent resources.
+- Change automation:
+  - use Terraform to update the environment to match the change.
+  - store and version-control your Terraform templates in Cloud Source
+    Repositories.
+
+3. Parameter:
+- The terraform {} block is required so Terraform knows which provider to
+  download from the Terraform Registry.
+- A version to each provider defined in the required_providers block. 
+  - optional, but recommended. 
+  - used to constrain the provider to a specific version or a range of versions
+    in order to prevent downloading a new provider that may possibly contain
+    breaking changes.
+- The provider block is used to configure the named provider. 
+  - responsible for creating and managing resources. 
+  - Multiple provider blocks can exist if a Terraform configuration manages
+    resources from different provider.
+
+4. Commands:
+- Terraform init: 
+  - The first command to run for a new configuration or after checking out
+    an existing configuration from version control.
+  - To initializes various local settings and data that will be used by
+    subsequent commands.
+- Terraform apply: Apply configuration.
+- Terraform destroy: destroy configuartion.
+
+5. Module:
+- A Terraform module is a set of Terraform configuration files in a single
+  directory.
+- When you run Terraform commands directly from such a directory, it is
+  considered the root module.
+- Calling module:
+  - your configuration can use module blocks to call modules in other directories. 
+  - When Terraform encounters a module block, it loads and processes that
+    module's configuration files.
+- Support local and remote modules.
+- When using a new module for the first time, you must run either terraform
+  init or terraform get to install the module..
+- When either of these commands is run, Terraform will install any new modules
+  in the .terraform/modules directory within your configuration's working
+  directory
+
+6. Typical files:
+- LICENSE: (informational only) contain license annoucement.
+- README.md: (informational only) mark down note to display on Github /
+  Terraform Registry.
+- main.tf: contains the main set of configurations for your module.
+- variables.tf:  contains the variable definitions for your module.
+- outputs.tf: contains the output definitions for your module.
+
+7. Terraform State:
+- Terraform expects that each remote object is bound to only one resource
+  instance, which is normally guaranteed because Terraform is responsible for
+  creating the objects and recording their identities in the state.
+- Metadata: In addition to tracking the mappings between resources and remote
+  objects, Terraform must also track metadata such as resource dependencies.
+- Performance: In addition to basic mapping, Terraform stores a cache of the
+  attribute values for all resources in the state. This is an optional feature
+  of Terraform state and is used only as a performance improvement.
+- Sync: ith a fully featured state backend, Terraform can use remote locking as
+  a measure to avoid multiple different users accidentally running Terraform at
+  the same time.
+- State locking: If supported by your backend, Terraform will lock your state
+  for all operations that could write state. This prevents others from.
+  acquiring the lock and potentially corrupting your state.
+  - Locking is automatically without any message.
+  - If acquiring the lock is taking longer than expected, Terraform will output
+    a status message.
+  - If state locking fails, Terraform will not continue
+  - disable by using -lock flag.
+  - Not all backends support locking.
+- Workspaces:
+  - Each Terraform configuration has an associated backend that defines how
+    operations are executed and where persistent data such as the Terraform
+    state is stored.
+  - The persistent data stored in the backend belongs to a workspace.
+  - Initially the backend has only one workspace, called "default".
+  - Certain backends support multiple named workspaces, which allows multiple
+    states to be associated with a single configuration..
+
+8. Import terraform configuration:
+- Identify the existing infrastructure to be imported.
+- Import the infrastructure into your Terraform state.
+- Write a Terraform configuration that matches that infrastructure.
+- Review the Terraform plan to ensure that the configuration matches the expected state and infrastructure.
+- Apply the configuration to update your Terraform state.

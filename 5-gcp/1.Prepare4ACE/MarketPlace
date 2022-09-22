@@ -1,0 +1,5 @@
+- Google Cloud Marketplace lets you quickly deploy functional software packages
+  by providing pre-defined templates with Deployment Manager.
+- Deployment Manager is a Google Cloud service that uses templates written in a
+  combination of YAML, python, and Jinja2 to automate the allocation of Google
+  Cloud resources and perform setup tasks.

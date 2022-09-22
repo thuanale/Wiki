@@ -1,0 +1,57 @@
+- App Engine is a fully managed, serverless platform for developing and hosting
+  web applications at scale.
+- choose popular coding languages, libraries, frameworks to develop apps with familar tools.
+- provides built-in services & APIs that common to most apps.
+- offer Sofware Development Kits (SDKs) includes:
+  - All of the APIs and libraries available to App Engine
+  - A simulated, secure sandbox environment that emulates all of the App Engine services on your local computer, 
+  - Deployment tools to upload your application to the cloud and manage different versions.
+-  the Security Command Center automatically scan & detect common web app
+   vulnerabilities.
+
+2. Environment:
+- Standard:
+  - Persistent storage with queries, sorting, and transaction
+  - Automatic scaling and load balancing
+  - Asynchronous task queues for performing work outside the scope of a request
+  - Scheduled tasks for triggering events at specified times or regular intervals
+  - Integration with other Google Cloud services and APIs
+  - Requirements:
+    - Must use specified versions of Java, Python, PHP, Go, Node.js, and Ruby.
+    - Apps must conform to sandbox constraints that are dependent on runtime.
+  - Follow 3 steps:
+    - A web application is developed and tested locally.
+    - The SDK is used to deploy the application to App Engine.
+    - App Engine scales and services the application
+- Flexible:
+  - Run in a docker container on Google Compute Engine, which managed by App
+    Engine.
+  - Instances are health-checked, healed as necessary, and co-located.
+  - Critical, backward-compatible updates are automatically applied to the
+    underlying operating system.
+  - VM instances are automatically located by geographical region according to
+    the settings in your project.
+  - VM instances are restarted on a weekly basis.
+  - Supports microservices, authorization, SQL and NoSQL databases, traffic
+    splitting, logging, search, versioning, security scanning, Memcache, and
+    content delivery networks.
+  - Allow:
+    - Custom configurations and libs.
+    - Customize the runtime & the operating system of your VM.
+
+3. Comparison:
+ __________________________|_______Standard_________|_______Flexible____
+|Instance startup          |Seconds                 |Mins
+------------------------------------------------------------------------
+|SSH access                |No                      |Yes (not default)
+------------------------------------------------------------------------
+|Write to local disk       |No                      |Yes,ephemeral
+------------------------------------------------------------------------
+|Support the 3rd-party libs|For certain languages   |Yes
+------------------------------------------------------------------------
+|Network Access            |Via App Engine services |Yes
+------------------------------------------------------------------------
+|Pricing model             |After free tier usage,  |Pay for resource
+|                          |pay per instance class, |allocation per hour
+|------------------------------------------------------------------------
+|Automatic shutdown        |yes                     |No

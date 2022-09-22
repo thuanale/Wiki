@@ -1,0 +1,29 @@
+1. Routes: 
+- every network has:
+  - routes that let instances in a network send traffic directly to each other,
+    even across subnets.
+  - a default route that directs packets to destinations that are outside the
+    network.
+  - Firewall rules must also allow the packet.
+- Routes map traffic to destination networks:
+  - Apply to traffic egressing a VM.
+  - Forward traffic to most specific route.
+  - Are created when a subnet is created.
+  - Enable VMs on same network to communicate.
+  - Destination is in CIDR notation.
+  - Traffic is delivered only if it also matches a firewall rule.
+
+2. Firewall rules:
+- VPC network functions as a distributed firewall.
+- Firewall rules are applied to the network as a whole.
+- Connections are allowed or denied at the instace level.
+- Firewall rules are stateful.
+- Implied deny all ingress and allow all egress.
+- Parameter:
+  - direction: ingress/egress
+  - source / dest
+  - protocol & port
+  - action
+  - priority
+  - rule assignment: all rules are assigned to all instances or certain
+    instances as well.

@@ -1,0 +1,43 @@
+1. Cloud SQL:
+- Cloud SQL offers fully managed relational databases as a service, including:
+  - MySQL
+  - PostgreSQL
+  - SQL Server
+
+2.  Charateristics:
+- Cloud SQL: Doesn't require any software installation or maintenance.
+- Can scale up to 64 processor cores, 400+ GB of RAM, and 30 TB of storage.
+- Supports automatic replication scenarios
+- Supports managed backups - The cost of an instance covers seven backups.
+- Encrypts customer data when on Googles internal networks and when stored in
+  database tables, temporary files, and backups.
+- Includes a network firewall.
+- Patches and updates automatically applied
+- You administer MySQL users
+- Support multiple clients
+
+3. Performance: 
+- <= 64TB of storage
+- <= 60k IOS
+- <= 624GB of RAM
+- Scale out with read replicas.
+
+4. Cloud SQL services:
+- HA configuration: 
+  - Primary / Standby
+  - regional instances with synchronous replication
+- Provides automated and on-demand backups with point-in-time recovery.
+- Import/export via:
+  - mysqldump
+  - import & export CSV files.
+- Can also scale up, which does require a machine restart or scale out using
+  read replicas.
+
+5. Connecting to SQL instance:
+- within Google Cloud: via SQL private IP
+- Connecting from outside Google Cloud:
+  - Need manual control over SSL certificates
+    - Generate & periodically rotate the certificates yourself.
+    - Otherwise, use an unencrypted connection by authorizing a specific
+      address to connect to your SQL server over its external IP.
+  - If need auto control over SSL certificates: Cloud proxy

@@ -1,0 +1,15 @@
+- API is a clean & well-defined interface that hides unnecessary detail of the
+  software.
+- Tools to manage API:
+  - Cloud Endpoints:
+    - distributed API management system
+    - provides an API console, hosting, logging, monitoring, and other features
+      to help you create, share, maintain, and secure your APIs.
+    - API must support the OpenAPI Specification.
+    - supports applications running in App Engine, Google Kubernetes Engine,
+      and Compute Engine.
+    - Clients include Android, iOS, and Javascript.
+  - Apigee Edge:
+    - focus on business problems, like rate limiting, quotas, and analytics.
+    - Backend services for Apigee Edge don't have to be in Google Cloud.
+    - Often used to provide a software service to other companies.

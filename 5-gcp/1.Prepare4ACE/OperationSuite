@@ -1,0 +1,69 @@
+1. Operation suite:
+- Integrated monitoring, logging, diagnostics
+- Manages across platforms:
+  - Gcloud and AWS
+  - Dynamic discovery of Google Cloud with smart defaults
+  - Open-source agents and integrations
+- Access to powerful data & analytics tools
+- Collaboration with third-party software.
+
+2. Cloud Monitoring:
+- Dynamic config and intelligent defaults.
+- Monitor platform, system, and application metrics:
+  - Ingest data: metrics, events and metadata
+  - Generates insights through dashboards, chards, alerts.
+- also look at logs associated with resources from the dashboard. 
+- monitor messages being posted to your pubsub topic for the transportation
+  management app or via email.
+- Custom metrics allow you to define metrics descriptors for things you want
+  to keep track of that aren’t included in standard metrics.
+- A metrics scope is the root entity that holds monitoring and configuration
+  information in Cloud Monitoring.
+  - Each metrics scope can have between 1 and 100 monitored projects. 
+  - Can have as many metrics scopes as you want.
+  - For Google Cloud projects and AWS accounts can't be monitored by more than
+    one metrics scope.
+  - Contain custom dashboards, alerting policies, uptime checks, notification
+    channels, and group definitions that you use with your monitored projects.
+  - The first monitored Google Cloud project in a metrics scope is called the
+    hosting project, and it must be specified when you create the metrics
+    scope.
+    - The name of that project becomes the name of your metrics scope.
+  - To access an AWS account, a project must be configured in Gcloud to hold
+    AWS Connector.
+  - All users of Google Cloud’s operations suite with access to that metrics
+    scope have access to all data by default.
+- Monitoring agent:
+  - Allow to access additional system resources and app services.
+  - Support for Compute Engine & EC2 instances.
+
+3. Cloud Logging:
+- allows you to log any timestamped data in logs you define and manage.
+- There are a myriad of options for where you can save your logs and how to
+  route them.
+- There is also an interface provided to query your logs.
+- Need to install logging agent to get additional log
+  - Support for Compute Engine & EC2 instances.
+
+4. Error Reporting:
+- Aggregate and display errors for running cloud services
+  - Error notifications
+  - Error dashboard
+
+5. Cloud Tracing:
+- a distributed tracing system:
+  - collects latency data from your applications
+  - displays it in the Cloud Console.
+  - Displays data in near real-time.
+- Collect latency data:
+  - App Engine
+  - Google HTTPs LB
+  - Apps instrumented with the Cloud Trace SDKs.
+
+6. Debugging:
+- Inspect an application without stopping it or slowing it down significantly.
+- Debug snapshots:
+  - Capture call stack and local variables of a running application.
+- Debug logpoints:
+  - Inject logging into a service without stopping it.
+- Support multiple coding languages.

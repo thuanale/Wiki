@@ -1,0 +1,54 @@
+1. Backup:
+2. Restore:
+3. Move an instance to a new zone:
+- Automated process (moving within region):
+  - gcloud compute instances move.
+  - manual steps: update references to VM.
+- Manual process (moving between regions):
+  - Snapshots all persistent disks of VM
+  - Create new disks in destination zones
+  - Create new VM & attach created disks.
+  - Assign IP
+  - Update reference
+  - Delete snapshots, original disks & old VM.
+
+4. How incremental snapshots work:
+- Snapshots are incremental by default.
+- To ensure the reliability of snapshot history, a full snapshot might occasionally
+  & automatically capture a full image of the disk.
+- When this occurs, previous incremental snapshots of that disk are unchanged.
+- You can only create them for persistent disks. 
+- Stored in a Cloud Storage bucket managed by the snapshot service and are
+  automatically compressed.
+- Can be regional or multi-regional storage. 
+- Snapshots are stored across multiple locations with automatic checksums. 
+- Schedule:
+  - using the gcloud command line and cron. 
+  - using Google cloud console or command line.
+  - A Snapshot schedule and its source persistent disk have to be in the same region. 
+  - Can create them while they are running.
+- Incremental snapshots work as follows:
+  - The first successful snapshot of a persistent disk is a full snapshot that
+    contains all the data on the persistent disk.
+  - The second snapshot only contains any new data or modified data since the
+    first snapshot. Data that hasn't changed since snapshot 1 isn't included.
+    Instead, snapshot 2 contains references to snapshot 1 for any unchanged
+    data.
+  - Snapshot 3 contains any new or changed data since snapshot 2 but won't
+    contain any unchanged data from snapshot 1 or 2. Instead, snapshot 3
+    contains references to blocks in snapshot 1 and snapshot 2 for any
+    unchanged data.
+  - This repeats for all subsequent snapshots of the persistent disk. Snapshots
+    are always created based on the last successful snapshot taken.
+- Snapshot deletion:
+  - If your disk has a snapshot schedule, you must detach the snapshot schedule
+    from the disk before you can delete the schedule.
+  - If the snapshot has no depedent snapshots, Compute Engine immediately marks
+    the snapshots as DELETED in the system.
+  - Otherwise:
+    - Any data that is required for restoring other snapshots is moved into the
+      next snapshot, increasing its size.
+    - Any data that is not required for restoring other snapshots is deleted.
+    - The next snapshot references the snapshot before the deleted one.
+
+2.

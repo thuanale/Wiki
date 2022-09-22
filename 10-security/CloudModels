@@ -1,0 +1,31 @@
+1. Cloud Models:
+- Security requirements, strategies and responsibilities.
+
+2. Three documented models:
+- The Cloud Risk Accumulation Model of CSA.
+- Jericho Forum's Cloud Cube Model.
+- NIST Model (including multi-tenancy).
+
+3. The Cloud Risk Accumulation Model of CSA:
+- Understanding the layer dependency of cloud service models is critical when
+  analysing and defining the security risks (and subsequent security
+  safeguards) of cloud computing.
+- Defines a notional interdependency between the three major service models.
+- Indicates that the security burden is directly proportional to the deployed
+  models.
+
+4. Cloud Cube Model:
+- 4 dimensions of deployment:
+  - Internal (I) / External (E)
+  - Proprietary (P) / Open (O)
+  - Perimeterized / De-perimeterized Architectures.
+  - Insourced / Outsourced
+
+5. NIST:
+- Defines cloud options in terms of: deployment models, services models and
+  essential chracteristics.
+- Multi-tenancy and security:
+  - Implies the sharing resources & apps w/ multiple users from different
+    companies.
+  - Implies the requirement for a rigid security policy guaranteeing consumer
+    data segregation, isolation, service levels, and governance.

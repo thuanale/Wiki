@@ -1,0 +1,7 @@
+1. Memorystore is a fully managed Redis service
+- In-memory data store service
+- High availability, failover, patching, and monitoring
+- Instances up to 300 GB
+- Sub-millisecond latency
+- Network throughput of 12 Gbps
+- Easy Lift-and-Shift

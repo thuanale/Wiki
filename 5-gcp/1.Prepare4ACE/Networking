@@ -1,0 +1,111 @@
+1. Load balancing:
+- Global HTTP(S):
+  - Layer 7 loadbalacing based on load
+  - Anycast IP address
+  - Support HTTP: HTTP/port 80/port 8080
+  - Support HTTPs: HTTPs or port 443
+  - URL maps: Can route different URLs to different backends
+- Global SSL Proxy:
+  - Layer 4 load balancing of non-HTTPS SSL traffic based on load.
+  - Terminates SSL session at load balancing layer.
+  - Supported on specific port numbers.
+- Global TCP Proxy:
+  - Layer 4 load balancing of non-SSL TCP traffic
+  - terminates your customers’ TCP sessions at the load balancing layer, then
+    forwards the traffic to your virtual machine instances using TCP or SSL.
+  - Supported on specific port numbers.
+- Regional (aka Regional network):
+  - Load balancing of any traffic (TCP, UDP)
+  - Supported on any port number
+  - Support IPv4 only
+  - Architect:
+    - Backend service-based
+    - Target pool-based
+- Regional internal:
+  - Load balancing of traffic inside a VPC.
+  - Use for the internal tiers of multi-tier applications.
+  - Software-defined
+  - Two types:
+    - Internal TCP/UDP
+      - directly delivers the traffic from the client instance to a backend
+        instance.
+    - Internal HTTP/HTTPS
+- 3 types of global LB support IPv6
+
+2. Backend services:
+  - Contain:
+    - Health check
+    - Session affinitiy:
+      - Optional
+      - attempts to send all requests from the same client to the same virtual
+        machine instance.
+    - Time out setting:
+      - 30 secs by default.
+      - the amount of time the backend service will wait on the backend before
+        considering the request a failure.
+    - One/more backends:
+      - An instance group (managed/unmanaged)
+      - A balancing mode:
+        - tells the load balancing system how to determine when the backend is
+          at full usage.
+        - based on CPU utilization or RPS
+      - A capacity scaler:
+        - is an additional control that interacts with the balancing mode
+          setting.
+        - based on ceiling percentage of CPU/Rate targets
+
+3. HTTPS load balancing:
+- Target HTTPS proxy
+- One signed SSL certificate installed.
+  - Support up to 15 certicates per the target proxy
+  - For each SSL certificate, you first create an SSL certificate resource,
+    which contains the SSL certificate information.
+- Client SSL session terminates at the load balancer
+- Support the QUIC transport layer protocol.
+
+4. Backend bucket: 
+- Use case:
+  - Dynamic requests are redirected to backend service.
+  - Static requests are sent to backend bucket.
+
+5. Network Endpoint Groups (NEG):
+- a configuration object that specifies a group of backend endpoints or
+  services.
+- can use NEGs as backends for some load balancers and with Traffic Director.
+- Types:
+  - Zonal:
+    - contains one or more endpoints that can be Compute Engine VMs or services
+      running on the VMs.
+    - Each endpoint is specified either by an IP address or an IP:port
+      combination.
+  - Internet:
+    - contains a single endpoint that is hosted outside of Google Cloud.
+    - This endpoint is specified by hostname FQDN:port or IP:port.
+  - Serverless:
+    - points to Cloud Run, App Engine, Cloud Functions services residing in the
+      same region as the NEG.
+  - Hybrid connectivity:
+    - points to Traffic Director services running outside of Google Cloud.
+
+6. Backend service-based architecture:
+- Regional backend service.
+- Deﬁnes the behavior of the load balancer and how it distributes traﬃc to its
+  backend instance groups.
+- Enables new features not supported with legacy target pools:
+  - Non-legacy health checks
+  - Auto-scaling with managed instance groups
+  - Connection draining
+  - Conﬁgurable failover policy
+
+7. Target pool-based architecture
+- Forwarding rules (TCP and UDP)
+- Up to 50 per project
+- One health check
+- Instances must be in the same region.
+
+2. CloudDNS
+- Programmable: can publish and manage millions of DNS zones and records using
+  the Cloud Console, the command-line interface, or the API.
+
+3. CloudCDN:
+

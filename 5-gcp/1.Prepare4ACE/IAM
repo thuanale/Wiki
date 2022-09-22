@@ -1,0 +1,148 @@
+                     IAM
+1. IAM 
+- Identity & Access Management
+
+- Define: Who can do What on Which resources
+  - Who: contains users, user groups, service accounts, cloud identities.
+  - What: contains roles
+  - Which: resources
+
+- Roles:
+  - Collection of permissions.
+  - Basic: Set project-level permissions and, unless otherwise specified,
+    control access and management to all Google Cloud services.
+     - Browser: Read access to browse the hierarchy for a project, including
+       the folder, organization, and Cloud IAM policy. This role doesn't
+       include permission to view resources in the project.
+     - Owner: view + modified + manage roles + billing 
+     - Editor: view + modified
+     - Viewer: view + 
+     - Billing admin: view + billing
+  - Predifined: Apply to a specific service in a project
+  - Custom:
+    - Need to manage the permissions that define the custom role you have
+      created.
+    - Can only be applied to either the project level or organization level.
+- Apply least privilege model
+- Cloud identies:
+  - Organizations can policies and manage their user & groups using Google
+    Admin Console.
+  - Attributes:
+    - Using the same AD/LDAP credentials for login & access.
+    - Manage accounts over Google Admin Console.
+    - Available in free & premium editions.
+    - Already availble for Google Workspace customers.
+
+- To get users & groups from other directory service to Google Identity:
+  - scheduled one-way sync with Google Cloud Directory Sync.
+
+- SSO:
+  - Use Cloud Identity to configure SAML SSO.
+  - If SAML2 isn’t supported, use a third-party solution.
+
+2. Type of account:
+- A Google account:
+  - represents anyone who interacts with Google Cloud. 
+  - When signing up for a Google account you will be asked to provide an email
+    address that is associated with the account.
+  - The email does not have to come from the gmail domain.
+- A service account:
+  - For application to access Google cloud resources.
+  - Named with an email address
+  - Use cryptographic keys to access resources
+  - Type:
+    - User-created (custom).
+    - Built-in.
+      - Compute Engine default service accounts
+        - Automatically created per project with auto-generated name and email
+          address.
+        - Automatically added as a project Editor.
+      - App Engine default service accounts.
+    - Google APIs service account.
+      - Runs internal Google processes on your behalf.
+  - Roles:
+    - Default service accounts: basic & predefined roles
+    - User-created service accounts: predefined roles
+    - Roles for service accounts can be assigned to groups or users.
+  - Authentication:
+    - Google-managed service accounts:
+      - all service accounts have Google-managed keys
+      - Google stores both the public & private portion of the key
+      - Each public key can be used for signing for a maximum of 2 weeks
+      - Private keys are never directly accessible.
+    - User-managed service accounts:
+      - Google only stores the public portion of a user-managed key.
+      - Users are responsible for private key security.
+      - Can create up to 10 user-managed service account keys per service.
+      - Can be administered via the IAM API, gcloud, or the Console.
+    - User-managed service accounts:
+- Google groups:
+  - Collections of google accounts & service accounts.
+  - Has a unique email address that associated with the group. 
+  - Each member of the group will receive the permissions you specify in the
+    group policy as they authenticate.
+- Google Workspace domain:
+  - represents a virtual group of all the Google accounts that have been
+     created in an organization's Workspace account.
+  - represent your organization's internet domain name.
+  - whenever adding a user to Workspace domain, a new user account will be
+    created.
+- Cloud Identity domains:
+  - manage users & groups using the Google Admin Console.
+  - has same abilities on Google Cloud as Google Workspace domain.
+
+3. Roles:
+- Organization:
+  - Organization Admin: Control over all cloud resources; useful for auditing.
+  - Project creator: Controls project creation; control over who can create
+    projects.
+- Creating & managing organizations:
+  - Created when a Google Workspace or Cloud Identity account creates a Google
+    Cloud Project.
+  - Workspace or Cloud Identity super administrator:
+    - Assign the Organization admin role to some users.
+    - Be the point of contact in case of recovery issues.
+    - Control the lifecycle of the Workspace or Cloud Identity account and
+      Organization resource.
+  - Organization admin:
+    - Define IAM policies.
+    - Determine the structure of the resource hierarchy.
+    - Delegate responsibility over critical components such as Networking,
+      Billing, and Resource Hierarchy through IAM roles.
+
+- Hierarchy: policy inheritance
+  - Organization:
+    - Admin: full control over all resources
+    - Viewer: view access to all resources
+  - Folder:
+    - Admin: full control over folders.
+    - Creator: browser hierarchy and create folders.
+    - Viewer: view folders and projects below a resource.
+  - Project: 
+    - Creator: create new projects and migrate new projects into organization
+    - Deleter: delete projects
+
+4. IAM policies:
+- A policy consists of a list of bindings.
+- A binding binds a list of members to a role, where the members can be user
+  accounts, Google groups, Google domains, and service accounts.
+- Parent policy will always always override resource policy.
+
+5. IAM conditions:
+- Enforce conditional, attribute-based access control for Google Cloud
+  resources.
+  - Grant resource access to identities (members) only if configured conditions
+    are met.
+  - Specified in the role bindings of a resource's IAM policy.
+
+6. Best practices:
+- Least privileges
+- Audit membership of group & policies.
+- Grant roles to group
+- Service account:
+  - Apply key rotation
+  - Audit
+  - Naming convention
+- IAP (Identity-Aware Proxy):
+  - Identity-based access control
+  - Central authorization layer for applications accessed by HTTPS

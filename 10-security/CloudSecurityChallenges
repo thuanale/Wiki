@@ -1,0 +1,17 @@
+1. Security Objects:
+- Asset
+- Threat: potential events
+- Vulnerability: weakness
+- Attack
+- Contermeasure: address a threat and mitigates risk
+
+2. Security Challenges:
+- Data breaches: unauthorized access to data
+- Data Loss: theft, leakage, corruption
+- Authorization: interception or hacking
+- Interface: poorly design interfaces and APIs
+- DoS
+- Malice: malicious
+- Poor Planning: insufficient research during planning cloud deployment and
+  poor due delligence
+- Multi-Tenance: shared resource vulnerabilities.

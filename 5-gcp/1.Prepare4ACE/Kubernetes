@@ -1,0 +1,129 @@
+1. Kubernetes:
+- an open-source platform for managing containerized workloads and services.
+- easy to orchestrate many containers on many hosts, scale them as
+  microservices and easily deploy rollouts and rollbacks.
+- a set of APIs that you can use to deploy containers on a set of nodes called
+  a cluster.
+- The system is divided into a set of primary components that run as the
+  control plane and a set of nodes that run containers.
+- You can describe a set applications and how they should interact with each
+  other, and Kubernetes determines how to make that happen.
+
+2. Objects:
+- Node: represents a computing instance.
+- Multiple nodes are called cluster.
+- A pod: 
+  - Is the smallest deployable object in Kubernetes. 
+  - It is a single instance of a running process that contains one or more
+    docker containers.
+  - Pods provide networking and storage to containers, and contain dependencies
+    the container needs to run and communicate.
+- A deployment:
+  - Manages a set of multiple identical pods.
+  - It uses a replica set to deﬁne the number of pods. 
+  - Monitors pods in a replica set and replaces unhealthy
+    instances to ensure your application remains available.
+  - Uses a pod template, which provides a spec of what each deployed pod should
+    look like.
+  - When you update the pod template in a deployment, it starts a rolling
+    upgrade of the pods in the deployment.
+- A service:
+  - a group of pod endpoints that you can conﬁgure access for.
+  - Use selectors to deﬁne which pods are included in a service.
+  - A service gives you a stable IP that belongs to the service. 
+  - Pods have internal IP addresses but they can change as pods get restarted and replaced.
+  - A service can be conﬁgured to implement load balancing.
+
+3. Commands:
+- Kubectl:
+  - Imperative: run, create, replace, delete.
+    - Overwrite existing state.
+    - Operation on single object.
+    - Specifies how.
+  - Declarative: apply.
+    - Works on a directory of config files
+    - Specifies what.
+
+4. GKE:
+- Google Cloud's load-balancing for Compute Engine instances.
+- Node pools to designate subsets of nodes within a cluster.
+- Automatic scaling of your cluster's node instance count
+- Automatic upgrades for your cluster's node software.
+- Node auto-repair to maintain node health and availability 
+- Logging and monitoring with Google Cloud's operations suite for visibility into your cluster
+
+- Mode of operation
+  - Autopilot:
+    - full-provisioned and managed.
+    - Charged according to the resources pods use
+    - Regional service
+    - Version: release channel
+    - Network routing: VPC-native
+    - Features: production
+    - Pre-configured with an optimized cluster configuration.
+  - Standard:
+    - provides flexibility to define and manage the cluster structure yourself.
+    - regional/zonal
+    - Version: release channel, default or specific.
+    - Network routing: VPC-native or route-based.
+    - Features: Production or Alpha.
+      - Can used custom configuration.
+- Can be zonal or regional:
+  - Zonal: 
+    - has a single control plane in a single zone.
+    - nodes can be distributed across multiple zones.
+  - Regional:
+    - has multiple replicas of the contorl plane in multiple zones w/ a given
+      region.
+    - nodes are replicated across three zones.
+
+- Version: 
+  - At setup you can choose to load a specific version of GKE or enroll in a
+    release channel. If you don’t specify either one of those, the current
+    default version is chosen. 
+  - Best practice to enable auto-upgrade for cluster nodes and the cluster
+    itself.
+- Network routing: routing between pods in GKE can be either
+  - using alias IPs: VPC-native cluster. 
+  - or Google Cloud Routes: a routes-based cluster
+- Network isolation:
+  - Public GKE networks let you set up routing from public networks to your
+    cluster.
+  - Private networks use internal addresses for pods and nodes and are isolated
+    from public networks.
+
+- Features: Cluster features for Kubernetes will be either Alpha, Beta, or
+  Stable, depending on their development status.
+
+5. Load balancing:
+- To implement network load balancing you create a service object with these
+  settings:
+  - type: LoadBalancer.
+  - Set External Traﬃc Policy to cluster or local
+    - Cluster - traﬃc will be load balanced to any healthy GKE node and then
+      kube-proxy will send it to a node with the pod.
+    - Local - nodes without the pod will be reported as unhealthy. Traﬃc will
+      only be sent to nodes with the pod. Traﬃc will be sent directly to pod
+      with source ip header info included.
+- To implement external http(s) load balancing create an ingress object with
+  the following settings:
+  - Routing depends on URL path, session aﬃnity, and the balancing mode of
+    backend Network endpoint groups (NEGS)
+  - The object type is ingress.
+  - Using ingress.class: “gce” annotation in the metadata deploys an external
+    load balancer.
+  - External load balancer is deployed at Google Points of presence.
+  - Static IP for ingress lasts as long as the object.
+- To implement an internal http(s) load balancer create an ingress object with
+  the following settings:
+  - Routing depends on URL path, session aﬃnity, and balancing mode of the
+    backend NEGS.
+  - The object kind is ingress.
+  - Metadata requires an Ingress.class: “gce-internal” to spawn an internal load balancer.
+  - Proxies are deployed in a proxy only subnet in a speciﬁc region in your VPC.
+  - Only NEGs are supported. Use the following annotation in your service metadata:
+    - cloud.google.com/neg: '{"ingress": true}'
+   - Forwarding rule is assigned from the GKE node address range.
+
+6. Anthos:
+

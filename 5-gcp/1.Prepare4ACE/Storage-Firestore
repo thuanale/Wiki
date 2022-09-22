@@ -1,0 +1,38 @@
+- Data is stored in documents & then organized into collections.
+- Documents can contain complex nested objects in addition to subcollections.
+- Firestores NoSQL queries can be used to:
+  - retrieve individual, specific documents
+  - retrieve all documents in a collection.
+  - Can include multiple, chained filters.
+  - Can combine filtering and sorting options.
+  - Indexed by default.
+- Use data synchronization to update data on any connected device.
+- Cache data that an app is actively using, so the app can write, read, listen
+  to & query even if the device is offline.
+- Characteristics:
+  - automatic multi-region data replication
+  - strong consistency guarantees 
+  - atomic batch operations and real transaction support.
+- Charged for: 
+  - read, write, and delete
+  - the rate of one document read per query, whether the query returns data or not.
+  - the amount of storage your data consumes 
+  - for certain kinds of network bandwidth used to access your data.
+  - Ingress is currently free, and in many cases so is egress.
+- Free:
+  - 10GiB of free network egress per month between US regions.
+  - 50k document reads
+  - 20k document writes
+  - 20k document deletes
+  - 1GB of stored data
+
+2. Mode:
+- Datastore mode (new server projects)
+  - Compatible with Datastore applications
+  - Strong consitency
+  - No entity group limits
+- Native mode (new mobile and web apps):
+ - Strongly consistent storage layer
+ - Collection & document data model
+ - Real-time updates
+ - Mobile & web client library

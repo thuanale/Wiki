@@ -1,0 +1,44 @@
+1. Storage options:
+
+           |Persistent disk|Persistent disk|Local SSD disk|RAM disk
+           |HDD            |SSD            |              |(tmpfs)
+----------------------------------------------------------------------------
+Data       |Yes            |Yes            |No            |No
+redundancy |               |               |              |
+----------------------------------------------------------------------------
+Encryption |Yes            |Yes            |Yes           |N/A
+at rest    |               |               |              |
+----------------------------------------------------------------------------
+Snapshoting|Yes            |Yes            |No            |No
+----------------------------------------------------------------------------
+Bootable   |Yes            |Yes            |No            |Not
+----------------------------------------------------------------------------
+Use case   |General,bulk   |Very random    |High IOPS and |Low latency and
+           |file storage   |IOPS           |low latency   |risk of dat loss
+
+2. Boot disk:
+- VM comes with a single root persistent disk.
+- Image is loaded onto root disk during first boot:
+  - Bootable: can attach to a VM and boot from it.
+  - Durable: can survive VM terminate (need to disable auto-delete option).
+- Some OS images are customized for Compute Engine.
+
+3. Persistent disk:
+- Attributes:
+  - Durable
+  - Bootable
+  - Attached to a VM through the network interface
+  - Performance: scales with size
+  - HDD/SSD
+  - Disk resizing: even running & attached.
+  - Can be attached in read-only mode to multiple VMs
+  - Zonal / Regional
+  - Support multiple type of encryption keys:
+    - Google managed
+    - Customer managed
+    - Customer supplied.
+- Each persistent disk references data distributed across several physical
+  disks.
+- Regional persistent disks share replicas of the physical disks across two
+  zones.
+

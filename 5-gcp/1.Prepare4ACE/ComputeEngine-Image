@@ -1,0 +1,24 @@
+1. Images
+- A machine image is a compute engine resource that stores all the
+  configuration, metadata, permissions and data from one or more disks required
+  to create a virtual machine instance.
+- Public base images
+- Custom images:
+  - Create new image from VM: pre-configured and installed VM.
+  - Import from on-prem, workstation, or another cloud.
+  - Management features: image sharing, image family, deprecation.
+
+2. Scenario:
+Scenarios                     |Machine|Persistent    |Custom image|Instance 
+                              |_image_|disk snapshots|            |template
+----------------------------------------------------------------------------
+Single disk backup            | Yes   | Yes          | Yes        | No
+----------------------------------------------------------------------------
+Multiple disk backup          | Yes   | No           | No         | No
+----------------------------------------------------------------------------
+Differential backup           | Yes   | Yes          | No         | No
+----------------------------------------------------------------------------
+Instance cloning & replication| Yes   | No           | Yes        | Yes
+----------------------------------------------------------------------------
+VM instance configuration     | Yes   | No           | No         | Yes
+----------------------------------------------------------------------------

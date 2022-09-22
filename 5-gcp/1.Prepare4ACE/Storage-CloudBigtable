@@ -1,0 +1,46 @@
+- Designed for:
+  - handle massive workloads
+  - consistent low latency
+  - high throughput
+
+- Use case: 
+  - operational
+  - analytical applications
+
+- Consider when:
+  - Theyre working with more than 1TB of semi-structured or structured data.
+  - Data is fast with high throughput, or its rapidly changing
+    - Consitent sub 10ms latency
+  - NoSQL data.
+  - Data is a time-series or has natural semantic ordering.
+  - Working with big data, running asynchronous batch or synchronous real-time
+    processing on the data.
+  - Running machine learning algorithms on the data.
+
+- Interact with Cloud BigTable:
+  - Using API
+  - Streaming
+  - Batch process
+
+2. Storage model:
+- stores data in massively scalable tables, 
+- each of which is a sorted key/value map. 
+- The table is composed of rows
+- Each row is indexed by a single row key, 
+- columns that are related to one another are typically grouped together into a
+  column family.
+  - Each column is identified by a combination of the column family and a
+    column qualifier, which is a unique name within the column family.
+- Each row/column intersection can contain multiple cells, or versions, at
+  different timestamps, providing a record of how the stored data has been
+  altered over time.
+- Cloud Bigtable tables are sparse; if a cell does not contain any data, it
+  does not take up any space.
+- A Cloud Bigtable table is sharded into blocks of contiguous rows, called
+  tablets, to help balance the workload of queries.
+  - Tablets are stored on Colossus, which is Google's file system, in SSTable format. 
+  - An SSTable provides a persistent, ordered immutable map from keys to
+    values, where both keys and values are arbitrary byte strings.
+- Cloud Bigtable learns to adjust to specific access patterns
+- Cloud Bigtable will update the indexes so that other nodes can distribute
+  that workload evenly (rebalances without moving data).

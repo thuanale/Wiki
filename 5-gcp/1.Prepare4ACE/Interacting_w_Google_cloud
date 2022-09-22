@@ -1,0 +1,13 @@
+Interacting with Google Cloud
+1. Cloud Console: 
+- web GUI
+2. Cloud SDK & Cloud shell.
+- SDK: set of tools to manage resources and apps hosted on Google Cloud
+  - gcloud tool: provide main CLI for Google Cloud products and services.
+  - gsutil: provide access to Cloud Storage from the CLI.
+  - bq: A command-line tool for Big Query
+- Cloud shell:
+  - provide command-line access to cloud resources directly from a browser
+  - Debian-based VM w/ persistent 5GB /home
+3. API
+4. Cloud Console mobile app.

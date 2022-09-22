@@ -1,0 +1,19 @@
+1. Terminology:
+- 
+- Node: A node is an instance of the Docker engine participating in the swarm.
+  - Manager node:
+    - dispatches units of work called tasks to worker nodes.
+    - perform the orchestration and cluster management functions required to
+      maintain the desired state of the swarm.
+    - only an single elected leader to conduct orchestration tasks.
+  - Worker node:
+    - receive and execute tasks dispatched from manager nodes.
+    - by default, manager node also runs service of worker node.
+- Service: is the definition of the tasks to execute on the manager or worker
+  nodes.
+  - Replicated service: distribute a specific number of replica tasks among the
+    nodes.
+  - Global service: run on all available nodes.
+- Task: carries a Docker container and the commands to run inside the container.
+- Load balancing:
+  - Ingress load balancing

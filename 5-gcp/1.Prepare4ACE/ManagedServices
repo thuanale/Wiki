@@ -1,0 +1,29 @@
+1. Big Query:
+- Google Cloud’s serverless, highly scalable, and cost-effective cloud data warehouse
+- Full managed
+- PB scale
+- SQL interface
+- Very fast
+
+2. Dataflow:
+- Use Cloud Dataflow to execute a wide variety of data processing patterns
+- Serverless, fully managed data processing
+- Batch and stream processing with autoscale
+- Open source programming using
+- Intelligently scale to millions of QPS
+
+3. Dataprep:
+- Use Cloud Dataprep to visually explore, clean, and prepare data for analysis
+  and machine learning.
+- Serverless, works at any scale.
+- Focus on data analysis
+- Integrated partner service operated by Trifacta.
+
+4. Dataproc:
+- Cloud Dataproc is a service for running Apache Spark and Apache Hadoop
+  clusters.
+- Low cost
+- Super fast to start, scale and shut down
+- Integrated with GCP services
+- Managed service
+- Simple and familiar

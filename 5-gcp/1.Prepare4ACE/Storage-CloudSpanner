@@ -1,0 +1,15 @@
+1. Cloud Spanner:
+- Scale to PB
+- Strong consistency
+- HA:
+  - in zonal
+  - in regional.
+  - The replication of data will be synchronized across zones using Google’s
+    global fiber network.
+  - Using atomic clocks ensures atomicity whenever you are updating your data.
+2. Best suit for:
+- A SQL relational database management system with joins and secondary indexes.
+- Built-in high availability 
+- Strong global consistency 
+- Database sizes that exceed 2TB.
+- High numbers of input and output operations per second.

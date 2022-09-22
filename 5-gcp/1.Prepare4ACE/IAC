@@ -1,0 +1,13 @@
+1. IAC
+- Build/Change/Destroy an infrastructure when needed.
+- Create identical infrastructures for dev, test, and prod.
+- Can be part of a CI/CD pipeline.
+- Templates are the building blocks for disaster recovery procedures.
+- Support many IAC tools
+
+2. Google cloud Marketplace:
+- Deploy production-grade solutions
+- Single bill for Google Cloud and third-party services
+- Manage solutions using Terraform
+- Notifications when a security update is available
+- Direct access to partner support

@@ -1,0 +1,36 @@
+                         Cloud computing overview     
+- Traits:
+  - Customers get computing resources that are on-demand and self-service.
+  - Customers get access to those resources over the Internet, from anywhere.
+  - The provider of those resources allocates them to users out of that pool.
+  - Resources are elastic-which means they're flexible, so customers can be.
+  - Customers pay only for what they user, or reserve as they go.
+- IAAS:
+  - Infrastructure As A Service.
+  - Offer: raw compute, storage, network
+  - Pay for what they allocates
+  - Services:
+    - Google Compute Engines
+      - Full control
+      - Can use custom image
+    - Google Kubernetes Engine
+      - Cloud-native
+      - Full manage resources of cluster.
+
+- PAAS:
+  - Platform As A Service.
+    - Google App Engine
+      - To just focus on writing code
+      - Developer velocity
+      - To minimize operational overhead
+    - Google Cloud Run
+      - Scales to meet demand
+      - Pay for what you use
+      - Supports API endpoints 
+    - Google Cloud Function
+      - For event-driven workloads
+      - Scales to meet demand
+      - Minimal configuration
+  - Offer platform to deploy code.
+  - Pay for what they uses.
+- SAAS:

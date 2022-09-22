@@ -1,0 +1,34 @@
+1. Virtual private cloud:
+- A secure, individual, private cloud-computing model hosted within a public
+  cloud.
+- VPC networks connect Google CLoud resources to each other and to the
+  internet.
+    - Segmenting networks
+    - Using firewall rules to restrict access to instances
+    - Creating static routes to forward traffic to specific destinations.
+- Google VPC networks are global & can have subnets in any Google Cloud region
+  worldwide.
+
+2. Objects:
+- Projects:
+  - Associates objects and services with billing.
+  - Contain networks (up to 5) that can be shared/peer.
+- Networks:
+  - Has no IP address range
+  - Is global & spans all available regions.
+  - Contains subnetworks.
+  - default, auto mode, custom mode
+- Subnetworks
+- Regions
+- Zones
+- IP address
+- VM
+- Routes
+- Firewall rules.
+
+8. Design:
+- Increased availability with multiple zones.
+- Globalization with multiple regions.
+- Security: Cloud NAT provides internet access with private instances.
+- Cost: Private Google Access to Google APIs and services (allow instance with
+  private address only to access Google APIs and services).

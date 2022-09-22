@@ -1,0 +1,25 @@
+1.
+- Artificial Intelligence: an umbrella term, which we can loosely describe as:
+  "all the various techniques we might use to make a computer do something
+  smart".
+- Applied Intelligence:
+- AI winter: a long time with minimal interest and reduced funding/investment
+  in AI.
+- Artificial General Intelligence (AGI - Strong AI or Full AI): AI at a level
+  capable of understanding, learning and/or performing any mental/intellectual
+  task that a human can do.
+- Narrow AI (Weak AI): AI that operates on one specific task - though can often
+  outperform a human at that task.
+- Machine Learning: A successful subset of AI that focuses on learning from
+  data, not on programming explicit rules to follow.
+- Deep Learning: A subset of ML that uses neural networks.
+- NLP: Natural Language Processing
+  - NLU: Natural Language Understanding
+  - NLG: Natural Language Generation.
+- Algorithmic Bias: Results that create or reinforce unfair outcomes from
+  repeatable technical issues - often unitentional, and also often difficult to
+  recognize.
+- The Black Box of AI: Manu ML/ Deep Learning models return results and
+  predictions, but do not provide any explanation of those results.
+- Deepfakes: using Deep Learning techniques to manipulate audio, images and
+  video - creating extremely realistic and deceptive content.

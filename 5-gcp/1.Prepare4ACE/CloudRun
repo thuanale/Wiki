@@ -1,0 +1,36 @@
+1. Cloud Run:
+- Cloud Run is a managed compute platform that lets you run stateless
+  containers via web requests or Pub/Sub events.
+- Serverless Container management.
+- Its built on Knative, an open API and runtime environment built on Kubernetes
+- Based on a service resource.
+- A service exposes an endpoint:
+  - Regional
+  - Replicated across zones.
+- Autoscalling:
+  - Scales based on incoming requests.
+  - Automatically scales to 0, when no traffic is received.
+  - to affect:
+    - CPU ultization.
+    - Concurrency settings: limit concurrent requests.
+    - Max number of instances: help control costs & limit connection.
+    - Min number of instances
+- Instances that are started might remain idle for up to 15 minutes to reduce
+  latency associated with cold starts.
+- be charged only for the resources used, when handling requests (include
+  startup & shutdown).
+
+2. Step:
+- Container-based Workflow:
+  - Write code
+  - Build & package apps into a container image.
+  - Image will be pused to Artifact Registry, where Cloud Run will deploy it.
+- Source-based workflow:
+  - Write code
+  - The rest will be completed by Cloud Run.
+. Once youve deployed your container image, youll get a unique HTTPS URL back.
+  - by default, ***.run.app
+  - or custom domain.
+- Finally, Cloud Run then starts your container on demand to handle requests, and
+  ensures that all incoming requests are handled by dynamically adding and
+  removing containers.

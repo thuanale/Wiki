@@ -1,0 +1,27 @@
+1. Cloud Functions:
+- Serverless function execution
+- Event based
+- Functions trigger when an event occurs.
+  - A trigger sends an https request to an endpoint the service is listening
+    on.
+  - This endpoint then responds by deploying and executing the function and
+    returning the results specified in your code. 
+- Scales by number of events received.
+- Functions are stateless - need to persist data if you need to share it
+  outsite the function.
+- Pricing:
+  - based on the number of events, compute time, and memory required in network
+    ingress/egress.
+  - If no requests are coming in, your function doesn’t cost anything.
+- Use cases: 
+  - Data processing/ETL: listen & respond to Cloud Storage events
+  - Webhooks: via a simple HTTP trigger
+  - Lightweight APIs
+  - Mobile backend
+  - IoT processing.
+- Depending on the programming language you choose, the Cloud Functions
+service provides a base image and runtime that will be updated and patched
+automatically.
+- You can implement minimum instance limits to avoid latency associated with
+  cold starts.
+

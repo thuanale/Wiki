@@ -1,0 +1,27 @@
+1. Interconnect:
+- L2
+- Type:
+  - CloudVPN
+  - Dedicated Interconnect
+    - Provision a cross connect between the Google network & Cloud Router
+    - in a common colocation facility
+    - Routes are exchanged via BGP.
+    - 10Gbps per link
+  - Partner Interconnect:
+    - via supported local ISP.
+    - 50Mbps - 10Gbps per connection.
+- use a VLAN that pipes directly into your GCP environment, providing
+  connectivity to internal IP addresses.
+
+2. Peering
+- L3
+- Type:
+  - Direct Peering:
+    - at GCP's Edge Points of Presence.
+    - 10 Gbps per link
+  - Carrier Peering:
+    - via supported local ISP.
+    - varies based on partner offering.
+- Provide access to Google Workspace services, YouTube, and Google Cloud APIs
+  using public IP addresses.
+- No guaranted SLA.
