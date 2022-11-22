@@ -1,0 +1,48 @@
+- A country will export a good if the world price of the good is higher than
+  the domestic price without trade. Trade raises producer surplus, reduces
+  consumer surplus, and raises total surplus.
+- A country will import a good if the world price is lower than the domestic
+  price without trade. Trade lowers producer surplus but raises consumer and
+  total surplus.
+- A tariff: a tax on imports
+  - A tariff benefits producers and generates revenue for the govt, but the
+  losses to consumers exceed these gains.
+- Import quotas: a quantitative limit on imports of a good.
+  - Mostly has the same effects as a tariff:
+    - Raises price, reduces quantity of imports.
+    - Reduce buyers' welfare.
+    - Increase sellers' welfare.
+  - A tariff creates revenue for the govt. A quota creates profits for the
+    foreign producers of the imported goods, who can sell them at higher price.
+  - Or, govt could auction licenses to import to capture this profit as
+    revenue. Usually it does not.
+
+  |  \
+ P|   \           S    
+  |    \       /
+  |     \     /
+  | A    \   /
+  |       \ /
+  |        X
+  |       /B\
+  |______/___\______________
+Pt|     /|   |\
+  | C  /D| E |F\
+Pw|___/__|___|__\________
+  |  /|  |   |  |\
+  |G/ |  |   |  | \D
+ 0|/__|__|___|__|_______________Q
+  Qw1 Qt1   Qw2 Qt2
+
+- Without tariff:
+CS = A + C + B + D + E +F 
+PS = G
+Total surplus = A + C+ B + D+ E+ F + G
+- Tariff:
+CS= A + B
+PS= C+G
+Revenue = E
+Total surplus = A + B + C + E +G
+ D = DWL from the overproduction
+F = DWL from the underconsumption. 
+DWL = D + F

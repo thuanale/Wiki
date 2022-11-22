@@ -1,0 +1,58 @@
+- Elasticity measures how much one variable responds to changes in another
+  variable.
+- Definition: Elasticity is a numerical measure of the responsiveness of Qd or
+  Qs to one of its determinants.
+1. Price Elasticity of Demand:
+- Formula:
+  Price elasticity of demand = absolute of (percentage change in Qd) /
+  (Percentage change in P)
+- Measure how much Qd responds to a change in P.
+- Or measures the price-sensitivity of buyers' demand.
+- Percentage of changes = (end value - start value) / mid value x 100%
+- mid value = (higher value - lower value) / 2
+- The price elasticity of demand depends on:
+  - The extent to which close substitutes are available.
+  - Whether the good is a necessity or a luxury.
+  - How broadly or narrowly the good is defined.
+  - The time horizon - elasticity is higher in the long run than the short run.
+- The variety of Demand Curves:
+  - The price elasticity of demand is closely related to the slope of the
+    demand curve.
+  - Rule of thumb: 
+    - the flatter the curve, the bigger the elasticity.
+    - the steeper the curve, the smaller the elasticity.
+  - Five different classifications of D curves:
+    - extreme: price unchage (extreme price sensitivity) or quantity unchange (price sensitivity = 0)
+    - inelasticity: price elasticity < 1 (low price sensitivity)
+    - unit elasticity: price elasticity = 1 (intermediate)
+    - elasticity: price elasticity > 1 (high)
+- Revenue = P x Q 
+  - If demand is elasic: the fall in revenue from lower Q is greater than the
+    increase in revenue from higher P.
+  - If demand is inelastic: the fall in revenue from lower Q is smaller than
+    the increase in revenue from higher P.
+
+2. Price Elasticity of Supply:
+- Formula: 
+  Price Elasticity of Supply = absolute of (percentage change in Qs) /
+  (percentage of change in P).
+- Measure sellers' price-sensitivity.
+- Use the midpoint method to compute the percentage changes.
+
+3. Relationship between demand and supply:
+- When supply is inelastic, an increase in demand has a bigger impact on price
+  than on quantity.
+- When supply is elastic, an increase in demand has a lower impact on price
+  than on quantity.
+- Supply often become less elastic as Q rises, due to capacity limits.
+
+4. Other elasticities:
+- Income elasticity of demand = absolute of (percentage change is Qd) /
+  (percentage change in income).
+- Cross-price elasticity of demand:
+  - measures the response of demand for one good to changes in the price of
+    another good.
+  - cross-price elasticity of demand = (% change in Qd for good 1) / (% change
+    in price of good 2)
+  - For subsititutes, cross-price elasticity > 0
+  - For complements, cross-price elasticity < 0

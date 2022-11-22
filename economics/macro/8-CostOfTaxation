@@ -1,0 +1,32 @@
+- A tax on a good reduces the welfare of buyers and sellers. This welfare loss
+  usually exceeds the revenue the tax raises for the govt.
+- The fall in total surplus (consumer surplus, producer surplus, and tax
+  revenue) is called the deadweight loss (DWL) of the tax.
+- A tax has a DWL because it causes consumers to buy less and producers to sell
+  less, thus shrinking the market below the level that maximizes total surplus.
+- The price elasticities of demand and supply measure how much buyers and
+  sellers respond to price changes. Therefore, higher elasticities imply higher
+  DWLs.
+- An increase in the size of a tax causes the DWL to rise even more.
+- An increase in the size of a tax causes revenue to rise at first, but
+  eventually revenue falls because the tax reduces the size of the market.
+   P
+   |\             /
+   | \           /
+   |CS\         /
+Pt2|___\       /
+   |   |\     / 
+   |C  |E\   /
+Peq|___|__\ /
+   |   |  /|\Eq'm
+   |D  |F/ | \
+Pt1|___|/  |  \
+   |P S|   |   \D
+   |  /|   |    \
+   | / |   |     \
+  0|/__|___|__________________Q
+       Qt  Qeq'm
+
+Tax revenue = C + D = (Pt2 - Pt1)*Qt
+Total surplus = CS + PS + tax revenue
+DWL = E + F = 1/2*(Pt2 - Pt1)*(Qeq'm - Qt)
