@@ -1,0 +1,36 @@
+Vagrant.configure("2") do |config|
+    VAGRANT_EXPERIMENTAL="disks"
+
+    config.vm.box = "generic/centos8"
+    config.vm.provider "virtualbox" do |v|
+        v.customize ["modifyvm", :id, "--nic2","natnetwork"]
+        v.customize ["modifyvm", :id, "--nat-network1","rhcsav8"]
+    end
+
+    config.vm.define "svr1" do |svr1|
+        svr1.vm.provider "virtualbox" do |v|
+          v.name = "svr1"
+          v.memory = 1024
+          v.cpus = 1
+        end
+        svr1.vm.hostname = "server1.example.com"
+        svr1.vm.disk :disk, name: "os1", size: "10GB"
+    end
+
+    config.vm.define "svr2" do |svr2|
+        svr2.vm.provider "virtualbox" do |v|
+            v.name = "svr2"
+            v.memory = 2048
+            v.cpus = 1
+        end
+        svr2.vm.hostname = "server2.example.com"
+        svr2.vm.disk :disk, name: "os2", size: "10GB"
+        svr2.vm.disk :disk, name: "data1", size: "250MB"
+        svr2.vm.disk :disk, name: "data2", size: "250MB"
+        svr2.vm.disk :disk, name: "data3", size: "250MB"
+        svr2.vm.disk :disk, name: "data4", size: "250MB"
+        svr2.vm.disk :disk, name: "data5", size: "4GB"
+        svr2.vm.disk :disk, name: "data6", size: "1GB"
+        svr2.vm.disk :disk, name: "data7", size: "1GB"
+    end
+end

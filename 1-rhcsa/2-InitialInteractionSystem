@@ -1,0 +1,115 @@
+1. Linux Directory Structure and File Systems:
+- Linux files are organized logically for ease of administration. This
+  file organization is maintained in hundreds of directories located in larger
+  containers (file systems). Red Hat Enterprise Linux follows the File system
+  Hierarchy Standard for file organization, which describes names, locations,
+  and permissions for many file types and directories.
+- Linux file systems contain files and subdirectories.
+- A subdirectory, also referred to as a child directory, is located under a
+  parent directory.
+- The parent directory is a subdirectory of a higher-level directory.
+- The root directory has no parent, and the lowest level subdirectory has no
+  child.
+- Type of data:
+  - Static data refers to file content that remains unchanged unless modified
+    explicitly.
+  - Dynamic or variable data, in contrast, refers to file content that is
+    modified and updated as required by system processes.
+- Category:
+  - disk-based: created on physical media.
+  - network-based: essentially disk-based file systems that are shared over the
+    network for remote access.
+  - memory-based: virtual; created automatically at system startup and
+    destroyed when the system goes down.
+
+2. Key directories:
+- Root File System (/) the top-lvel file system & contains higher-level
+  directories that store specific information.
+  - /etc (extended text configuration): holds system configuration files.
+  - /root
+  - /mnt
+- Boot File System (/boot): contains the Linux kernel, boot support files &
+  boot configuration files.
+- /home: store user home directories & other user contents. Each user is
+  assigned a home directory.
+- /opt: Optional directory: store additional software that may need to be
+  installed on the system. A subdirectory is created for each installed
+  software.
+- /usr: UNIX System Resources Directory.
+  - /usr/bin: contains ordinary users' excutable commands
+  - /usr/sbin: contains priviledged users's excutable commands.
+  - /usr/lib & /usr/lib64: contains shared library routines.
+  - /usr/include: contains header files for C language.
+  - /usr/local: store commands & tools downloaded from elsewhere.
+  - /usr/share: contain files that may be shared with other Linux platforms.
+  - /usr/src: contain source code.
+- /var: contains dynamic data that frequently changes while the system is
+  operational.
+  - /var/log
+  - /var/opt: contain dynamic data of softwares installed in /opt
+  - /var/spool: hold print jobs, cron jobs and mail messages & other queued
+    items before being sent out to their intended destinations.
+  - /var/tmp: hold temporary files & automatically deleted  if they are not
+    accessed or modified for a period of 30 days.
+- /tmp: Temporary Directory:
+  - file will be deleted if they are not accessed or modified for a period of
+    10 days.
+- /dev: Devices File System
+  - virtual
+  - store device nodes for physical hardware and virtual devices.
+  - These device nodes are automatically created and deleted by the udevd
+    service.
+  - Types:
+    - chracter/raw: are accessed serially with streams of bits transferred
+      during kernel and device communication.
+    - block: are accessed in a parallel fashion with data exchanged in blocks
+      (parallel) during kernel and device communication. Data on block devices
+      is accessed randomly.
+- /proc: Procfs File System (process file system): maintain information about
+  the current state of the running kernel.
+  - virtual
+  - The contents in /proc are created in memory at system boot time, updated
+    during runtime, and destroyed at system shutdown.
+- /run: The Runtime File System
+  - virtual.
+  - Repository of data for process running on the system.
+  - deleted automatically at system shutdown.
+- /sys: The System File System
+  - virtual.
+  - Information about hardware devices, drivers, and some kernel features is
+    stored and maintained in the /sys file system.
+  - This information is used by the kernel to load necessary support for the
+    devices, create device nodes in /dev, and configure the devices.
+
+3. Command:
+- tree
+- ls
+- which/whereis/type
+- cd:
+  - absolute path: full path
+  - relative path: path from current directory.
+- tty (teletype): identify your current active terminal session.
+  - Linux allocates unique pseudo (or virtual) numbered device files to
+    represent terminal sessions opened by users on the system.
+  - It uses these files to communicate with individual sessions. By default,
+    these files are stored in the /dev/pts (pseudo terminal session)
+    directory.
+  - These files are created by the system when a user opens a new terminal
+    session and they are removed on its closure.
+  - The destroyed files are recreated and reused for new terminal sessions.
+- uptime
+- lscpu
+- uname
+- pwd
+- clear
+- help:
+  - man
+  - apropos = man -k: search key words
+  - whatis: searches for a short description of the specified command or file
+    in the manual database.
+  - info, pinfo
+    - display command documentation in a document-like format in great detail.
+    - Documentation is divided into sections called nodes.
+    - The header across the top of the screen shows the name of the file being displayed, names of the current, next, and previous nodes, and the name of the node prior to the current node. 
+    - The operation of the info and pinfo commands is almost identical.
+- mandb

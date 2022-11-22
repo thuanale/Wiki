@@ -1,0 +1,84 @@
+1. Common File Types:
+- RHEL support 7 file types:
+  - regular: text, binary.
+  - directory
+  - device file: file is created and associated with a piece of hardware in the
+    system & is used by the system to communicate with the device.
+    - block special device file
+    - character (raw) special device file
+    - Each device driver is assigned a unique number called the major number,
+      which the kernel uses to recognize its type.
+    - The kernel in this situation allots a minor number to each individual
+      device within that device driver category to identify it as a unique
+      device.
+  - symbolic link
+  - named pipe
+  - socket.
+- command to determine:
+  - file
+  - stat
+
+2. Compression and Archiving:
+- tar
+- gzip/gunzip
+- bzip2/bunzip2
+
+3. File editing:
+- vim
+
+4. File & directory operations:
+- touch /vim
+- cat / tac
+- less / more
+- head / tail
+- wc
+- cp
+- rm
+- rmdir
+
+5. File linking:
+- Each file within a file system has a multitude of attributes assigned to it
+  at the time of its creation.
+- These attributes are collectively referred to as the file's metadata, and
+  they change when the file is accessed or modified.
+- A file's metadata includes several pieces of information, such as the file
+  type, size, permissions, owner's name, owning group name, last
+  access/modification times, link count, number of allocated blocks, and
+  pointers to the data storage location.
+- This metadata takes 128 bytes of space for each file.
+- This tiny storage space is referred to as the file's inode (index node).
+- An inode is assigned a unique numeric identifier that is used by the kernel
+  for accessing, tracking, and managing the file.
+- In order to access the inode and the data it points to, a filename is
+  assigned to recognize it and access it.
+- This mapping between an inode and a filename is referred to as a link.
+- It is important to note that the inode does not store the filename in its
+  metadata; the filename and corresponding inode number mapping is maintained
+  in the directory's metadata where the file resides.
+
+- Soft link:
+  - A soft link (a.k.a. a symbolic link or a symlink) makes it possible to
+    associate one file with another.
+  - Similar to shortcut in Windows.
+  - Each soft link has a unique inode number that stores the pathname to the
+    file it is linked with.
+  - Delete orginial file, make soft link file invalid.
+  - For a symlink, the link count does not increase or decrease, rather each
+    symlinked file receives a new inode number.
+  - The pathname can be absolute or relative depending on what was specified at
+    the time of its creation.
+  - The size of the soft link is the number of characters in the pathname to
+    the target.
+  - A soft link can cross a file system boundary and it can be used to link
+    directories.
+
+
+- Hard link: 
+  - A hard link is a mapping between one or more filenames and an inode number,
+    making all hard-linked files indistinguishable from one another.
+  - This implies that all hard-linked files will have identical metadata.
+    Changes to the file metadata and content can be made by accessing any of
+    the filenames.
+  - A hard link cannot cross a file system boundary, and it cannot be used to
+    link directories because of the restrictions placed within Linux designed
+    to avoid potential issues with some commands.

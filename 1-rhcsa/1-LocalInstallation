@@ -1,0 +1,43 @@
+1. What is Linux:
+- Free & Unix-like OS:
+  - Similar to Unix in terms of concepts, defautres, functionality & stability.
+- Also call GNU/Linux, Linux OS or Linux
+- Kernel to drive & control the GNU software and to regulate its communication
+  with the hardware.
+
+2. RHEL:
+- RHEL installer program is called Anaconda.
+- Files in the /var/log/anaconda directory are actually created and updated in
+  the /tmp directory during the installation; however, they are moved over once
+  the installation is complete.
+
+3. Virtual Console Screens: 
+- Console 1 (Ctrl+Alt+F1): This is the main screen. Before Anaconda begins, you
+  will select a language to use during installation, and then it will switch
+  the default console to the sixth screen (Console 6).
+- Console 2 (Ctrl+Alt+F2): The screen displays the shell interface to run
+  commands as the root user.
+- Console 3 (Ctrl+Alt+F3): This screen displays installation messages and
+  stores them in /tmp/anaconda.log file. This file also captures information on
+  detected hardware, in addition to other data.
+- Console 4 (Ctrl+Alt+F4): This screen shows storage messages and records them
+  in /tmp/storage.log file.
+- Console 5 (Ctrl+Alt+F5): This screen displays program messages and logs them
+  to /tmp/program.log file.
+- Console 6 (Ctrl+Alt+F6): This is the default graphical configuration and
+  installation console screen.
+
+4. GUI:
+- Wayland: a client/server display protocol that sets up the foundation for
+  running graphical programs and applications in RHEL 8.
+- 2 components that are critical to the functionality of a graphical
+  environment:
+  - Display/Login manager:
+    - default on RHEL8: GNOME Display Manger 
+    - handle the presentation of graphical login screen.
+    - a list of all normal user accounts that exist on the system.
+    - other users can be accessed via "Not listed".
+  - Desktop environment:
+    - Once the credentials are validated for a user, the display/login manager
+      establishes a Desktop Environment (DE) to work in.
+    - by default: GNOME desktop environment.
