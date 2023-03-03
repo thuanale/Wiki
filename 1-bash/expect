@@ -1,0 +1,175 @@
+Expect Tutorial 
+Source: https://w2home.blogspot.com/2007/11/expect-tutorial.html
+
+1. Get Started With Expect
+- The three commands send, expect, and spawn are the building power of Expect.
+The send command sends strings to a process, the expect command waits for
+strings from a process, and the spawn command starts a process.
+1.1 The send Command
+- The send command takes a string as an argument and sends it to a process. For
+example:
+  send "hello world"
+- This sends the string "hello world" (without the quotes). If Expect is
+  already interacting with a program, the string will be sent to that program.
+  But initially, send will send to the standard output. Here is what happens
+  when I type this to the Expect interpreter interactively:
+
+  % expect
+  expect1.1>send "hello world"
+  hello worldexpect1.2>exit
+  %
+
+- The send command does not format the string in any way, so after it is
+  printed the next Expect prompt gets appended to it without any space. To make
+  the prompt appear on a different line, put a newline character at the end of
+  the string. A newline is represented by "\n". The exit command gets you out
+  of the Expect interpreter.
+  
+  expect1.1>send "hello world\n"
+  hello world
+  expect1.2>exit
+  %
+
+- If these commands are stored in a file, speak, the script can be executed
+  from the UNIX command line:
+  % expect speak
+  hello world
+  To execute the file as just "speak" rather than "expect speak", insert the
+  line "#!./expect -f" and do "chmod +x speak" . The name of the interpreter
+  must appear after the characters #! in the first line. The ./expect is the
+  path where Expect is to be found; in this case, it is in the current working
+  directory.
+- The -f flag prefaces a file from which to read commands from. The flag itself
+  is optional as it is only useful when using the #! notation (see above), so
+  that other arguments may be supplied on the command line. (When using
+  Expectk, this option is specified as -file.)
+  % cat speak
+  #!./expect -f
+  send "hello world\n"
+  %
+  % chmod +x speak
+  % speak
+  hello world
+
+1.2 The expect Command
+- The expect command waits for a response, usually from a process. expect can
+  wait for a specific string or any string that matches a given pattern. Like
+  send, the expect command initially waits for characters from the keyboard. To
+  see how see how the expect command works, create a a file response.exp that
+  reads:
+
+  #!./expect -f
+  expect "hi\n"
+  send "hello there!\n"
+
+- When I make response.exp executable and run it, the interaction looks like
+  this:
+  % chmod +x response.exp
+  % response.exp
+  hi
+  hello there!
+
+- If you get an error that goes like couldn't read file " ": No such file or
+  directory, it may be because there are non-printable characters in your file.
+  This is true if you do cut-and-paste from Netscape to your file. To solve
+  this problem, try deleting trailing spaces at the end of each command line
+  (even if there seems to be nothing there) in the script and follow the above
+  steps again.
+1.3 What Happens When Input Does Not Match
+- If expect reads characters that do not match the expected string, it
+  continues waiting for more characters. If I had type hello instead of hi
+  followed by a return, expect would continue to wait for "hi\n". Finding
+  unexpected data in the input does not bother expect. It keeps looking until
+  it finds something that matches. If no input is given, expect command
+  eventually times out and returns. By default, after 10 seconds expect gives
+  up waiting for input that matches the pattern. This default value can be
+  changed by setting the variable timeout using the Tcl set command. For
+  example, the following command sets the timeout to 60 seconds.
+
+  set timeout 60
+
+- A timeout of -1 signifies that expect should wait forever and a timeout of 0
+  indicates that expect should not wait at all.
+
+1.4 Anchoring
+- To prevent expect from matching unexpected data, expect patterns can include
+  regular expressions. The caret ^ is a special character that only matches the
+  beginning of the input; it cannot skip over characters to find a valid match.
+  For example, the pather ^hi matches if I enter "hiccup" but not if I enter
+  "sushi" . The dollar sign ($) is another special character. It matches the
+  end of the data. The pattern hi$ matches if I enter "sushi" but not if I
+  enter "hiccup". And the pattern ^hi$ matches neither "sushi" nor "hiccup". It
+  matches "hi" and nothing else.
+- Patterns that use ^ or $ are said to be anchored. When patterns are not
+  anchored, patterns match beginning at the earliest possible position in the
+  string. For more techniques on pattern matching, I suggest you buy the the
+  book, Exploring Expect as well as Tcl and The Tk Toolkit
+
+1.5 Pattern-Action Pairs
+- Expect also allows association between a command and a pattern. The
+  association is made by listing the action (also known as command) immediately
+  after the pattern in the expect command itself. Here is an example of
+  pattern-action pairs:
+  
+  expect "hi" { send "You said hi\n" } \
+  "hello" { send "Hello yourself\n" } \
+  "bye" { send "Good-bye cruel world\n" }
+  
+- This command looks for "hi", "hello", and "bye". If any of the three
+  patterns are found, the action immediately following it gets executed.
+  If there is no match and the default timeout expires, expect stops
+  waiting and execution continues with the next command in the script.
+
+1.6. The spawn Command
+- The spawn command starts another program. The first argument of the spawn
+  command is the name of a program to start. The remaining arguments are passed
+  to the program. For example:
+  spawn ftp ftp.uu.net
+
+- This command spawns an ftp process and ftp.uu.net is the argument to the ftp
+  process.
+
+2. Putting It All Together
+- Now we're ready to use the three commands above to write a little script to
+  do some automations. Normally when I do anonymous ftp by hand from a shell,
+  this is what I see:
+
+  % ftp ftp.uu.net
+  Connected to ftp.uu.net.
+  220 ftp.UU.NET FTP server (Version wu-2.4(3) Fri Nov 25 16:08:40 EST 1994) ready.
+  Name (ftp.uu.net:dtly): anonymous
+  331 Guest login ok, send your complete e-mail address as password.
+  Password:
+  230-
+  230- Welcome to the UUNET archive.
+  230- A service of UUNET Technologies Inc, Falls Church, Virginia
+  230- For information about UUNET, call +1 703 206 5600, or see the files
+  230-
+  230- Access is allowed all day. Local time is Wed Feb 28 13:59:46 1996.
+                  .
+    .
+   .
+  230 Guest login ok, access restrictions apply.
+  ftp>
+
+- To partially automate this action so that you don't have to supply an
+  appropriate identification and then have control turn over to you, create a
+  file aftp.exp that looks like this:
+  #!./expect -f
+  spawn ftp $argv
+  expect "Name"
+  send "anonymous\r"
+  expect "Password:"
+  send "dtly@yboa.csc.calpoly.edu\r"
+  interact
+  Note: Instead of "dtly@yboa.csc.calpoly.edu\r", replace that with your login ID and the machine name of you are using.
+
+- Change permission of aftp.exp to executable and run it.
+  % chmod +x aftp.exe
+  % aftp.exe ftp.uu.net
+
+- Notice that each send command in the script ends with \r and not \n (\r denotes
+  a return character while \n denotes a linefeed character). Interact is an
+  Expect command that turns control from the script over to you. When this
+  command is executed, Expect stops reading commands from the script and instead
+  begins reading from the keyboard..
