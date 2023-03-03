@@ -1,0 +1,26 @@
+1. Elementary:
+1.1 Hostname:
+- A hostname is a unique alphanumeric label (the hyphen (-), underscore (_),
+  and period (.) characters are also allowed) that is assigned to a node to
+  identify it on the network. 
+- It can consist of up to 253 characters.
+- In RHEL, the hostname is stored in the /etc/hostname file.
+- To change:
+  - Method 1: edit in /etc/hostname & restart systemd-hostname service.
+  - Method 2: hostnamectl set-hostname <name> & logoff & login again.
+1.2. Protocol:
+- A protocol is a set of rules governing the exchange of data between two
+  network entities.
+- These rules include how data is formatted, coded, and controlled.
+- The rules also provide error handling, speed matching, and data packet
+  sequencing.
+- view in /etc/protocols
+
+1.3. Well-known ports:
+- A well-known port is reserved for an application's exclusive use, and it is
+  standardized across all network operating systems.
+- Well-known ports are defined in the /etc/services file.
+- A private port, on the other hand, is an arbitrary number generated when a
+  client application attempts to establish a communication session with its
+  server process.
+- This port number no longer exists after the session has ended.

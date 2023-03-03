@@ -82,3 +82,37 @@
   - A hard link cannot cross a file system boundary, and it cannot be used to
     link directories because of the restrictions placed within Linux designed
     to avoid potential issues with some commands.
+
+- Different between copying & linking:
+
+--------------Copy----------------------------------------Link-----------------
+Create a duplicate of the source    |Create a shortcut that point to the source
+file. If either file modified, the  |file. The source file can be accessed or 
+other will remain intact            |modified using either the source file or 
+                                    |link.
+-------------------------------------------------------------------------------
+Each copied files stores its own    |All linked files point to the same data.
+data at a unique location           |
+-------------------------------------------------------------------------------
+Each copied file has a unique inode |Hard link: All hard-linked files share
+number of its unique data           |the same inode number, and hence metadata.
+                                    |Symlink: Each symlinked file has a unique 
+                                    |inode number, but the inode number store 
+                                    |only the pathname to the source.
+-------------------------------------------------------------------------------
+If a copy file is moved, erased or  |Hard link: If the hard link is weeded out, 
+renamed, the source file will have  |the other file and the data will remain 
+no impact, and vice versa.          |untouched.
+                                    |Symlink: If the source is deleted, the
+                                    |soft link will be broken and become
+                                    |meaningless. If the soft link is removed,
+                                    |the soft link will have no impact.
+                                    |no impact.
+-------------------------------------------------------------------------------
+Copy is used when the data needs to |Links are used when access to the same
+be edited independent of the other  |source is required from multiple location.
+-------------------------------------------------------------------------------
+Permissions on the source and the   |Permissions are managed on the source 
+copy are managed independent of each|file.
+other                               |
+-------------------------------------------------------------------------------

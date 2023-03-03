@@ -1,0 +1,182 @@
+1. Linux boot process:
+- Major phases:
+  - the firmware phase
+  - the bootloader phase
+  - the kernel phase
+  - the initialization phase
+- The system accomplishes these phases one after the other while performing and
+  attempting to complete the tasks identified in each phase.
+1.1. The firmware phase (BIOS and UEFI):
+- The firmware is the BIOS (Basic Input/Output System) or the UEFI (Unified
+  Extensible Firmware Interface) code that is stored in flash memory on the
+  x86- based system board.
+  - BIOS:
+    - legacy
+    - a small memory chip in the computer that stores system date
+      and time, list and sequence of boot devices, I/O configuration, etc.
+    - This configuration is customizable.
+  - UEFI:
+    - a new 32/64-bit architecture-independent specification.
+    - replacing BIOS.
+    - This mechanism delivers enhanced boot and runtime services.
+    - Has its own device drivers, 
+    - Is able to mount and read extended file systems, includes UEFI-compliant
+      application tools, and supports one or more bootloader programs.
+    - Comes with a boot manager that allows you to choose an alternative boot
+      source.
+
+- Step 1.Runs the Power-On-Self-Test (POST): to detect, test, and initialize
+  the system hardware components.
+  - installs appropriate drivers for the video hardware
+  - exhibit system messages on the screen. 
+
+- Step 2: Scans the available storage devices to locate a boot device:
+  - starting with MBR
+    - Master Boot Record
+    - lcated on the first sector of the boot disk
+    - a 512-byte image that contains:
+      - 446 bytes of the bootloader program
+      - 64 bytes for the partition table
+      - the last two bytes with the boot signature.
+- Step 3: As soon as it discovers a usable boot device, it loads the bootloader
+  into memory and passes control over to it.
+
+1.2. Bootloader phase:
+- RHEL uses GRUB2 (GRand Unified Bootloader) version 2 as the bootloader
+  program.
+- GRUB2 supports both BIOS and UEFI firmware.
+- The primary job of the bootloader program is :
+  - spot the Linux kernel code in the /boot file system.
+  - decompress kernel code.
+  - load kernel into memory based on the configuration defined in the
+    /boot/grub2/grub.cfg file.
+  - transfer control over to it to further the boot process.
+- For UEFI-based systems:
+  - GRUB2 looks for the EFI system partition /boot/efi instead
+  - runs the kernel based on the configuration defined in the
+    /boot/efi/EFI/redhat/grub.efi file.
+
+1.3. The kernel phase:
+- The kernel is the central program of the operating system, providing access
+  to hardware and system services.
+- Step 1. extracts the initial RAM disk (initrd) file system image:
+  - found in the /boot file system into memory
+  - decompresses it
+  - and mounts it as read-only on /sysroot to serve as the temporary root file
+    system.
+- Step 2. Loads necessary modules from the initrd image to allow access to the
+  physical disks and the partitions and file systems therein.
+- Step 3. Loads any required drivers to support the boot process.
+- Step 4. Unmounts the initrd image and mounts the actual physical root file
+  system on / in read/write mode.
+- Step 5. executes the systemd process with PID 1 and passes the control over to it.
+
+1.4. The Initialization phase:
+- Control by systemd.
+- Starts all enabled userspace system and network services and brings the
+  system up to the preset boot target.
+
+2. GRUB2 Bootloader:
+- Mode:
+  - Edit mode (Press e):
+    - GRUB2 loads the configuration for the selected kernel entry from the
+      /boot/grub2/grub.cfg file in an editor.
+    - enabling you to make a desired modification before booting the system.
+  - Command mode (Press c)
+2.1 Understanding GRUB2 configuration files:
+- /boot/grub2/grub.cfg:
+  - Referenced at boot time.
+  - generated automatically when a new kernel is installed or upgraded.
+  - generate manualy via submitting grub2-mkconfig
+  - not advisable to modify directly.
+  - in UEFI-based system, located in /boot/efi/EFI/redhat
+- /etc/default/grub:
+  - defines the directives that govern how GRUB2 should behave at boot time.
+  - Any changes made to the grub file will only take effect after the
+    grub2-mkconfig utility has been executed.
+- /etc/grub.d/
+  - refer by grub2-mkconfig
+  - 00_header, sets the GRUB2 environment
+  - 10_linux script searches for all installed kernels on the same disk partition
+  - 30_os-prober searches for the presence of other operating systems
+  - 40_custom and 41_custom are to introduce any customization. 
+2.2 Booting into Specific Targets:
+- These special target levels can be launched from the GRUB2 interface by
+  selecting a kernel, pressing e to enter the edit mode, and appending the
+  desired target name to the line that begins with the keyword “linux”.
+- Mode:
+  - rd.break: useful for reset password
+  - emergency
+  - rescue
+  - 3: cli mode
+
+3. The Linux Kernel:
+- The kernel is the core of the Linux system. 
+- Manages hardware, enforces security, regulates access to the system, as well
+  as handles processes, services, and application workloads.
+- Is a collection of software components called modules.
+  - Modules are device drivers that:
+    - control hardware devices.
+    - interact with software subsystems.
+  - Module Type: 
+    - Static Loaded: are integral to system functionality.
+    - Dynamic loaded:  as needed, making the kernel speedier and more efficient
+      in terms of overall performance and less vulnerable to crashes.
+- Kernel package:
+  - kernel: Contains no files, but ensures other kernel packages are accurately
+    installed.
+  - kernel-core: Includes a minimal number of modules to provide core
+    functionality.
+  - kernel-devel: Includes support for building kernel modules
+  - kernel-modules: Contains modules for common hardware devices
+  - kernel-modules-extra: Contains modules for not-so-common hardware devices
+  - kernel-headers: Includes files to support the interface between the kernel
+    and userspace libraries and programs.
+  - kernel-tools: Includes tools to manipulate the kernel
+  - kernel-tools-libs: Includes the libraries to support the kernel tools
+- Kernel version:
+  -   4.18.0-80.el8.x86_64
+      / / /  |   |   \
+     / / / RH ver|    \
+    / / /        |     Processor arch.
+major/ kernel    |
+ver./  patch     |
+   /   revision  |
+  major       Enterprise
+revision      Linux 8
+
+- Structure of kernel files:
+  - kernel & it support files are stored at different locations in the
+    directory.
+  - the most noteworthy:
+  - /boot:
+    - created at system installation.
+    - houses the Linux kernel, GRUB2 configuration, and other kernel and boot
+      support files.
+      - kernel file: vmlinuz, initramfs, config, and System.map.
+        - Have the current kernel version appended to their names.
+        - The vmlinuz is the main kernel file 
+        - initramfs, config, and System.map storing the main kernel's boot
+          image, configuration, and mapping, respectively.
+      - The files for the rescue version have the string "rescue" embedded
+        within their names, as indicated in the above output.
+    - The efi and grub2 subdirectories under /boot hold bootloader information
+      specific to firmware type used on the system: UEFI or BIOS.
+    - The subdirectory loader under /boot is the storage location for
+      configuration of the running and rescue kernels. The configuration is
+      stored in files under the entries subdirectory.
+    - The files are named using the machine id of the system as stored in the
+      /etc/machine-id file and the kernel version they are for.
+  - /proc:
+    - a virtual, memory-based file system.
+    - Its contents are created and updated in memory at system boot and during
+      runtime, and they are destroyed at system shutdown.
+    - It maintains information about the current state of the kernel.
+  - /usr/lib/modules:
+    - This directory holds information about kernel modules.
+    - Underneath it are subdirectories specific to the kernels installed on the
+      system.
+4. Installing kernel:
+- Installing kernel packages requires extra care because it could leave your
+  system in an unbootable or undesirable state.
+

@@ -1,0 +1,120 @@
+1. Concepts:
+- Package Groups: 
+  - A package group is a collection of correlated packages designed to serve a
+    common purpose.
+  - It provides the convenience of querying, installing, and deleting as a
+    single unit rather than dealing with packages individually.
+  - There are two types of package groups: environment groups and package
+    groups.
+    - An environment group is a larger collection of RHEL packages that
+      provides all necessary software to build the operating system foundation
+      for a desired purpose.
+    - Package A group, on the other hand, is a small bunch of RHEL packages that serve
+      a common purpose.
+- Application Streams:
+  - Apply modular approach to organize multiple versions of a software
+    application alongside its dependencies to be available for installation
+    from a single repository.
+- Modules:
+  - A logical set of application packages that includes everything required to
+    install it, including the executables, libraries, documentation, tools, and
+    utilities as well as dependent components.
+- Core repository:
+  - BaseOS: including the kernel, modules, bootloader, and other foundational
+    software packages.
+  - AppStreams
+- Module streams:
+  - A module stream is a collection of packages organized by version. 
+  - Each module can have multiple streams.
+  - Each stream receives updates independent of the other streams. 
+  - A stream can be enabled or disabled.
+  - An enabled stream allows the packages it contains to be queried or
+    installed.
+  - Only one stream of a specific module can be enabled at a time.
+  - Each module has a default stream, which provides the latest or the
+    recommended version.
+- Module profiles:
+  - A module profile is a list of recommended packages organized for
+    purpose-built, convenient deployments to support a variety of use cases.
+  - Each module stream can have zero, one, or more profiles associated with it
+    with only one of them marked as the default.
+- dnf/yum Repository:
+  - A dnf repository (yum repository or a repo) is a digital library for
+    storing software packages.
+  - A repository is accessed for package retrieval, query, update, and
+    installation, and it may be free or for a fee.
+  - Repo defintion: 
+    # Exclusive ID (unique among other repos)
+    [Example_RHEL_8]
+    # Description
+    name=Example of RHEL 8 app components
+    # Url to repo (ftp://, http://, https://). For local file
+    # file://<dir_start_here>
+    baseurl=http://example.com/example-repo
+    # Enable the repo? 1: True, 0: False(disabled)
+    enabled=1
+    # GPG key check? 0: False, 1: True
+    gpgcheck=0
+
+2. Software Management with dnf:
+- dnf configuration file:
+  - dnf.conf or in /etc/yum.repos.d/
+- The dnf command:
+  - in RHEL 8, yum is a soft link to the dnf utility.
+  - requires the system to have access to a local or remote software repository
+    or to a local installable package file.
+  - The primary benefit of using dnf over rpm is the command’s ability to
+    resolve dependencies automatically by identifying and installing any
+    additional required packages for a successful installation of the specified
+    software.
+- Ways to administrative software:
+  - Individual Package Management
+  - Package groups
+  - Modules
+- Individual Package Management:
+  #List package in all enabled repos:
+  dnf repoquery
+  #List package in a specific repo:
+  dnf repoquery --repo "ExampleRepo"
+  #List all packages. @ sign means the packet has been installed:
+  dnf list
+  # List all installed packages:
+  dnf list installed
+  # List all installed packages started with example*:
+  dnf list installed example*
+  #List all packages To list all packages available from all enabled
+  #repositories that should be able to update:
+  dnf list updates
+  #Install package:
+  dnf install <package>
+  #Update package:
+  dnf update
+  #Local install package:
+  dnf localinstall <path_to_repo> <package>
+  #Search packages that contain specific file
+  #whatprovides: can use wildcard for filename expansion.
+  dnf provides /etc/passwd
+- Package group management:
+  dnf group list
+  dnf group list installed
+  dnf group list available
+  dnf group summary
+  dnf group install "group name"
+- Module management:
+  # To list all modules along with their stream, profile, and summary
+  # information available from all configured repos:
+  dnf module list
+  dnf module list --profile <module:streams>
+- Switching Module Streams:
+  - Switching module streams is typically performed to upgrade or downgrade the
+    version of an installed module.
+  - The correct process for either operation is to uninstall the existing
+    version provided by a stream alongside any dependencies that it has, switch
+    to the other stream, and install the desired version.
+    # list module summary. [i] means installed.
+    dnf module list --profile <module>
+    # remove if module has been installed.
+    dnf module remove <module>
+    # reset profile (no enable/disable all module)
+    dnf module install <module:streams/profile>
+
