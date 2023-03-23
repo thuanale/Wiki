@@ -1,0 +1,121 @@
+1. Definition:
+- As a representation of system resources and services, systemd introduces the
+  concept of systemd units.
+- A systemd unit, which performs or controls a particular task, is the basic
+  object that systemd manages. See the following examples of various systemd
+  unit types:
+  - service,
+  - target,
+  - device,
+  - mount,
+  - timer,
+  - other types that are relevant to the init system.
+- A systemd unit consists of a name, type and a configuration file, which defines the task of the unit.
+  - /usr/lib/systemd/system/: systemd unit files distributed with installed RPM packages.
+  - /run/systemd/system/: systemd unit files created at run time. This
+    directory takes precedence over the directory with installed service unit
+    files.
+  - /etc/systemd/system/: systemd unit files created by systemctl enable as
+    well as unit files added for extending a service. This directory takes
+    precedence over the directory with runtime unit files.
+- The default configuration of systemd is defined during the compilation and
+  you can find the configuration in the /etc/systemd/system.conf file. Use this
+  file if you want to deviate from those defaults and override selected default
+  values for systemd units globally.
+
+2. Command
+- Alternatively, you can mask any service unit and prevent it from being
+  started manually or by another service.
+  systemctl mask <service>.service
+  
+- Alternatively, restart a service unit only if the corresponding service is
+  already running:
+  systemctl try-restart <name>.service
+
+- Alternatively, reload the configuration without interrupting service
+  execution (not applicable for system service):
+  systemctl reload <name>.service 
+
+3. Target:
+- Targets in systemd act as synchronization points during the start of your system.
+- Target unit files, which end with the .target file extension, represent the
+  systemd targets.
+- The purpose of target units is to group together various systemd units
+  through a chain of dependencies.
+- You can display the default target using the systemctl command or examine the
+  /etc/systemd/system/default.target file, which represents the default target
+  unit.
+  - Determine, which target unit is used by default:
+    systemctl get-default
+  - Determine the default target using the symbolic link:
+    ls -l /usr/lib/systemd/system/default.target
+- Target:
+  - basic: unit target covering basic boot-up
+  - rescue: unit target that pulls in the base system and spawns a rescue
+    shell.
+  - multi-user: unit target for setting up a multi-user system
+  - graphical: unit target for setting up a graphical login screen
+  - emergency: unit target that starts an emergency shell on the main console
+  - sysinit: unit target that pulls in the services required for system
+    initialization.
+- Procedure to change target:
+  - set via commands or change soft link to default.target
+    - CMD: systemctl set-default <target>
+    - Remove old link & make a new soft link: 
+      ln -sf  ln -sf /usr/lib/systemd/system/<target>.target /usr/lib/systemd/system/default.target
+  - reboot
+- Recuse mode: 
+  - Rescue mode provides a convenient single-user environment and allows you to
+    repair your system in situations when it is unable to complete a regular
+    booting process.
+  - In rescue mode, the system attempts to mount all local file systems and
+    start certain important system services, but it does not activate network
+    interfaces or allow more users to be logged into the system at the same
+    time.
+- Emergency mode: 
+  - Emergency mode provides the most minimal environment possible and allows
+    you to repair your system even in situations when the system is unable to
+    enter rescue mode.
+  - In emergency mode, the system mounts the root file system only for reading,
+    does not attempt to mount any other local file systems, does not activate
+    network interfaces, and only starts a few essential services.
+
+4. Reboot:
+- Suspend:
+  - CMD: systemctl suspend
+  - This command saves the system state in RAM and with the exception of the
+    RAM module, powers off most of the devices in the machine.
+  - When you turn the machine back on, the system then restores its state from
+    RAM without having to boot again.
+  - Because the system state is saved in RAM and not on the hard disk,
+    restoring the system from suspend mode is significantly faster than from
+    hibernation.
+  - However, note that the suspended system state is also vulnerable to power
+    outages.
+- Hibernate:
+  - CMD: systemctl hibernate
+  - This command saves the system state on the hard disk drive and powers off
+    the machine.
+  - When you turn the machine back on, the system then restores its state from
+    the saved data without having to boot again.
+  - Because the system state is saved on the hard disk and not in RAM, the
+    machine does not have to maintain electrical power to the RAM module.
+  - However, as a consequence, restoring the system from hibernation is
+    significantly slower than restoring it from suspend mode.
+  - Alternatively, to hibernate and suspend the system, run the following
+    command:
+    systemctl hybrid-sleep
+
+5. Modify service:
+- Extend service capability:
+  - create a sub folder /etc/systemd/system/<service>.service.d/
+  - create <service-name>.conf file
+  - In this file, add function we need to extend. 
+  - Note, this conf file must follow construct of service file.
+  - CMD: systemctl daemon-reload; systemctl restart <service>.service
+- Overwrite/Create custom service file:
+  - create the file to /etc/systemd/system/<service-name>.service.d/
+  - copy the service file to the directory and modify it.
+  - CMD: systemctl daemon-reload; systemctl restart <service>.service
+- Check:
+  - CMD: systemd-delta
