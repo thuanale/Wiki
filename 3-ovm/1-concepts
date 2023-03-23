@@ -1,0 +1,18 @@
+1. Hypervisor:
+- Virtualization is defined as enabling multiple operating systems to run on a
+  single host computer.
+- Hypervisor is the essential component in the virtualization stack
+  - also called Virtual Machine Monitor (VMM).
+  - creates a virtual platform on the host computer, on top of which multiple
+    guest operating systems are executed and monitored.
+  - This way, multiple operating systems, which are either multiple instances
+    of the same operating system, or different operating systems, can share the
+    hardware resources offered by the host.
+- Type:
+  - Native (bare-metal): Native hypervisors are software systems that run
+    directly on the host's hardware to control the hardware, and to monitor the
+    guest operating systems.
+  - Hosted: Hosted hypervisors are designed to run within a traditional operating system.
+    - In other words, a hosted hypervisor adds a distinct software layer on top
+      of the host operating system, and the guest operating system becomes a
+      third software level above the hardware.
