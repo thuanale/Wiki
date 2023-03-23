@@ -1,0 +1,66 @@
+1. Region:
+- A region is a geographical area on the planet containing at least one, but
+  potentially multiple datacenters.
+- The datacenters are in close proximity and networked together with a
+  low-latency network.
+- Most Azure regions are paired with another region within the same geography
+  to make a regional pair (or paired regions).
+- Characteristics of region pair:
+  - Physical isolation:  prefer at least 300 miles of separation between
+    datacenters in a regional pair (in most cases).
+  - Platform-provided replication.
+  - Region recovery order: bring one region up first.
+  - Sequential updates.
+  - Data residency: Regions reside within the same geography as their enabled
+    set (except for the Brazil South and Singapore regions).
+
+2. Subscription: 
+- An Azure subscription is a logical unit of Azure services that's linked to an
+  Azure account.
+- Characteristics:
+  - Every Azure cloud service belongs to a subscription.
+  - Each subscription can have a different billing and payment configuration.
+  - Multiple subscriptions can be linked to the same Azure account.
+  - More than one Azure account can be linked to the same subscription.
+  - Billing for Azure services is done on a per-subscription basis.
+  - If your Azure account is the only account associated with a subscription,
+    you're responsible for the billing requirements.
+  - Programmatic operations for a cloud service might require a subscription
+    ID.
+
+3. Obtain subscription:
+- Way to obtain subscription:
+  - an Enterprise agreement: Any Enterprise Agreement customer can add Azure to
+    their agreement by making an upfront monetary commitment to Azure. The
+    commitment is consumed throughout the year by using any combination of the
+    wide variety of cloud services Azure offers.
+  - request a Microsoft reseller: Buy Azure through the Open Licensing program,
+    which provides a simple, flexible way to purchase cloud services from your
+    Microsoft reseller.
+  - Microsoft partner.
+  - open personal free account for a trial subscription.
+
+4. Microsoft Cost Management:
+5. Tag:
+- Each resource tag has a name and a value.
+- The tag name remains constant for all resources that have the tag applied.
+- The tag value can be selected from a defined set of values, or unique for a
+  specific resource instance.
+- A resource or resource group can have a maximum of 50 tag name/value pairs.
+- Tags applied to a resource group aren't inherited by the resources in the
+resource group.
+6. Cost savings:
+- Reservations: 
+  - Reservations provide a billing discount and don't affect the runtime state
+    of your resources.
+  - save up to 72% on pay-as-you-go prices.
+- Azure Hybrid Benefits:
+  - Access pricing benefits if you have a license that includes Software
+    Assurance.
+  - Azure Hybrid Benefits helps maximize the value of existing on-premises
+    Windows Server or SQL Server license investments when migrating to Azure.
+- Azure Credits: Use the monthly credit benefit to develop, test, and
+  experiment with new solutions on Azure.
+- Azure regions: Cost is different among regions
+- Budgets: 
+- Pricing Calculator

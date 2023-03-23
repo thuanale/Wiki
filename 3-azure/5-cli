@@ -1,0 +1,4 @@
+- Commands in the CLI are structured in groups and subgroups. Each group
+  represents a service provided by Azure, and the subgroups divide commands for
+  these services into logical groupings.
+- 

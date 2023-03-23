@@ -1,0 +1,25 @@
+1. Azure Subscriptions:
+- Azure AD tenants.
+  - A subscription can only be tied to one Azure AD tenant at a time. 
+  - Can have multiple tenants in an Azure account.
+  - Can move subscription to other Azure AD tenant.
+- Subscriptions are required to associate with Azure AD tenants to create
+  resources.
+
+2. Type:
+- Free trial
+- Pay-as-you-go
+- Enterprise Agreement (EA)
+
+3. Cost
+4. Azure Support Plan:
+- Basic
+- Standard
+- Developer
+- Professional Direct.
+
+5. Management group:
+- Default: root tenant group
+- Under root tenant group, there are many management groups which contains
+  multiple subscriptions.
+  - We can move subscription among management groups.

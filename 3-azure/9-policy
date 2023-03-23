@@ -1,0 +1,160 @@
+1. Managmenet groups:
+- Management groups provide a governance scope above subscriptions. 
+  - organize subscriptions into management groups
+  - the governance conditions you apply cascade by inheritance to all
+    associated subscriptions.
+- However, all subscriptions within a single management group must trust the
+  same Azure Active Directory (Azure AD) tenant.
+- Moving multiple subscriptions under that management group:
+   - create one Azure role assignment on the management group, which will
+     inherit that access to all the subscriptions.
+   - One assignment on the management group can enable users to have access to
+     everything they need instead of scripting Azure RBAC over different
+     subscriptions.
+- Important facts:
+  - 10,000 management groups can be supported in a single directory.
+  - A management group tree can support up to six levels of depth.
+  - This limit doesn't include the Root level or the subscription level.
+  - Each management group and subscription can only support one parent.
+  - Each management group can have many children.
+  - All subscriptions and management groups are within a single hierarchy in
+    each directory.
+
+1.1  Root management group:
+- Each directory is given a single top-level management group called the root
+  management group.
+- Built into the hierarchy to have all management groups and subscriptions fold
+  up to it.
+- Allows for global policies and Azure role assignments to be applied at the
+  directory level.
+- The Azure AD Global Administrator needs to elevate themselves to the User
+  Access Administrator role of this root group initially.
+- After elevating access, the administrator can assign any Azure role to other
+  directory users or groups to manage the hierarchy.
+- As administrator, you can assign your own account as owner of the root
+  management group.
+- Facts:
+  - By default, the root management group's display name is Tenant root group
+    and operates itself as a management group.
+  - The ID is the same value as the Azure Active Directory (Azure AD) tenant
+    ID.
+  - To change the display name, your account must be assigned the Owner or
+    Contributor role on the root management group.
+  - The root management group can't be moved or deleted, unlike other
+    management groups.
+  - All subscriptions and management groups fold up to the one root management
+    group within the directory.
+    - All resources in the directory fold up to the root management group for
+      global management.
+    - New subscriptions are automatically defaulted to the root management
+      group when created.
+  - All Azure customers can see the root management group, but not all
+    customers have access to manage that root management group.
+    - Everyone who has access to a subscription can see the context of where
+      that subscription is in the hierarchy.
+    - No one is given default access to the root management group.
+    - Azure AD Global Administrators are the only users that can elevate
+      themselves to gain access.
+    - Once they have access to the root management group, the global
+      administrators can assign any Azure role to other users to manage it.
+
+1.2. Custom role:
+- Azure custom role support for management groups is currently in preview with
+  some limitations.
+- You can define the management group scope in the Role Definition's assignable
+  scope.
+- That Azure custom role will then be available for assignment on that
+  management group and any management group, subscription, resource group, or
+  resource under it.
+
+2. Policy:
+- Azure Policy is a service in Azure that you can use to create, assign, and
+  manage policies.
+- You can use policies to enforce rules on your resources to meet corporate
+  compliance standards and service level agreements.
+- Azure Policy runs evaluations and scans on your resources to make sure
+  they're compliant.
+- Advantage	Description:
+  - Enforce rules and compliance:
+    - Enable built-in policies, or build custom policies for all resource types.
+    - Support real-time policy evaluation and enforcement, and periodic or
+      on-demand compliance evaluation.
+  - Apply policies at scale
+    - Apply policies to a management group with control across your entire
+      organization.
+    - Apply multiple policies and aggregate policy states with policy
+      initiative. Define an exclusion scope.
+  - Perform remediation
+    - Conduct real-time remediation, and remediation on your existing resources.
+  - Exercise governance
+    - Implement governance tasks for your environment:
+      - Support multiple engineering teams (deploying to and operating in the
+        environment).
+      - Manage multiple subscriptions
+      - Standardize and enforce how cloud resources are configured
+      - Manage regulatory compliance, cost control, security, and design
+        consistency.
+- Policy definition:
+  - Describes the compliance conditions for a resource, and the actions to
+    complete when the conditions are met.
+  - One or more policy definitions are grouped into an initiative definition,
+    to control the scope of your policies and evaluate the compliance of your
+    resources.
+  - Step:
+    - Create policy definiton.
+    - Create an initiative definition.
+    - Define scope
+    - Determine compliance.
+
+3. RBAC:
+- Management group support Azure role-based access control (Azure RBAC) for all
+  resource accesses and role definitions.
+- RBAC is not enabled by default.
+- These permissions are inherited to child resources that exist in the hierarchy.
+- Concepts:
+  - Security principal (Who)
+    - An object that represents something that requests access to resources.
+  - Role definition (What)
+    - A set of permissions that lists the allowed operations. 
+    - Type: builtin & custom role definitions.
+  - Scope (Where)
+    - The boundary for the requested level of access, or "how much" access is
+      granted.
+  - Assignment:
+    - Attaches a role definition to a security principal at a particular
+      scope.
+    - Users can grant the access described in a role definition by creating
+      (attaching) an assignment for the role.
+- Different with Azure AD policy:
+	               |  Azure RBAC roles	                |         Azure AD admin roles
+Access management| Manages access to Azure resources	| Manages access to Azure AD resources
+-----------------------------------------------------------------------------------------------
+Scope assignment | Scope can be specified at multiple | Scope is specified at the tenant level
+                 | levels, including management       |
+                 | groups, subscriptions, resource    |
+                 | groups, and resources	            |
+-----------------------------------------------------------------------------------------------
+Role definitions | Roles can be defined via the Azure | Roles can be defined via the Azure admin 
+                 | portal, the Azure CLI, Azure       | portal, Microsoft 365 admin portal, and 
+                 | PowerShell, Azure Resource Manager | Microsoft Graph Azure AD PowerShell 
+                 | templates, and the REST API        |	
+
+- Fundametal roles:
+  - Owner:
+    - The Owner role has full access to all resources, including the right to
+      delegate access to others.
+    - The Service Administrator and Co-Administrators roles are assigned the
+      Owner role at the subscription scope.
+  - Contributor:
+    - The Contributor role can create and manage all types of Azure resources.
+    - This role can't grant access to others.
+  - Reader:
+    - The Reader role can view existing Azure resources.
+  - User Access Administrator:
+    - The User Access Administrator role can manage user access to Azure
+      resources.
+- The access granted by a role, the effective permissions, is computed by
+  subtracting the NotActions operations from the Actions operations.
+- Azure RBAC is an allow model. This means that when you're assigned a role,
+  Azure RBAC allows you to perform certain actions, such as read, write, or
+  delete.

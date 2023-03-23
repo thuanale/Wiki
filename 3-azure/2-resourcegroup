@@ -1,0 +1,90 @@
+1. Terminology:
+- resource:
+  - A manageable item that is available through Azure.
+- resource group: 
+  - A container that holds related resources for an Azure solution. 
+  - The resource group can include all the resources for the solution, or only
+    those resources that you want to manage as a group.
+  - You decide how you want to allocate resources to resource groups based on
+    what makes the most sense for your organization.
+- resource provider:
+  - A service that supplies the resources you can deploy and manage through
+    Resource Manager.
+  - Each resource provider offers operations for  working with the resources
+    that are deployed.
+  - The name of a resource type is in the format:
+    {resource-provider}/{resource-type}.
+- template:
+  - A JavaScript Object Notation (JSON) file that defines one or more resources
+    to deploy to a resource group.
+  - It also defines the dependencies between the deployed resources. The
+    template can be used to deploy the resources consistently and repeatedly.
+- declarative syntax:
+  - Syntax that lets you state "Here is what I intend to create" without having
+    to write the sequence of programming commands to create it.
+
+2. Benefit of Resource group:
+- deploy, manage, and monitor all the resources for your solution as a group.
+- deploy your solution throughout the development lifecycle & in a consistent
+  state.
+- manage your infrastructure through declarative templates.
+- define the dependencies between resources.
+- apply access control to all services in your resource group because
+  Role-Based Access Control (RBAC) is natively integrated into the management
+  platform.
+- apply tags to resources to logically organize all the resources in your
+  subscription.
+- clarify your organization's billing by viewing costs for a group of resources
+  sharing the same tag.
+
+3. Best practice:
+- Define and deploy your infrastructure through the declarative syntax in Azure
+  Resource Manager templates.
+- Define all deployment and configuration steps in the template.
+- Run imperative commands to manage your resources.
+- Arrange resources with the same lifecycle in a resource group.
+- Use tags for all other organizing of resources
+
+4. Create resource groups:
+- Resources can be deployed to any new or existing resource group.
+- Deployment of resources to a resource group becomes a job where you can track
+  the template execution.
+- Deployments are incremental.
+
+5. Considerations:
+- Resources can only exist in one resource group.
+- Resource Groups cannot be renamed.
+- Resource Groups can have resources of many different types (services).
+- Resource Groups can have resources from many different regions.
+
+6. Creating resource groups:
+- All the resources in your group should share the same lifecycle. 
+- Each resource can only exist in one resource group.
+- you can add or remove a resource to a resource group at any time.
+- can move a resource from one resource group to another group.
+- A resource group can contain resources that reside in different regions.
+- A resource group can be used to scope access control for administrative actions.
+- A resource can interact with resources in other resource groups.
+
+7. Resource locks:
+- Resource Manager locks allow organizations to put a structure in place that
+  prevents the accidental deletion of resources in Azure.
+  - You can associate the lock with a subscription, resource group, or resource.
+  - Locks are inherited by child resources.
+- Lock types:
+  - Read-Only locks, which prevent any changes to the resource.
+  - Delete locks, which prevent deletion.
+- Only the Owner and User Access Administrator roles can create or delete
+  management locks.
+
+8. Move resource:
+- When moving resources, both the source group and the target group are locked
+  during the operation.
+- Write and delete operations are blocked on the resource groups until the move completes. 
+- This lock means you can't add, update, or delete resources in the resource groups.
+- Locks don't mean the resources aren't available.
+
+9. Determine resource limit: 
+- When you need to increase a default limit, there is a Request Increase link.
+- All resources have a maximum limit listed in Azure limits.
+- If you are at the maximum limit, the limit can't be increased.

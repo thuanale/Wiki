@@ -1,0 +1,18 @@
+1. Administration tool:
+- The Azure portal: The Azure portal is a website that lets you create,
+  configure, and alter the resources in your Azure subscription.
+- The Azure CLI: The Azure CLI is a cross-platform command-line program to
+  connect to Azure and execute administrative commands on Azure resources.
+- Azure PowerShell
+
+2. cmdlet:
+- A PowerShell command is called a cmdlet (pronounced "command-let").
+- A cmdlet is a command that manipulates a single feature.
+- The term cmdlet is intended to imply "small command".
+
+3. module:
+- Cmdlets are shipped in modules.
+- A PowerShell Module is a DLL that includes the code to process each available
+  cmdlet.
+- You'll load cmdlets into PowerShell by loading the module in which they're
+  contained.

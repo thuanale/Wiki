@@ -1,0 +1,227 @@
+1. Type of data:
+- VM machine data
+- Unstructured data: format of unstructured data is referred to as
+  non-relational.
+- Structured data.
+
+2. Tier:
+- Standard: used HDD, usually used for infrequently accessed or bulk data
+- Premium: used SSD, usually best for VM's disk with I/O intensive
+  applications.
+- Cannot convert between Standard and Premium.
+
+3. Data services:
+- Azure Blob Storage (containers): A massively scalable object store for
+  unstructed or non-relational data (text, and binary data).
+- Azure Files: : Managed file shares for cloud or on-premises deployments.
+- Azure Queue Storage: A messaging store for reliable messaging between
+  application components.
+- Azure Table Storage:  A NoSQL store for schemaless storage of structured data
+  or relational data.
+
+4. Storage Account Types:
+- Standard general purpose v2:
+  - Blob Storage (including Data Lake Storage), Queue Storage, Table Storage,
+    and Azure Files.
+  - Uses 3 resouces to store & manage data:
+    - An Azure storage account.
+    - Containers in an Azure storage account.
+    - Blobs in a container.
+  - Need to configure these settings:
+    - Blob container options
+    - Blob types and upload options
+    - Blob Storage access tiers
+    - Blob lifecycle rules
+    - Blob object replication options
+- Premium block blobs:
+  - Blob Storage (including Data Lake Storage).
+  - Premium storage account for block blobs and append blobs.
+  - Recommended for applications with high transaction rates.
+- Premium file shares:
+  - Azure Files.
+  - Recommeded for enterprise or high-performance scale apps.
+- Premium page blobs:
+  - Pages blobs only.
+  - Page blobs are ideal for storing index-based and sparse data structures,
+    such as operating systems, data disks for virtual machines, and databases.
+
+5. Blob types:
+- Block blobs:
+  - Default
+  - A block blob consists of blocks of data that are assembled to make a
+    blob.
+- Append blobs:
+  - An append blob is similar to a block blob because the append blob also
+    consists of blocks of data.
+  - The blocks of data in an append blob are optimized for append
+    operations.
+  - Append blobs are useful for logging scenarios, where the amount of data
+    can increase as the logging operation continues.
+- Page blobs:
+  - A page blob can be up to 8 TB in size. 
+  - Page blobs are more efficient for frequent read/write operations.
+  - Azure Virtual Machines uses page blobs for operating system disks and
+    data disks.
+- After you create a blob, you can't change its type.
+
+6. Determine replication strategies:
+- Locally redundant storage (LRS):
+  - Locally redundant storage is the lowest-cost replication option and offers
+    the least durability compared to other strategies.
+  - If a data center-level disaster occurs, such as fire or flooding, all
+    replicas might be lost or unrecoverable.
+- Zone redundant storage (ZRS):
+  - Zone redundant storage synchronously replicates your data across three
+    storage clusters in a single region.
+  - Each availability zone, and the ZRS cluster within it, is autonomous, and
+    has separate utilities and networking capabilities.
+- Geo-redundant storage (GRS):
+  - Geo-redundant storage replicates your data to a secondary region.
+  - Default replication option.
+  - Copies the data synchronously three times within a single physical location
+    in the primary region by using LRS.
+  - GRS provides a higher level of durability even during a regional outage.
+  - Options:
+    - GRS:
+      - replicates your data to another data center in a secondary region.
+      - The data is available to be read only if Microsoft initiates a failover
+        from the primary to secondary region.
+    - Read-access geo-redundant storage (RA-GRS): replicates your data to
+      another data center in a secondary region, and also provides you with the
+      option to read from the secondary region.
+- Process:
+  - All data is first replicated with locally redundant storage. 
+  - An update is first committed to the primary location and replicated by
+    using LRS.
+  - The update is then replicated asynchronously to the secondary region by
+    using GRS.
+  - When data is written to the secondary location, it's also replicated within
+    that location by using LRS.
+  - Both the primary and secondary regions manage replicas across separate
+    fault domains and upgrade domains within a storage scale unit.
+  - The storage scale unit is the basic replication unit within the
+    datacenter.
+  - Replication at this level is provided by LRS.
+
+- Geo-zone-redundant storage (GZRS):
+  - Geo-zone-redundant storage combines the high availability of zone-redundant
+    storage with protection from regional outages as provided by geo-redundant
+    storage.
+  - Options:
+    - GZRS:
+      - The data is available to be read-only if Microsoft inititates a
+        failover from the primary to secondary region.
+    - RA-GZRS: read-access to data in the 2nd region.
+
+7. Access storage:
+- Every object you store in Azure Storage has a unique URL address.
+- Your storage account name forms the subdomain portion of the URL address.
+- The combination of the subdomain and the domain name, which is specific to
+  each service, forms an endpoint for your storage account.
+- Configure custom domains:
+  - direct mapping: Direct mapping lets you enable a custom domain for a
+    subdomain to an Azure storage account.
+    - For this approach, you create a CNAME record that points from the
+      subdomain to the Azure storage account.
+  - Intermediary domain mapping is applied to a domain that's already in use
+    within Azure.
+    - This approach might result in minor downtime while the domain is being
+      mapped.
+    - To avoid downtime, you can use the asverify intermediary domain to
+      validate the domain.
+    - By prepending the asverify keyword to your own subdomain, you permit
+      Azure to recognize your custom domain without modifying the DNS record
+      for the domain.
+- By prepending the asverify keyword to your own subdomain, you permit Azure
+  to recognize your custom domain without modifying the DNS record for the
+  domain.
+- After you modify the DNS record for the domain, your domain is mapped to the
+  blob endpoint with no downtime.
+
+7. Configure Blob Storage:
+- Azure Blob Storage uses a container resource to group a set of blobs.
+- A blob must be stored in a container resource.
+- Thing to notice:
+  - All blobs must be in a container.
+  - A container can store an unlimited number of blobs.
+  - An Azure storage account can contain an unlimited number of containers.
+  - You can create the container in the Azure portal.
+  - You upload blobs into a container.
+- Configure a container:
+  - Name: unique within the Azure storage account.
+  - Public access level:
+    - Private
+    - Blob: allow anonymous public read access for the blobs only.
+    - Container: Allow anonymous public read and list access to the entire
+      container, including the blobs.
+- Assign blob access tiers:
+  - Hot:
+    - default option
+    - The Hot tier is optimized for frequent reads and writes of objects in the
+      Azure storage account
+    - A good usage case is data that is actively being processed.
+  - Cool:
+    - The Cool tier is optimized for storing large amounts of data that's
+      infrequently accessed.
+    - This tier is intended for data that remains in the Cool tier for at least
+      30 days.
+    - A usage case for the Cool tier is short-term backup and disaster recovery
+      datasets and older media content.
+    - Not frequently accessed, but need to be immediately available.
+  - Archive:
+    - The Archive tier is an offline tier that's optimized for data that can
+      tolerate several hours of retrieval latency.
+    - Data must remain in the Archive tier for at least 180 days or be subject
+      to an early deletion charge.
+    - Data for the Archive tier includes secondary backups, original raw data,
+      and legally required compliance information.
+    - Has highest access data.
+    - Lowest storage costs.
+  - Premium:
+    - best suited for I/O instensive workloads that require low & consistent
+      storage latency.
+
+- Configure life-cycle.
+- Object replication:
+  - Object replication copies blobs in a container asynchronously according to
+    policy rules that you configure.
+  - During the replication process, the following contents are copied from the
+    source container to the destination container:
+    - The blob contents
+    - The blob metadata and properties
+    - Any versions of data associated with the blob
+  - Require:
+    - Blob versioning is enabled on both containers.
+    - Blob snapshots are not replicated.
+    - Tiers of containers are in the Hot or Cool & can be in different.
+    - Congiure replication policy.
+
+9. Upload to Blob storage:
+- Tool:
+  - AzCopy: cli.
+  - Azure Storage Data Movement library: .NET library for moving data between
+    Azure Storage services.
+  - Azure Data Factory: You can copy data to and from Blob Storage by using the
+    account key, shared access signature, service principal, or managed
+    identities for Azure resources authentications.
+  - blobfuse: A virtual file system driver for Azure Blob Storage. You can use
+    blobfuse to access your existing block blob data in your storage account
+    through the Linux file system.
+  - Azure Data Box Disk:
+    - A service for transferring on-premises data to Blob Storage when large
+      datasets or network constraints make uploading data over the wire
+      unrealistic.
+    - You can use Azure Data Box Disk to request solid-state disks (SSDs) from Microsoft.
+    - You can copy your data to those disks and ship them back to Microsoft to
+      be uploaded into Blob Storage.
+  - Azure Import/Export: A service that helps you export large amounts of data
+    from your storage account to hard drives that you provide and that
+    Microsoft then ships back to you with your data.
+
+10. Cost:
+- Performance tiers
+- Data access costs
+- Transaction costs
+- Geo-replication data transfer costs
+- Outbound data transfer costs
+- Changes to the storage tier.

@@ -1,0 +1,73 @@
+1. User account:
+- Every user who wants access to Azure resources needs an Azure user account.
+- Supported account:
+  - Cloud identity:
+    - A user account with a cloud identity is defined only in Azure AD.
+    - Can be for user accounts defined in your Azure AD organization, and also
+      for user accounts defined in an external Azure AD instance.
+    - When a cloud identity is removed from the primary directory, the user
+      account is deleted.
+  - Directory-synchronized identity:
+    - defined in an on-premises Active Directory.
+    - A synchronization activity occurs via Azure AD Connect to bring these
+      user accounts in to Azure.
+    - The source for these accounts is Windows Server Active Directory.
+  - Guest user:
+    - Guest user accounts are defined outside Azure.
+    - The source for guest user accounts is Invited user.
+- Configuration:
+  - Consider where users are defined.
+  - Consider support for external contributors
+  - Consider a combination of user accounts
+
+2. Manage:
+- New user:
+  - Cloud identity: Create via Azure AD or invited as guest user for external.
+  - A new user account must have a display name and an associated user account
+    name.
+  - Information and settings that describe a user are stored in the user
+    account profile.
+  - A user with Global administrator or User administrator privileges can
+    preset profile data in user accounts.
+  - Non-admin users can set some of their own profile data, but they can't
+    change their display name or account name.
+- Restore:
+  - Restore operations for a deleted account are available up to 30 days after
+    an account is removed.
+  - After 30 days, a deleted user account can't be restored.
+- Consider gathered account data. Collect sign-in and audit log information for
+  user accounts.
+- Consider user profile data. Allow users to set their profile information for
+  their accounts, as needed.
+
+3. Create bulk user accounts:
+- Only Global administrators or User administrators have privileges to create
+  and delete user accounts in the Azure portal.
+- To complete bulk create or delete operations, the admin fills out a
+  comma-separated values (CSV) template of the data for the user accounts.
+- Bulk operation templates can be downloaded from the Azure AD portal.
+- Bulk lists of user accounts can be downloaded.
+
+4. Group accounts:
+- Type:
+  - Security groups:
+    - Used to manage member and computer access to shared resources for a group
+      of users.
+    - Implemented by Azure AD administrators.
+    - Can apply the same permissions to all members of a group.
+  - MS 365 groups:
+    - enable group access for guest users outside your Azure AD organization.
+    - Normal users and Azure AD admins can both use Microsoft 365 groups.
+- Group members have access to a shared mailbox, calendar, files, SharePoint
+  site, and more.
+- Access rights for group members:
+  - Assigned: add specific user
+  - Dynamic user: automatically add/remove user which is met specific rule.
+  - Dynamic device: (Security groups only) Apply dynamic group rules to
+    automatically add and remove devices in security groups.
+
+5. Create administrative units:
+- Consider:
+ - management tools
+ - role requirements in the Azure portal.
+ - Scope

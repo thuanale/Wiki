@@ -1,0 +1,52 @@
+1.
+{
+    "$schema": "http://schema.management.​azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "",
+    "parameters": {},
+    "variables": {},
+    "functions": [],
+    "resources": [],
+    "outputs": {}
+}
+- $schema: (required) Location of the JSON schema file that describes the
+  version of the template language. Use the URL shown in the preceding
+  example.
+- contentVersion: (required) indicate major update.
+- parameters (optional): Values that are provided when deployment is executed
+  to customize resource deployment.
+- variable (optional) Values that are used as JSON fragments in the template to
+  simplify template language expressions.
+- function (optional) User-defined functions that are available within the
+  template.
+- resource types (required) Resource types that are deployed or updated in a
+  resource group.
+- outputs (optional) Values that are returned after deployment.
+
+2. Parameter:
+- You're limited to 256 parameters in a template.
+- You can reduce the number of parameters by using objects that contain
+  multiple properties.
+
+3. Consider Bicep templates:
+- Azure Bicep is a domain-specific language (DSL) that uses declarative syntax
+  to deploy Azure resources.
+- You can use Bicep instead of JSON to develop your Azure Resource Manager
+  templates (ARM templates).
+- User >>write>> Bicep >>convert>> JSON >>deploy>> Azure
+
+4. outputs:
+"outputs": {
+  "<output-name>": {
+    "condition": "<boolean-value-whether-to-output-value>",
+    "type": "<type-of-output-value>",
+    "value": "<output-value-expression>",
+    "copy": {
+      "count": <number-of-iterations>,
+      "input": <values-for-the-variable>
+    }
+  }
+}
+
+5. Resource changes:  
+- Resources will be created only if they didn't already exist and updated only
+  if there's a change..
